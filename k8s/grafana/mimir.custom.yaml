@@ -1,0 +1,14 @@
+nginx:
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    hosts:
+      - host: mimir.minikube
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      # empty, disabled.
+serviceMonitor:
+  enabled: true
+  interval: 10s

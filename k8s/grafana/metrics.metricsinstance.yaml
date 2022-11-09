@@ -1,0 +1,13 @@
+apiVersion: monitoring.grafana.com/v1alpha1
+kind: MetricsInstance
+
+metadata:
+  name: metrics
+  namespace: tools
+  labels:
+    agent: grafana-agent-metrics
+spec:
+  remoteWrite:
+    - url: http://mimir-distributor:8080/api/v1/push
+  # Use all ServiceMonitor in this namespace
+  serviceMonitorSelector: {}
