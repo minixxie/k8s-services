@@ -6,6 +6,7 @@ tmp="$tmp".html
 
 grafanaPwd=$(kubectl get secret -n tools grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo)
 mysqlPwd=$(kubectl get secret --namespace db mysql -o jsonpath="{.data.mysql-root-password}" | base64 -d)
+postgresqlPwd=$(kubectl get secret --namespace db postgresql -o jsonpath="{.data.postgresql-password}" | base64 --decode)
 
 time=$(TZ=UTC date +"%Y-%m-%d %H:%M:%SZ")
 
@@ -44,6 +45,20 @@ div.xterm {
 			OR
 			<div class="xterm">
 			cd mysql/ && make cli
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>PostgreSQL</td>
+		<td>
+			root pass: $postgresqlPwd<br />
+			<br />
+			<div class="xterm">
+			kubectl run postgresql-client --rm --tty -i --restart='Never' --namespace db --image docker.io/bitnami/postgresql:11.13.0-debian-10-r0 --env="PGPASSWORD=\$(kubectl get secret --namespace db postgresql -o jsonpath="{.data.postgresql-password}" | base64 --decode)" --command -- psql --host postgresql -U postgres -d postgres -p 5432
+			</div>
+			OR
+			<div class="xterm">
+			cd postgresql/ && make cli
 			</div>
 		</td>
 	</tr>
