@@ -11,4 +11,4 @@ down:
 
 .PHONY: cli
 cli:
-	kubectl run postgresql-client --rm --tty -i --restart='Never' --namespace db --image docker.io/bitnami/postgresql:11.13.0-debian-10-r0 --env="PGPASSWORD=$$(kubectl get secret --namespace db postgresql -o jsonpath="{.data.postgres-password}" | base64 -d)" --command -- psql --host postgresql -U postgres -d postgres -p 5432
+	kubectl run postgresql-client --rm --tty -i --restart='Never' --namespace db --image docker.io/bitnami/postgresql:15.1.0-debian-11-r0 --env="PGPASSWORD=$$(kubectl get secret --namespace db postgresql -o jsonpath="{.data.postgres-password}" | base64 -d)" --command -- psql --host postgresql -U postgres -d postgres -p 5432
