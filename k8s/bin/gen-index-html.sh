@@ -41,6 +41,10 @@ div.xterm {
 			<div class="xterm">
 			kubectl run mysql-client --rm --tty -i --restart='Never' --image  docker.io/bitnami/mysql:8.0.31-debian-11-r10 --namespace db --env MYSQL_ROOT_PASSWORD=$mysqlPwd --command -- bash -c 'mysql -h mysql.db.svc.cluster.local -uroot -p"\$MYSQL_ROOT_PASSWORD"'
 			</div>
+			OR
+			<div class="xterm">
+			cd mysql/ && make cli
+			</div>
 		</td>
 	</tr>
 
