@@ -4,6 +4,7 @@ tmp=$(mktemp /tmp/XXXXXX)
 mv "$tmp" "$tmp".html
 tmp="$tmp".html
 
+kubeappPwd=$(kubectl get --namespace default secret kubeapps-operator-token -o go-template='{{.data.token | base64decode}}' ; echo)
 grafanaPwd=$(kubectl get secret -n tools grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo)
 mysqlPwd=$(kubectl get secret --namespace db mysql -o jsonpath="{.data.mysql-root-password}" | base64 -d)
 postgresqlPwd=$(kubectl get secret --namespace db postgresql -o jsonpath="{.data.postgres-password}" | base64 -d)
@@ -26,6 +27,13 @@ div.xterm {
 
 <h3>Generated at: $time</h3>
 <table border="1">
+	<tr>
+		<td>Kubeapps</td>
+		<td>
+			<a target="_blank" href="http://kubeapps.minikube/">http://kubeapps.minikube/</a><br />
+			token: $kubeappPwd<br />
+		</td>
+	</tr>
 	<tr>
 		<td>Grafana</td>
 		<td>

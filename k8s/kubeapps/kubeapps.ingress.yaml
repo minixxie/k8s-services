@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kubeapps
+  namespace: kubeapps
+spec:
+  rules:
+  - host: kubeapps.minikube
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: kubeapps
+            port:
+              number: 80
