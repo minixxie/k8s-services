@@ -16,3 +16,4 @@ down:
 	kubectl delete secret kubeapps-operator-token -n default || true
 	kubectl delete clusterrolebinding kubeapps-operator || true
 	kubectl delete serviceaccount kubeapps-operator -n default || true
+	helm uninstall kubeapps -n kubeapps
