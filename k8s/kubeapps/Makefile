@@ -8,7 +8,7 @@ up:
 	kubectl create clusterrolebinding kubeapps-operator --clusterrole=cluster-admin --serviceaccount=default:kubeapps-operator
 	kubectl apply -f ./kubeapps.secret.yaml
 	kubectl apply -f ./kubeapps.ingress.yaml
-	pass=$(kubectl get --namespace default secret kubeapps-operator-token -o go-template='{{.data.token | base64decode}}' ; echo) ; echo "pass: $pass"
+	pass=$$(kubectl get --namespace default secret kubeapps-operator-token -o go-template='{{.data.token | base64decode}}' ; echo) ; echo "pass: $$pass"
 
 .PHONY: down
 down:
