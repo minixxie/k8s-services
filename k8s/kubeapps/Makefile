@@ -14,4 +14,5 @@ up:
 down:
 	kubectl delete ing kubeapps -n kubeapps || true
 	kubectl delete secret kubeapps-operator-token -n default || true
+	kubectl delete clusterrolebinding kubeapps-operator || true
 	kubectl delete serviceaccount kubeapps-operator -n default || true
