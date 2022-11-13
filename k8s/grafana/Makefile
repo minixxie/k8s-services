@@ -1,11 +1,16 @@
 # Dashboards
-# https://grafana.com/grafana/dashboards/12062-node-exporter/
+# *https://grafana.com/grafana/dashboards/12062-node-exporter/
+# https://grafana.com/grafana/dashboards/16378-node-exporter-nodes/
 
 .PHONY: up
 up:
 	helm repo add grafana https://grafana.github.io/helm-charts || true
+	helm repo add prometheus-community https://prometheus-community.github.io/helm-charts || true
 	helm repo list
 	helm repo update
+	# prometheus
+	helm upgrade --install prometheus prometheus-community/prometheus -n tools --create-namespace
+	kubectl get deployment -n tools | grep prometheus
 	# mimir
 	helm upgrade --install mimir grafana/mimir-distributed -f ./mimir.custom.yaml -n tools --create-namespace
 	kubectl get deployment -n tools | grep mimir
@@ -19,10 +24,15 @@ up:
 	kubectl get deployment grafana -n tools
 	# See what releases were deployed
 	helm list -n tools
+	kubectl apply -f prometheus.ingress.yaml
 	kubectl apply -f grafana.ingress.yaml
 	kubectl apply -f metrics.metricsinstance.yaml
 	@echo "Add data source on grafana: http://grafana.minikube/datasources/new"
-	@echo "[Prometheus/Mimir]"
+	@echo "[Prometheus]"
+	@echo "1. Choose 'Prometheus'"
+	@echo "2. Input HTTP URL as http://prometheus-server.tools.svc:80 (prometheus-server is the k8s svc name)"
+	@echo "3. Save & test"
+	@echo "[Prometheus (Mimir)]"
 	@echo "1. Choose 'Prometheus'"
 	@echo "2. Input HTTP URL as http://mimir-nginx.tools.svc:80/prometheus (mimir-nginx is the k8s svc name)"
 	@echo "3. Save & test"
@@ -34,8 +44,10 @@ up:
 .PHONY: down
 down:
 	kubectl delete ing grafana -n tools || true
+	kubectl delete ing prometheus -n tools || true
 	kubectl delete metricsinstance metrics -n tools || true
 	helm uninstall grafana -n tools || true
 	helm uninstall grafana-agent -n tools || true
 	helm uninstall loki -n tools || true
 	helm uninstall mimir -n tools || true
+	helm uninstall prometheus -n tools || true
