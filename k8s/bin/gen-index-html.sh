@@ -40,7 +40,8 @@ div.xterm {
 			<a target="_blank" href="http://grafana.minikube/">http://grafana.minikube/</a><br />
 			user: admin<br />
 			pass: $grafanaPwd<br />
-			<a target="_blank" href="http://mimir.minikube/">http://mimir.minikube/</a><br />
+			Prometheus: <a target="_blank" href="http://prometheus.minikube/">http://prometheus.minikube/</a><br />
+			Mimir: <a target="_blank" href="http://mimir.minikube/prometheus">http://mimir.minikube/prometheus</a><br />
 			Node-exporter: <a target="_blank" href="http://minikube:9100/">http://minikube:9100/</a><br />
 		</td>
 	</tr>

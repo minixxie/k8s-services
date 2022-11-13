@@ -2,6 +2,8 @@
 # *https://grafana.com/grafana/dashboards/12062-node-exporter/
 # https://grafana.com/grafana/dashboards/16378-node-exporter-nodes/
 
+CHOICE := 1  # 1: grafana + prometheus, 2: grafana + mimir
+
 .PHONY: up
 up:
 	helm repo add grafana https://grafana.github.io/helm-charts || true
@@ -12,8 +14,10 @@ up:
 	helm upgrade --install prometheus prometheus-community/prometheus -n tools --create-namespace
 	kubectl get deployment -n tools | grep prometheus
 	# mimir
-	helm upgrade --install mimir grafana/mimir-distributed -f ./mimir.custom.yaml -n tools --create-namespace
-	kubectl get deployment -n tools | grep mimir
+	if [ "${CHOICE}" == 2 ]; then \
+		helm upgrade --install mimir grafana/mimir-distributed -f ./mimir.custom.yaml -n tools --create-namespace; \
+		kubectl get deployment -n tools | grep mimir; \
+	fi
 	# loki
 	helm upgrade --install loki grafana/loki-stack -n tools --create-namespace
 	# grafana-agent

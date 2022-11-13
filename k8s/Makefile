@@ -14,7 +14,7 @@ recreate-cluster:
 	minikube addons enable ingress
 	minikube addons list
 	make check
-	@ip=$$(minikube ip); echo "Make sure to put entries into /etc/hosts:"; echo "$$ip grafana.minikube"
+	make hosts
 
 .PHONY: index
 index:
@@ -35,9 +35,10 @@ mysql-cli:
 .PHONY: hosts
 hosts:
 	@ip=$$(minikube ip); \
-	echo "Copy and paste this section into your /etc/hosts file:"; \
+	echo "## Copy and paste this section into your /etc/hosts file:"; \
 	echo "$$ip  minikube"; \
 	echo "$$ip  grafana.minikube"; \
+	echo "$$ip  prometheus.minikube"; \
 	echo "$$ip  mimir.minikube"; \
 	echo "$$ip  kubeapps.minikube"; \
 	echo "$$ip  echo-server-api.minikube";
