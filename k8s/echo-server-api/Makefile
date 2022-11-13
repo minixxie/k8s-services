@@ -1,6 +1,6 @@
 .PHONY: up
 up:
-	helm repo add ealenn https://ealenn.github.io/charts
+	helm repo add ealenn https://ealenn.github.io/charts || true
 	helm repo update
 	helm upgrade --install echo-server-api ealenn/echo-server -n apps --create-namespace --set ingress.enable=true
 	helm list -n apps

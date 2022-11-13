@@ -1,3 +1,6 @@
+# Dashboards
+# https://grafana.com/grafana/dashboards/12062-node-exporter/
+
 .PHONY: up
 up:
 	helm repo add grafana https://grafana.github.io/helm-charts || true

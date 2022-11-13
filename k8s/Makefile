@@ -31,3 +31,12 @@ mysql:
 mysql-cli:
 	kubectl run mysql-client --rm --tty -i --restart='Never' --image  docker.io/bitnami/mysql:8.0.31-debian-11-r0 --namespace db --env MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD --command -- bash
 
+.PHONY: hosts
+hosts:
+	@ip=$$(minikube ip); \
+	echo "Copy and paste this section into your /etc/hosts file:"; \
+	echo "$$ip  minikube"; \
+	echo "$$ip  grafana.minikube"; \
+	echo "$$ip  mimir.minikube"; \
+	echo "$$ip  kubeapps.minikube"; \
+	echo "$$ip  echo-server-api.minikube";
