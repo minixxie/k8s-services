@@ -47,14 +47,14 @@ hosts:
 
 .PHONY: mysql
 mysql:
-	cd mysql && make up \
+	make -C ./mysql up \
 		&& make mysql-exporter
 
 .PHONY: mysql-exporter
 mysql-exporter:
-	cd prometheus-mysql-exporter && make up
+	make -C ./prometheus-mysql-exporter up
 
 .PHONY: kube-prometheus-stack
 kube-prometheus-stack:
-	cd kube-prometheus-stack && make up \
+	make -C ./kube-prometheus-stack up \
 		&& make mysql-exporter
