@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: prometheus-mysql-exporter
+  namespace: db
+spec:
+  rules:
+  - host: mysql-exporter.minikube
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: prometheus-mysql-exporter
+            port:
+              number: 80
