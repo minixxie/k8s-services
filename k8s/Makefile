@@ -33,18 +33,6 @@ ingress-controller:
 index:
 	./bin/gen-index-html.sh
 
-mysql:
-	helm uninstall mysql || true
-	helm repo add bitnami https://charts.bitnami.com/bitnami
-	helm repo list
-	helm install mysql bitnami/mysql -n db --create-namespace
-	kubectl -n db get pod
-	MYSQL_ROOT_PASSWORD=$$(kubectl get secret --namespace db mysql -o jsonpath="{.data.mysql-root-password}" | base64 -d) \
-		&& echo MYSQL_ROOT_PASSWORD=$$MYSQL_ROOT_PASSWORD
-
-mysql-cli:
-	kubectl run mysql-client --rm --tty -i --restart='Never' --image  docker.io/bitnami/mysql:8.0.31-debian-11-r0 --namespace db --env MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD --command -- bash
-
 .PHONY: hosts
 hosts:
 	@ip=$$(minikube ip); \
@@ -56,3 +44,17 @@ hosts:
 	echo "$$ip  mimir.minikube"; \
 	echo "$$ip  kubeapps.minikube"; \
 	echo "$$ip  echo-server-api.minikube";
+
+.PHONY: mysql
+mysql:
+	cd mysql && make up \
+		&& make mysql-exporter
+
+.PHONY: mysql-exporter
+mysql-exporter:
+	cd prometheus-mysql-exporter && make up
+
+.PHONY: kube-prometheus-stack
+kube-prometheus-stack:
+	cd kube-prometheus-stack && make up \
+		&& make mysql-exporter
