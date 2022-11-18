@@ -13,7 +13,7 @@ up:
 	# if ServiceMonitor resource exists and MySQL statefulset was deployed:
 	if [ "$$(kubectl get servicemonitor -A)" != "error: the server doesn't have a resource type \"servicemonitor\"" ]; then \
 		$$(kubectl get statefulset mysql -n db ; \
-		if [ $? -eq 0 ]; then \
+		if [ $$? -eq 0 ]; then \
 			helm upgrade --install prometheus-mysql-exporter prometheus-community/prometheus-mysql-exporter \
 				-f ./prometheus-mysql-exporter.values.yaml -n db --create-namespace; \
 			kubectl apply -f ./prometheus-mysql-exporter.ingress.yaml; \
