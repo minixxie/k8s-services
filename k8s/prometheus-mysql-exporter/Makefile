@@ -17,7 +17,7 @@ up:
 			helm upgrade --install prometheus-mysql-exporter prometheus-community/prometheus-mysql-exporter \
 				-f ./prometheus-mysql-exporter.values.yaml -n db --create-namespace; \
 			kubectl apply -f ./prometheus-mysql-exporter.ingress.yaml; \
-		fi
+		fi; \
 	fi
 
 .PHONY: down
