@@ -5,7 +5,8 @@ mv "$tmp" "$tmp".html
 tmp="$tmp".html
 
 kubeappPwd=$(kubectl get --namespace default secret kubeapps-operator-token -o go-template='{{.data.token | base64decode}}' ; echo)
-grafanaPwd=$(kubectl get secret -n tools grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo)
+#grafanaPwd=$(kubectl get secret -n tools grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo)
+grafanaPwd=$(kubectl get secret -n monitor kube-prometheus-stack-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo)
 mysqlPwd=$(kubectl get secret --namespace db mysql -o jsonpath="{.data.mysql-root-password}" | base64 -d)
 postgresqlPwd=$(kubectl get secret --namespace db postgresql -o jsonpath="{.data.postgres-password}" | base64 -d)
 
@@ -22,6 +23,13 @@ div.xterm {
 	padding: 10px 5px;
 }
 </style>
+<script>
+document.addEventListern("DOMContentLoaded", function(event) {
+	document.getElementById("copyGrafanaPasswordButton").onclick = async() => {
+		await navigator.clipboard.writeText("$grafanaPwd");
+	};
+});
+</script>
 </head>
 <body>
 
@@ -39,7 +47,7 @@ div.xterm {
 		<td>
 			<a target="_blank" href="http://grafana.minikube/">http://grafana.minikube/</a><br />
 			user: admin<br />
-			pass: $grafanaPwd<br />
+			pass: $grafanaPwd <button id="copyGrafanaPasswordButton">copy to clipboard</button><br />
 			Prometheus: <a target="_blank" href="http://prometheus.minikube/">http://prometheus.minikube/</a><br />
 			Mimir: <a target="_blank" href="http://mimir.minikube/prometheus">http://mimir.minikube/prometheus</a><br />
 			Node-exporter: <a target="_blank" href="http://minikube:9100/">http://minikube:9100/</a><br />
