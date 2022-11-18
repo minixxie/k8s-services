@@ -64,3 +64,8 @@ mysql-exporter:
 kube-prometheus-stack:
 	make -C ./kube-prometheus-stack up \
 		&& make mysql-exporter
+
+.PHONY: kafka
+kafka:
+	make -C ./kafka \
+		&& make -C ./kafka-ui
