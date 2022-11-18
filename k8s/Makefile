@@ -3,6 +3,7 @@ check:
 	kubectl config get-clusters
 	kubectl config current-context
 	kubectl get namespace
+	kubectl get all -A
 
 # minikube delete; minikube start --driver=virtualbox && minikube addons enable ingress
 # minikube delete; minikube start --driver=hyperkit && minikube addons enable ingress

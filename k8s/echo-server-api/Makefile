@@ -1,3 +1,9 @@
+.PHONY: check
+check:
+	kubectl get ing echo-server-api -n apps
+	kubectl get svc echo-server-api -n apps
+	kubectl get deploy echo-server-api -n apps
+
 .PHONY: up
 up:
 	helm repo add ealenn https://ealenn.github.io/charts || true
@@ -13,7 +19,7 @@ up:
 
 .PHONY: down
 down:
-	kubectl delete ing echo-server-api -n apps
+	kubectl delete -f ./echo-server-api.ingress.yaml
 	helm uninstall echo-server-api -n apps || true
 
 .PHONY: test
