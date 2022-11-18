@@ -52,6 +52,7 @@ hosts:
 	echo "$$ip  minikube"; \
 	echo "$$ip  grafana.minikube"; \
 	echo "$$ip  prometheus.minikube"; \
+	echo "$$ip  mysql-exporter.minikube"; \
 	echo "$$ip  mimir.minikube"; \
 	echo "$$ip  kubeapps.minikube"; \
 	echo "$$ip  echo-server-api.minikube";

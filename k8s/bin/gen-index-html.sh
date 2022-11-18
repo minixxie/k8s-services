@@ -65,6 +65,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			<div class="xterm">
 			cd mysql/ && make cli
 			</div>
+			MySQL exporter metrics: <a target="_blank" href="http://mysql-exporter.minikube/">http://mysql-exporter.minikube/</a>
 		</td>
 	</tr>
 	<tr>
