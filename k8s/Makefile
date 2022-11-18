@@ -45,6 +45,10 @@ hosts:
 	echo "$$ip  kubeapps.minikube"; \
 	echo "$$ip  echo-server-api.minikube";
 
+.PHONY: kubeapps
+kubeapps:
+	make -C ./kubeapps up
+
 .PHONY: mysql
 mysql:
 	make -C ./mysql up \
