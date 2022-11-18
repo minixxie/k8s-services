@@ -67,5 +67,5 @@ kube-prometheus-stack:
 
 .PHONY: kafka
 kafka:
-	make -C ./kafka \
-		&& make -C ./kafka-ui
+	make -C ./kafka up \
+		&& make -C ./kafka-ui up
