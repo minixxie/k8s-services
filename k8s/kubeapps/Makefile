@@ -1,3 +1,7 @@
+.PHONY: check
+check:
+	kubectl get ing kubeapps -n kubeapps
+
 .PHONY: up
 up:
 	# https://kubeapps.dev/
@@ -12,8 +16,8 @@ up:
 
 .PHONY: down
 down:
-	kubectl delete ing kubeapps -n kubeapps || true
-	kubectl delete secret kubeapps-operator-token -n default || true
+	kubectl delete -f ./kubeapps.ingress.yaml || true
+	kubectl delete -f ./kubeapps.secret.yaml || true
 	kubectl delete clusterrolebinding kubeapps-operator || true
 	kubectl delete serviceaccount kubeapps-operator -n default || true
-	helm uninstall kubeapps -n kubeapps
+	helm uninstall kubeapps -n kubeapps || true

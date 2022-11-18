@@ -25,6 +25,9 @@ div.xterm {
 </style>
 <script>
 document.addEventListener("DOMContentLoaded", function(event) {
+	document.getElementById("copyKubeappsPasswordButton").onclick = async() => {
+		await navigator.clipboard.writeText("$kubeappPwd");
+	};
 	document.getElementById("copyGrafanaPasswordButton").onclick = async() => {
 		await navigator.clipboard.writeText("$grafanaPwd");
 	};
@@ -39,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		<td>Kubeapps</td>
 		<td>
 			<a target="_blank" href="http://kubeapps.minikube/">http://kubeapps.minikube/</a><br />
-			token: $kubeappPwd<br />
+			token: $kubeappPwd <button id="copyKubeappsPasswordButton">copy to clipboard</button><br />
 		</td>
 	</tr>
 	<tr>
