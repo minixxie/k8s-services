@@ -17,14 +17,17 @@ recreate-cluster:
 	make check
 	make hosts
 
-# Another possible way for ingress-controller:
-# $ minikube addons enable ingress
-# $ minikube addons list
+# Solution 1:
+# minikube addons enable ingress
+# minikube addons list
+# Solution 2:
+#	helm repo add nginx-stable https://helm.nginx.com/stable || true
+#	helm repo update
+#	helm upgrade --install nginx-ingress nginx-stable/nginx-ingress || true
 .PHONY: ingress-controller
 ingress-controller:
-	helm repo add nginx-stable https://helm.nginx.com/stable || true
-	helm repo update
-	helm upgrade --install nginx-ingress nginx-stable/nginx-ingress || true
+	minikube addons enable ingress
+	minikube addons list
 
 .PHONY: index
 index:
