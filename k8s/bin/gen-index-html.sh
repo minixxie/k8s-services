@@ -24,7 +24,7 @@ div.xterm {
 }
 </style>
 <script>
-document.addEventListern("DOMContentLoaded", function(event) {
+document.addEventListener("DOMContentLoaded", function(event) {
 	document.getElementById("copyGrafanaPasswordButton").onclick = async() => {
 		await navigator.clipboard.writeText("$grafanaPwd");
 	};
