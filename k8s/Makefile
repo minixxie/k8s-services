@@ -13,10 +13,18 @@ recreate-cluster:
 	#minikube delete ; minikube start --driver=hyperkit --cpus 4 --memory 8192
 	#minikube delete ; minikube start --driver=hyperkit --cpus 2 --memory 4096
 	minikube delete ; minikube start --driver=hyperkit --cpus 2 --memory 2048
-	minikube addons enable ingress
-	minikube addons list
+	make ingress-controller
 	make check
 	make hosts
+
+# Another possible way for ingress-controller:
+# $ minikube addons enable ingress
+# $ minikube addons list
+.PHONY: ingress-controller
+ingress-controller:
+	helm repo add nginx-stable https://helm.nginx.com/stable || true
+	helm repo update
+	helm upgrade --install nginx-ingress nginx-stable/nginx-ingress || true
 
 .PHONY: index
 index:
