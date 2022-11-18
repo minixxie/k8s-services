@@ -10,7 +10,9 @@ check:
 # minikube delete; minikube start --driver=virtualbox --host-only-cidr='172.16.0.1/20' && minikube addons enable ingress
 .PHONY: recreate-cluster
 recreate-cluster:
-	minikube delete ; minikube start --driver=hyperkit --cpus 4 --memory 8192
+	#minikube delete ; minikube start --driver=hyperkit --cpus 4 --memory 8192
+	#minikube delete ; minikube start --driver=hyperkit --cpus 2 --memory 4096
+	minikube delete ; minikube start --driver=hyperkit --cpus 2 --memory 2048
 	minikube addons enable ingress
 	minikube addons list
 	make check
