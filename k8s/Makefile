@@ -44,6 +44,7 @@ hosts:
 	echo "$$ip  mysql-exporter.minikube"; \
 	echo "$$ip  mimir.minikube"; \
 	echo "$$ip  kubeapps.minikube"; \
+	echo "$$ip  kafka-ui.minikube"; \
 	echo "$$ip  echo-server-api.minikube";
 
 .PHONY: kubeapps

@@ -57,6 +57,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		</td>
 	</tr>
 	<tr>
+	<tr>
+		<td>Kafka</td>
+		<td>
+			<a target="_blank" href="http://kafka-ui.minikube/">http://kafka-ui.minikube/</a><br />
+		</td>
+	</tr>
+	<tr>
 		<td>MySQL</td>
 		<td>
 			root pass: $mysqlPwd<br />
