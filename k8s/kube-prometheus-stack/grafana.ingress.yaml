@@ -5,7 +5,7 @@ metadata:
   namespace: monitor
 spec:
   rules:
-  - host: grafana.minikube
+  - host: grafana.local
     http:
       paths:
       - pathType: Prefix

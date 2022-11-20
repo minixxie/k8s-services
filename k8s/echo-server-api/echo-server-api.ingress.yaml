@@ -5,7 +5,7 @@ metadata:
   namespace: apps
 spec:
   rules:
-  - host: echo-server-api.minikube
+  - host: echo-server-api.local
     http:
       paths:
       - pathType: Prefix

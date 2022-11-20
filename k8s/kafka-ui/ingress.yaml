@@ -5,7 +5,7 @@ metadata:
   namespace: middleware
 spec:
   rules:
-  - host: kafka-ui.minikube
+  - host: kafka-ui.local
     http:
       paths:
       - pathType: Prefix

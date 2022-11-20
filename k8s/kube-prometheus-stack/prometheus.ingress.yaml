@@ -5,7 +5,7 @@ metadata:
   namespace: monitor
 spec:
   rules:
-  - host: prometheus.minikube
+  - host: prometheus.local
     http:
       paths:
       - pathType: Prefix

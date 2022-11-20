@@ -5,7 +5,7 @@ metadata:
   namespace: db
 spec:
   rules:
-  - host: mysql-exporter.minikube
+  - host: mysql-exporter.local
     http:
       paths:
       - pathType: Prefix

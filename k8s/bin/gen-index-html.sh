@@ -41,26 +41,26 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	<tr>
 		<td>Kubeapps</td>
 		<td>
-			<a target="_blank" href="http://kubeapps.minikube/">http://kubeapps.minikube/</a><br />
+			<a target="_blank" href="http://kubeapps.local/">http://kubeapps.local/</a><br />
 			token: $kubeappPwd <button id="copyKubeappsPasswordButton">copy to clipboard</button><br />
 		</td>
 	</tr>
 	<tr>
 		<td>Grafana</td>
 		<td>
-			<a target="_blank" href="http://grafana.minikube/">http://grafana.minikube/</a><br />
+			<a target="_blank" href="http://grafana.local/">http://grafana.local/</a><br />
 			user: admin<br />
 			pass: $grafanaPwd <button id="copyGrafanaPasswordButton">copy to clipboard</button><br />
-			Prometheus: <a target="_blank" href="http://prometheus.minikube/">http://prometheus.minikube/</a><br />
-			Mimir: <a target="_blank" href="http://mimir.minikube/prometheus">http://mimir.minikube/prometheus</a><br />
-			Node-exporter: <a target="_blank" href="http://minikube:9100/">http://minikube:9100/</a><br />
+			Prometheus: <a target="_blank" href="http://prometheus.local/">http://prometheus.local/</a><br />
+			Mimir: <a target="_blank" href="http://mimir.local/prometheus">http://mimir.local/prometheus</a><br />
+			Node-exporter: <a target="_blank" href="http://k8s.local:9100/">http://k8s.local:9100/</a><br />
 		</td>
 	</tr>
 	<tr>
 	<tr>
 		<td>Kafka</td>
 		<td>
-			<a target="_blank" href="http://kafka-ui.minikube/">http://kafka-ui.minikube/</a><br />
+			<a target="_blank" href="http://kafka-ui.local/">http://kafka-ui.local/</a><br />
 		</td>
 	</tr>
 	<tr>
@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			<div class="xterm">
 			cd mysql/ && make cli
 			</div>
-			MySQL exporter metrics: <a target="_blank" href="http://mysql-exporter.minikube/">http://mysql-exporter.minikube/</a>
+			MySQL exporter metrics: <a target="_blank" href="http://mysql-exporter.local/">http://mysql-exporter.local/</a>
 		</td>
 	</tr>
 	<tr>

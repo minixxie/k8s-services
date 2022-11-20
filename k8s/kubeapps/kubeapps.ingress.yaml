@@ -5,7 +5,7 @@ metadata:
   namespace: kubeapps
 spec:
   rules:
-  - host: kubeapps.minikube
+  - host: kubeapps.local
     http:
       paths:
       - pathType: Prefix

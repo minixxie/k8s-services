@@ -13,8 +13,6 @@ up:
 	kubectl apply -f ./echo-server-api.ingress.yaml
 	kubectl get deployment echo-server-api -n apps
 	kubectl get pod -n apps | grep echo-server-api
-	@echo "Remember to add these to /etc/hosts:"
-	@echo "$$(minikube ip)  echo-server-api.minikube"
 	@echo "And you can try 'make test' to test the API endpoint. Ref: https://github.com/Ealenn/Echo-Server"
 
 .PHONY: down
@@ -25,7 +23,7 @@ down:
 .PHONY: test
 test:
 	if [ "$$(which python)" != "" ]; then \
-		curl -v -H 'Host: echo-server-api.minikube' "http://$$(minikube ip)/param?query=demo" | python -m json.tool; \
+		curl -v -H 'Host: echo-server-api.local' "http://echo-server-api.local/param?query=demo" | python -m json.tool; \
 	else \
-		curl -v -H 'Host: echo-server-api.minikube' "http://$$(minikube ip)/param?query=demo"; \
+		curl -v -H 'Host: echo-server-api.local' "http://echo-server-api.local/param?query=demo"; \
 	fi
