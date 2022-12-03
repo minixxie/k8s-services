@@ -4,6 +4,7 @@ tmp=$(mktemp /tmp/XXXXXX)
 mv "$tmp" "$tmp".html
 tmp="$tmp".html
 
+argocdPwd=$(kubectl get -n argo-cd secret argocd-initial-admin-secret -o go-template='{{.data.password | base64decode}}' ; echo)
 kubeappPwd=$(kubectl get --namespace default secret kubeapps-operator-token -o go-template='{{.data.token | base64decode}}' ; echo)
 #grafanaPwd=$(kubectl get secret -n tools grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo)
 grafanaPwd=$(kubectl get secret -n monitor kube-prometheus-stack-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo)
@@ -31,6 +32,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	document.getElementById("copyGrafanaPasswordButton").onclick = async() => {
 		await navigator.clipboard.writeText("$grafanaPwd");
 	};
+	document.getElementById("copyArgoCDPasswordButton").onclick = async() => {
+		await navigator.clipboard.writeText("$argocdPwd");
+	};
 });
 </script>
 </head>
@@ -38,6 +42,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 <h3>Generated at: $time</h3>
 <table border="1">
+	<tr>
+		<td>ArgoCD</td>
+		<td>
+			<a target="_blank" href="http://grafana.local/">http://grafana.local/</a><br />
+			user: admin<br />
+			pass: $argocdPwd <button id="copyArgoCDPasswordButton">copy to clipboard</button><br />
+		</td>
+	</tr>
 	<tr>
 		<td>Kubeapps</td>
 		<td>
