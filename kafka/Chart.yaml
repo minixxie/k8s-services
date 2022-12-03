@@ -1,0 +1,7 @@
+apiVersino: v2
+name: kafka
+version: 19.1.4
+dependencies:
+  - name: kafka
+    version: 19.1.4
+    repository: https://charts.bitnami.com/bitnami
