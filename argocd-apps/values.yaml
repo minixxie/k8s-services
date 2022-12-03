@@ -1,0 +1,85 @@
+argocd-apps:
+  applications:
+    - name: kafka
+      namespace: argo-cd
+      project: default
+      source:
+        repoURL: https://charts.bitnami.com/bitnami
+        targetRevision: 19.1.4
+        path: ''
+        chart: kafka
+        helm:
+          releaseName: kafka
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: kafka
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+        automated: {}
+          # prune: false
+          # selfHeal: false
+    - name: kafka-ui
+      namespace: argo-cd
+      project: default
+      source:
+        repoURL: https://provectus.github.io/kafka-ui
+        targetRevision: 0.4.6
+        path: ''
+        chart: kafka-ui
+        helm:
+          releaseName: kafka
+          parameters:
+            - name: ingress.enabled
+              value: 'true'
+            - name: ingress.host
+              value: kafka-ui.local
+            - name: 'yamlApplicationConfig.kafka.clusters[0].name'
+              value: kafka-01
+            - name: 'yamlApplicationConfig.kafka.clusters[0].bootstrapServers'
+              value: kafka.kafka.svc:9092
+            - name: 'yamlApplicationConfig.auth.type'
+              value: disabled
+            - name: 'yamlApplicationConfig.management.health.ldap.enabled'
+              value: 'false'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: kafka
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+        automated: {}
+          # prune: false
+          # selfHeal: false
+    - name: harbor
+      namespace: argo-cd
+      project: default
+      source:
+        repoURL: https://provectus.github.io/kafka-ui
+        targetRevision: 16.0.4
+        path: ''
+        chart: harbor
+        helm:
+          releaseName: harbor
+          parameters:
+            - name: service.type
+              value: ClusterIP
+            - name: exposureType
+              value: ingress
+            - name: ingress.core.hostname
+              value: harbor.local
+            - name: ingress.core.ingressClassName
+              value: nginx
+            - name: ingress.core.pathType
+              value: Prefix
+            - name: externalURL
+              value: http://harbor.local
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: harbor
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+        automated: {}
+          # prune: false
+          # selfHeal: false
