@@ -1,12 +1,29 @@
 argocd-apps:
   applications:
+    - name: mysql
+      namespace: argo-cd
+      project: default
+      source:
+        repoURL: https://charts.bitnami.com/bitnami
+        targetRevision: 9.4.4
+        chart: mysql
+        helm:
+          releaseName: mysql
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: db
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+        # automated:
+        #   prune: false
+        #   selfHeal: false
     - name: kafka
       namespace: argo-cd
       project: default
       source:
         repoURL: https://charts.bitnami.com/bitnami
-        targetRevision: 19.1.4
-        path: ''
+        targetRevision: 19.1.5
         chart: kafka
         helm:
           releaseName: kafka
@@ -16,16 +33,15 @@ argocd-apps:
       syncPolicy:
         syncOptions:
           - CreateNamespace=true
-        automated: {}
-          # prune: false
-          # selfHeal: false
+        # automated:
+        #   prune: false
+        #   selfHeal: false
     - name: kafka-ui
       namespace: argo-cd
       project: default
       source:
         repoURL: https://provectus.github.io/kafka-ui
         targetRevision: 0.4.6
-        path: ''
         chart: kafka-ui
         helm:
           releaseName: kafka
@@ -48,14 +64,14 @@ argocd-apps:
       syncPolicy:
         syncOptions:
           - CreateNamespace=true
-        automated: {}
-          # prune: false
-          # selfHeal: false
+        # automated:
+        #   prune: false
+        #   selfHeal: false
     - name: harbor
       namespace: argo-cd
       project: default
       source:
-        repoURL: https://provectus.github.io/kafka-ui
+        repoURL: https://charts.bitnami.com/bitnami
         targetRevision: 16.0.4
         path: ''
         chart: harbor
@@ -80,6 +96,39 @@ argocd-apps:
       syncPolicy:
         syncOptions:
           - CreateNamespace=true
-        automated: {}
-          # prune: false
-          # selfHeal: false
+        # automated:
+        #   prune: false
+        #   selfHeal: false
+    - name: kube-prometheus-stack
+      namespace: argo-cd
+      project: default
+      source:
+        repoURL: https://prometheus-community.github.io/helm-charts
+        targetRevision: 42.2.1
+        chart: kube-prometheus-stack
+        helm:
+          releaseName: kube-prometheus-stack
+          parameters:
+            - name: prometheus.ingress.enabled
+              value: 'true'
+            - name: prometheus.ingress.hosts[0]
+              value: prometheus.local
+            - name: alertmanager.ingress.enabled
+              value: 'true'
+            - name: alertmanager.ingress.hosts[0]
+              value: alertmanager.local
+            - name: grafana.ingress.enabled
+              value: 'true'
+            - name: grafana.ingress.hosts[0]
+              value: grafana.local
+            - name: grafana.adminPassword
+              value: hello123
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: monitor
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+        # automated:
+        #   prune: false
+        #   selfHeal: false
