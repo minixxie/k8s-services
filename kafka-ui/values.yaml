@@ -1,0 +1,14 @@
+kafka-ui:
+  kafka:
+    clusters:
+      - name: kafka-01
+        bootstrapServers: kafka.kafka.svc:9092
+  auth:
+    type: disabled
+  management:
+    health:
+      ldap:
+        enabled: false
+  port: 8080
+  enabled: true
+  host: 'kafka-ui.local'

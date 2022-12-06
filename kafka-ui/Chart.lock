@@ -1,0 +1,6 @@
+dependencies:
+- name: kafka-ui
+  repository: https://provectus.github.io/kafka-ui
+  version: 0.4.6
+digest: sha256:38821eec5f747de3445bf25e401085470f240d040dd9398f0590e6846c9b7e05
+generated: "2022-12-07T07:12:48.740669+08:00"
