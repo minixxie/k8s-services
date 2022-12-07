@@ -1,0 +1,17 @@
+kube-prometheus-stack:
+  prometheus:
+    ingress:
+      enabled: true
+      hosts:
+        - prometheus.local
+  alertmanager:
+    ingress:
+      enabled: true
+      hosts:
+        - alertmanager.local
+  grafana:
+    adminPassword: hello123
+    ingress:
+      enabled: true
+      hosts:
+        - grafana.local
