@@ -1,6 +1,6 @@
 dependencies:
-- name: kafka
+- name: harbor
   repository: https://charts.bitnami.com/bitnami
-  version: 19.1.4
-digest: sha256:bde9b49a7c4c404a7b9221ac211e45d2d171d6931f0ba4208c8f22fc9250a8db
-generated: "2022-12-07T23:21:30.942788+08:00"
+  version: 16.0.4
+digest: sha256:e3ea0001f36847d372eb79c9a25f39c9ec7a1767a7b6827f440c20e5d9e77e27
+generated: "2022-12-07T23:35:50.364859+08:00"
