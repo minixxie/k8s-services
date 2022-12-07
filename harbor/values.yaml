@@ -1,0 +1,10 @@
+harbor:
+  service:
+    type: ClusterIP
+  exposureType: ingress
+  ingress:
+    core:
+      hostname: harbor.local
+      ingressClassName: nginx
+      pathType: Prefix
+  externalURL: http://harbor.local
