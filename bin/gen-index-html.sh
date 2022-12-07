@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	<tr>
 		<td>ArgoCD</td>
 		<td>
-			<a target="_blank" href="http://grafana.local/">http://grafana.local/</a><br />
+			<a target="_blank" href="http://argo-cd.local/">http://argo-cd.local/</a><br />
 			user: admin<br />
 			pass: $argocdPwd <button id="copyArgoCDPasswordButton">copy to clipboard</button><br />
 		</td>
