@@ -1,12 +1,30 @@
 argocd-apps:
   applications:
-    - name: mysql
+    - name: mysql-helm
       namespace: argo-cd
       project: default
       source:
         repoURL: https://charts.bitnami.com/bitnami
         targetRevision: 9.4.4
         chart: mysql
+        helm:
+          releaseName: mysql-helm
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: db
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+        # automated:
+        #   prune: false
+        #   selfHeal: false
+    - name: mysql
+      namespace: argo-cd
+      project: default
+      source:
+        repoURL: https://github.com/minixxie/k8s-services
+        targetRevision: HEAD
+        path: mysql
         helm:
           releaseName: mysql
       destination:
@@ -22,9 +40,9 @@ argocd-apps:
       namespace: argo-cd
       project: default
       source:
-        repoURL: https://charts.bitnami.com/bitnami
-        targetRevision: 19.1.5
-        chart: kafka
+        repoURL: https://github.com/minixxie/k8s-services
+        targetRevision: HEAD
+        path: kafka
         helm:
           releaseName: kafka
       destination:
@@ -36,7 +54,7 @@ argocd-apps:
         # automated:
         #   prune: false
         #   selfHeal: false
-    - name: kafka-ui
+    - name: kafka-ui-helm
       namespace: argo-cd
       project: default
       source:
@@ -44,7 +62,7 @@ argocd-apps:
         targetRevision: 0.4.6
         chart: kafka-ui
         helm:
-          releaseName: kafka
+          releaseName: kafka-ui-helm
           parameters:
             - name: ingress.enabled
               value: 'true'
@@ -67,29 +85,33 @@ argocd-apps:
         # automated:
         #   prune: false
         #   selfHeal: false
+    - name: kafka-ui
+      namespace: argo-cd
+      project: default
+      source:
+        repoURL: https://github.com/minixxie/k8s-services
+        targetRevision: HEAD
+        path: kafka-ui
+        helm:
+          releaseName: kafka-ui
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: kafka
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+        # automated:
+        #   prune: false
+        #   selfHeal: false
     - name: harbor
       namespace: argo-cd
       project: default
       source:
-        repoURL: https://charts.bitnami.com/bitnami
-        targetRevision: 16.0.4
-        path: ''
-        chart: harbor
+        repoURL: https://github.com/minixxie/k8s-services
+        targetRevision: HEAD
+        path: harbor
         helm:
           releaseName: harbor
-          parameters:
-            - name: service.type
-              value: ClusterIP
-            - name: exposureType
-              value: ingress
-            - name: ingress.core.hostname
-              value: harbor.local
-            - name: ingress.core.ingressClassName
-              value: nginx
-            - name: ingress.core.pathType
-              value: Prefix
-            - name: externalURL
-              value: http://harbor.local
       destination:
         server: https://kubernetes.default.svc
         namespace: harbor
@@ -103,26 +125,11 @@ argocd-apps:
       namespace: argo-cd
       project: default
       source:
-        repoURL: https://prometheus-community.github.io/helm-charts
-        targetRevision: 42.2.1
-        chart: kube-prometheus-stack
+        repoURL: https://github.com/minixxie/k8s-services
+        targetRevision: HEAD
+        path: kube-prometheus-stack
         helm:
           releaseName: kube-prometheus-stack
-          parameters:
-            - name: prometheus.ingress.enabled
-              value: 'true'
-            - name: prometheus.ingress.hosts[0]
-              value: prometheus.local
-            - name: alertmanager.ingress.enabled
-              value: 'true'
-            - name: alertmanager.ingress.hosts[0]
-              value: alertmanager.local
-            - name: grafana.ingress.enabled
-              value: 'true'
-            - name: grafana.ingress.hosts[0]
-              value: grafana.local
-            - name: grafana.adminPassword
-              value: hello123
       destination:
         server: https://kubernetes.default.svc
         namespace: monitor
