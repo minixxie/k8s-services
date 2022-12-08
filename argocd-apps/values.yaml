@@ -36,6 +36,24 @@ argocd-apps:
         # automated:
         #   prune: false
         #   selfHeal: false
+    - name: redis-cluster
+      namespace: argo-cd
+      project: default
+      source:
+        repoURL: https://github.com/minixxie/k8s-services
+        targetRevision: HEAD
+        path: redis-cluster
+        helm:
+          releaseName: redis-cluster
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: db
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+        # automated:
+        #   prune: false
+        #   selfHeal: false
     - name: kafka
       namespace: argo-cd
       project: default
