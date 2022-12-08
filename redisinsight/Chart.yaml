@@ -1,0 +1,7 @@
+apiVersion: v2
+name: redisinsight
+version: 0.1.0
+dependencies:
+  - name: redisinsight
+    version: 0.1.0
+    repository: https://spy86.github.io/redisinsight

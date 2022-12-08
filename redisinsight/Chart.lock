@@ -1,0 +1,6 @@
+dependencies:
+- name: redisinsight
+  repository: https://spy86.github.io/redisinsight
+  version: 0.1.0
+digest: sha256:fec97a1db329e051081fc060eb84976d47c95316e15d881067fbc03076c6651e
+generated: "2022-12-08T23:09:18.862076+08:00"
