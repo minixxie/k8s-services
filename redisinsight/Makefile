@@ -10,3 +10,7 @@ up:
 .PHONY: down
 down:
 	helm uninstall redisinsight -n db || true
+
+.PHONY: exec
+exec:
+	kubectl -n db exec -it $$(kubectl -n db get pod -l app.kubernetes.io/name=redisinsight -o name) -- bash

@@ -1,0 +1,7 @@
+apiVersion: v2
+name: postgresql
+version: 12.1.3
+dependencies:
+  - name: postgresql
+    version: 12.1.3
+    repository: https://charts.bitnami.com/bitnami

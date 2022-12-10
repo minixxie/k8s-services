@@ -44,7 +44,7 @@ argocd-apps:
         targetRevision: HEAD
         path: redis-cluster
         helm:
-          releaseName: redis-cluster
+          releaseName: redis-cluster-01
       destination:
         server: https://kubernetes.default.svc
         namespace: db

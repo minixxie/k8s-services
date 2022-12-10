@@ -16,6 +16,7 @@ time=$(TZ=UTC date +"%Y-%m-%d %H:%M:%SZ")
 cat <<EOF > "$tmp"
 <html>
 <head>
+<title>minikube INDEX</title>
 <style>
 div.xterm {
 	background-color: #000000;
@@ -69,6 +70,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		</td>
 	</tr>
 	<tr>
+		<td>RedisInsight</td>
+		<td>
+			<a target="_blank" href="http://redisinsight.local/">http://redisinsight.local/</a><br />
+		</td>
+	</tr>
+	<tr>
+		<td>pgAdmin4</td>
+		<td>
+			<a target="_blank" href="http://pgadmin4.local/">http://pgadmin4.local/</a><br />
+		</td>
+	</tr>
 	<tr>
 		<td>Kafka</td>
 		<td>

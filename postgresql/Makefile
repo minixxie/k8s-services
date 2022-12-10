@@ -1,15 +1,13 @@
 .PHONY: up
 up:
-	helm repo add bitnami https://charts.binami.com/bitnami || true
-	helm repo list
-	helm repo update
-	helm upgrade --install postgresql bitnami/postgresql -n db --create-namespace
+	helm dep update .
+	helm upgrade --install postgresql . -n db --create-namespace
 
 .PHONY: down
 down:
 	helm uninstall postgresql -n db || true
 	# https://stackoverflow.com/questions/63917524/helm-postgres-password-authentication-failed
-	kubectl -n db delete pvc $$(kubectl get pvc -n db | grep postgres | awk '{print $$1}') || true
+	#kubectl -n db delete pvc $$(kubectl get pvc -n db | grep postgres | awk '{print $$1}') || true
 
 .PHONY: cli
 cli:
