@@ -211,3 +211,20 @@ argocd-apps:
         # automated:
         #   prune: false
         #   selfHeal: false
+    ### APPLICATIONS ###
+    - name: a-svc
+      namespace: argo-cd
+      project: default
+      source:
+        repoURL: https://github.com/minixxie/apps
+        targetRevision: HEAD
+        path: a-svc.java/k8s
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: monitor
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+        # automated:
+        #   prune: false
+        #   selfHeal: false
