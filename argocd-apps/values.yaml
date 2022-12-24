@@ -193,6 +193,25 @@ argocd-apps:
         # automated:
         #   prune: false
         #   selfHeal: false
+    - name: kube-prometheus-stack-crd
+      namespace: argo-cd
+      project: default
+      source:
+        repoURL: https://github.com/prometheus-community/helm-charts.git
+        targetRevision: kube-prometheus-stack-42.2.1
+        path: charts/kube-prometheus-stack/crds/
+        directory:
+          recurse: true
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: monitor
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+          - Replace=true
+        # automated:
+        #   prune: false
+        #   selfHeal: false
     - name: kube-prometheus-stack
       namespace: argo-cd
       project: default
@@ -202,6 +221,7 @@ argocd-apps:
         path: kube-prometheus-stack
         helm:
           releaseName: kube-prometheus-stack
+          skipCrds: true
       destination:
         server: https://kubernetes.default.svc
         namespace: monitor
