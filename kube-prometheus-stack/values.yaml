@@ -15,3 +15,35 @@ kube-prometheus-stack:
       enabled: true
       hosts:
         - grafana.local
+
+    #
+    dashboardProviders:
+      dashboardprovider.yaml:
+        apiVersion: 1
+        providers:
+        - name: provider-site
+          orgId: 1
+          folder: ''
+          type: file
+          disableDeletion: true
+          editable: false
+          options:
+            path: /var/lib/grafana/dashboards/provider-site
+    dashboards:
+      provider-site:
+        prometheus-stats:  # https://grafana.com/grafan/dashboards/2-prometheus-stats/
+          gnetId: 2
+          revision: 2
+          datasource: Prometheus
+        istio-performance:  # https://grafana.com/grafan/dashboards/12153-istio-performance-dashboard/
+          gnetId: 12153
+          revision: 1
+          datasource: Prometheus
+        jvm-micrometer-in-k8s:  # https://grafana.com/grafan/dashboards/13788-jvm-micrometer-in-k8s/
+          gnetId: 13788
+          revision: 1
+          datasource: Prometheus
+        spring-boot-observability:  # https://grafana.com/grafan/dashboards/17175-spring-boot-observability/
+          gnetId: 17175
+          revision: 1
+          datasource: Prometheus
