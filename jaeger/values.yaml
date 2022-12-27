@@ -1,0 +1,17 @@
+jaeger:  # https://github.com/jaegertracing/helm-charts/blob/main/charts/jaeger/values.yaml
+  provisionDataStore:  # set all to false as we are using 'allInOne' for demo purpose
+    cassandra: false
+    elasticsearch: false
+    kafka: false
+  allInOne:
+    enabled: true
+    ingress:
+      enabled: true
+      hosts:
+        - jaeger.local
+  collector:
+    enabled: false  # using allInOne
+  query:
+    enabled: false  # using allInOne
+  agent:
+    enabled: false  # using allInOne

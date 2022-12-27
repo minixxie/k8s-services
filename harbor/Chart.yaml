@@ -1,4 +1,4 @@
-apiVersino: v2
+apiVersion: v2
 name: harbor
 version: 16.0.4
 dependencies:

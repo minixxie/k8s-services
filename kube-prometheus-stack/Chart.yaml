@@ -1,4 +1,4 @@
-apiVersino: v2
+apiVersion: v2
 name: kube-prometheus-stack
 version: 42.2.1
 dependencies:
