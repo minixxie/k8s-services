@@ -248,6 +248,24 @@ argocd-apps:
         # automated:
         #   prune: false
         #   selfHeal: false
+    - name: signoz
+      namespace: argo-cd
+      project: default
+      source:
+        repoURL: https://github.com/minixxie/k8s-services
+        targetRevision: HEAD
+        path: signoz
+        helm:
+          releaseName: signoz
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: signoz
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+        # automated:
+        #   prune: false
+        #   selfHeal: false
     ### APPLICATIONS ###
     - name: a-svc
       namespace: argo-cd
