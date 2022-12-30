@@ -1,0 +1,4 @@
+zipkin:
+  ingress:
+    enabled: true
+    host: zipkin.local
