@@ -1,0 +1,10 @@
+signoz:
+  frontend:
+    ingress:
+      enabled: true
+      hosts:
+        - host: signoz.local
+          paths:
+            - path: /
+              pathType: Prefix
+              port: 3301
