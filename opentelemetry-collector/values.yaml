@@ -1,0 +1,35 @@
+opentelemetry-collector:
+  mode: "deployment"
+  service:
+    type: ClusterIP
+  ingress:
+    enabled: true
+    hosts:
+      - host: otel-collector.local
+        paths:
+          - path: /
+            pathType: Prefix
+            port: 4318
+  config:
+    exporters:
+      #jaeger:  # https://cloud.redhat.com/blog/using-opentelemetry-and-jaeger-with-your-own-services/application
+        #insecure: true
+        #endpoint: jaeger-collector.monitor.svc:14268
+      zipkin:  # https://opentelemetry.io/blog/2022/collector-builder-sample/
+        endpoint: "http://zipkin.zipkin.svc:9411/api/v2/spans"
+
+    receivers:
+      jaeger: null
+      prometheus: null
+      zipkin: null
+    service:
+      pipelines:
+        traces:
+          exporters:
+            - logging
+            #- jaeger
+            - zipkin
+          receivers:
+            - otlp
+        metrics: null
+        logs: null
