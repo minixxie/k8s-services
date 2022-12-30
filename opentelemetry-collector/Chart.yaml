@@ -1,0 +1,9 @@
+# https://artifacthub.io/packages/helm/opentelemetry-helm/opentelemetry-collector
+# https://github.com/open-telemetry/opentelemetry-helm-charts
+apiVersion: v2
+name: opentelemetry-collector
+version: 0.43.2
+dependencies:
+  - name: opentelemetry-collector
+    version: 0.43.2
+    repository: https://open-telemetry.github.io/opentelemetry-helm-charts

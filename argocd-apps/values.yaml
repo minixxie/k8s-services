@@ -266,6 +266,24 @@ argocd-apps:
         # automated:
         #   prune: false
         #   selfHeal: false
+    - name: opentelemetry-collector
+      namespace: argo-cd
+      project: default
+      source:
+        repoURL: https://github.com/minixxie/k8s-services
+        targetRevision: HEAD
+        path: opentelemetry-collector
+        helm:
+          releaseName: opentelemetry-collector
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: otel
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+        # automated:
+        #   prune: false
+        #   selfHeal: false
     - name: signoz
       namespace: argo-cd
       project: default
