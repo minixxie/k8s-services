@@ -266,6 +266,24 @@ argocd-apps:
         # automated:
         #   prune: false
         #   selfHeal: false
+    - name: zipkin-aws
+      namespace: argo-cd
+      project: default
+      source:
+        repoURL: https://github.com/minixxie/k8s-services
+        targetRevision: HEAD
+        path: zipkin-aws
+        helm:
+          releaseName: zipkin-aws
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: zipkin
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+        # automated:
+        #   prune: false
+        #   selfHeal: false
     - name: opentelemetry-collector
       namespace: argo-cd
       project: default

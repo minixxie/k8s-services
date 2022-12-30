@@ -1,0 +1,8 @@
+# https://github.com/Financial-Times/zipkin-helm
+apiVersion: v2
+name: zipkin-aws
+version: 0.6.4
+dependencies:
+  - name: zipkin-helm
+    version: 0.6.4
+    repository: https://financial-times.github.io/zipkin-helm/docs

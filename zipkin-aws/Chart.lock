@@ -1,0 +1,6 @@
+dependencies:
+- name: zipkin-helm
+  repository: https://financial-times.github.io/zipkin-helm/docs
+  version: 0.6.4
+digest: sha256:418964fc934bbbc9c23fb4deeed85e84a9a0b6177751367242d02d8d4222560f
+generated: "2022-12-30T22:47:42.079377+08:00"
