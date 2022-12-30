@@ -230,18 +230,18 @@ argocd-apps:
           - CreateNamespace=true
         # automated:
         #   prune: false
-    - name: jaeger
+    - name: jaeger-all-in-one
       namespace: argo-cd
       project: default
       source:
         repoURL: https://github.com/minixxie/k8s-services
         targetRevision: HEAD
-        path: jaeger
+        path: jaeger-all-in-one
         helm:
-          releaseName: jaeger
+          releaseName: jaeger-all-in-one
       destination:
         server: https://kubernetes.default.svc
-        namespace: monitor
+        namespace: jaeger
       syncPolicy:
         syncOptions:
           - CreateNamespace=true
