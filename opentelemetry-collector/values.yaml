@@ -13,7 +13,7 @@ opentelemetry-collector:
   config:
     exporters:
       jaeger:  # https://cloud.redhat.com/blog/using-opentelemetry-and-jaeger-with-your-own-services/application
-        endpoint: jaeger-collector.monitor.svc:14250
+        endpoint: jaeger-all-in-one-collector.jaeger.svc:14250
         tls:
           insecure: true
       zipkin:  # https://opentelemetry.io/blog/2022/collector-builder-sample/
