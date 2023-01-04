@@ -12,11 +12,16 @@ opentelemetry-collector:
             port: 4318
   config:
     exporters:
-      #jaeger:  # https://cloud.redhat.com/blog/using-opentelemetry-and-jaeger-with-your-own-services/application
-        #insecure: true
-        #endpoint: jaeger-collector.monitor.svc:14268
+      jaeger:  # https://cloud.redhat.com/blog/using-opentelemetry-and-jaeger-with-your-own-services/application
+        endpoint: jaeger-collector.monitor.svc:14250
+        tls:
+          insecure: true
       zipkin:  # https://opentelemetry.io/blog/2022/collector-builder-sample/
         endpoint: "http://zipkin.zipkin.svc:9411/api/v2/spans"
+      #skywalking:  # https://github.com/open-telemetry/opentelemetry-collector-contrib/blob/main/exporter/skywalkingexporter/README.md
+        #endpoint: "skywalking-oap.skywalking.svc:11800"
+        #tls:
+          #insecure: true
 
     receivers:
       jaeger: null
@@ -25,11 +30,16 @@ opentelemetry-collector:
     service:
       pipelines:
         traces:
-          exporters:
-            - logging
-            #- jaeger
-            - zipkin
           receivers:
             - otlp
-        metrics: null
+          exporters:
+            - logging
+            - jaeger
+            - zipkin
+            #- skywalking
+        metrics:
+          receivers:
+            - otlp
+          #exporters:
+            #- skywalking
         logs: null
