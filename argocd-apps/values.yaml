@@ -72,6 +72,24 @@ argocd-apps:
         # automated:
         #   prune: false
         #   selfHeal: false
+    - name: timescaledb-single
+      namespace: argo-cd
+      project: default
+      source:
+        repoURL: https://github.com/minixxie/k8s-services
+        targetRevision: HEAD
+        path: timescaledb-single
+        helm:
+          releaseName: timescaledb-single
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: timescaledb
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+        # automated:
+        #   prune: false
+        #   selfHeal: false
     - name: redis-cluster
       namespace: argo-cd
       project: default

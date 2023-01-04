@@ -1,0 +1,9 @@
+# https://artifacthub.io/packages/helm/fairwinds-incubator/timescaledb-single
+# https://github.com/timescale/helm-charts
+apiVersion: v2
+name: timescaledb-single
+version: 0.27.4
+dependencies:
+  - name: timescaledb-single
+    version: 0.27.4
+    repository: https://charts.timescale.com/
