@@ -48,14 +48,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		<td>
 			<a target="_blank" href="http://argo-cd.local/">http://argo-cd.local/</a><br />
 			user: admin<br />
-			pass: $argocdPwd <button id="copyArgoCDPasswordButton">copy to clipboard</button><br />
+			pass: $argocdPwd <button title="copy to clipboard" id="copyArgoCDPasswordButton">&#x2398;</button><br />
 		</td>
 	</tr>
 	<tr>
 		<td>Kubeapps</td>
 		<td>
 			<a target="_blank" href="http://kubeapps.local/">http://kubeapps.local/</a><br />
-			token: $kubeappPwd <button id="copyKubeappsPasswordButton">copy to clipboard</button><br />
+			token: $kubeappPwd <button title="copy to clipboard" id="copyKubeappsPasswordButton">&#x2398;</button><br />
 		</td>
 	</tr>
 	<tr>
@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		<td>
 			<a target="_blank" href="http://grafana.local/">http://grafana.local/</a><br />
 			user: admin<br />
-			pass: $grafanaPwd <button id="copyGrafanaPasswordButton">copy to clipboard</button><br />
+			pass: $grafanaPwd <button title="copy to clipboard" id="copyGrafanaPasswordButton">&#x2398;</button><br />
 			Prometheus: <a target="_blank" href="http://prometheus.local/">http://prometheus.local/</a><br />
 			Mimir: <a target="_blank" href="http://mimir.local/prometheus">http://mimir.local/prometheus</a><br />
 			Node-exporter: <a target="_blank" href="http://k8s.local:9100/">http://k8s.local:9100/</a><br />
