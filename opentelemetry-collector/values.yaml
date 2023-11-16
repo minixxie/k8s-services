@@ -15,12 +15,12 @@ opentelemetry-collector:
     exporters:
       debug: {}
       otlp:
-        endpoint: jaeger-all-in-one-collector.jaeger.svc:4317
+        endpoint: jaeger-collector.jaeger.svc:4317
         tls:
           insecure: true
       # to deprecate jaeger exporter as jaeger can receive OTLP protocol
       #jaeger:  # https://cloud.redhat.com/blog/using-opentelemetry-and-jaeger-with-your-own-services/application
-      #  endpoint: jaeger-all-in-one-collector.jaeger.svc:14250
+      #  endpoint: jaeger-collector.jaeger.svc:14250
       #  tls:
       #    insecure: true
       # Traces send to Zipkin
