@@ -1,6 +1,6 @@
 # https://artifacthub.io/packages/helm/jaegertracing/jaeger
 apiVersion: v2
-name: jaeger-all-in-one
+name: jaeger
 version: 0.65.4
 dependencies:
   - name: jaeger

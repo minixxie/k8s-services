@@ -88,6 +88,6 @@ kafka:
 .PHONY: local-monitoring
 local-monitoring:
 	make -C ./ingress-controller up
-	make -C ./jaeger-all-in-one local
+	make -C ./jaeger local
 	make -C ./opentelemetry-collector local
 	make -C ./kube-prometheus-stack local
