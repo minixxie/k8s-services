@@ -14,6 +14,137 @@ postgresqlPwd=$(kubectl get secret --namespace db postgresql -o jsonpath="{.data
 time=$(TZ=UTC date +"%Y-%m-%d %H:%M:%SZ")
 
 cat <<EOF > "$tmp"
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<style>
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", function(event) {
+	document.getElementById("copyKubeappsPasswordButton").onclick = async() => {
+		await navigator.clipboard.writeText("$kubeappPwd");
+	};
+	document.getElementById("copyGrafanaPasswordButton").onclick = async() => {
+		await navigator.clipboard.writeText("$grafanaPwd");
+	};
+	document.getElementById("copyArgoCDPasswordButton").onclick = async() => {
+		await navigator.clipboard.writeText("$argocdPwd");
+	};
+});
+</script>
+
+</head>
+<body>
+
+<div class="container">
+
+<table class="table table-bordered">
+<thead>
+	<tr>
+		<td>Name</td>
+		<td>URL</td>
+		<td>User</td>
+		<td>Pass</td>
+	</tr>
+</thead>
+<tbody>
+<tr>
+	<td><img style="height: 24px;" src="https://prometheus.io/assets/favicons/favicon.ico" /> AlertManager</td>
+	<td><a href="http://alertmanager.local" target="_blank">http://alertmanager.local</a></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td><img style="height: 24px;" src="https://prometheus.io/assets/favicons/favicon.ico" /> AlertManager</td>
+	<td><a href="http://argo-cd.local" target="_blank">http://argo-cd.local</a></td>
+	<td>admin</td>
+	<td>$argocdPwd <button title="copy to clipboard" id="copyArgoCDPasswordButton">&#x2398;</button></td>
+</tr>
+<tr>
+	<td><img style="height: 24px;" src="https://about.gitea.com/favicon.ico" /> Gitea</td>
+	<td><a href="http://gitea.local" target="_blank">http://gitea.local</a></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td><img style="height: 24px;" src="https://grafana.com/static/assets/img/fav32.png" /> Grafana</td>
+	<td><a href="http://grafana.local" target="_blank">http://grafana.local</a></td>
+	<td>admin</td>
+	<td>admin</td>
+</tr>
+<tr>
+	<td><img style="height: 24px;" src="https://graylog.org/wp-content/uploads/2022/08/favicon32.png" /> Graylog</td>
+	<td><a href="http://graylog-ui.local" target="_blank">http://graylog-ui.local</a></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td><img style="height: 24px;" src="https://www.jaegertracing.io/img/jaeger-icon-color.png" /> Jaeger</td>
+	<td><a href="http://jaeger.local" target="_blank">http://jaeger.local</a></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td><img style="height: 24px;" src="https://kafka.apache.org/logos/kafka_logo--simple.png" /> Kafka UI</td>
+	<td><a href="http://kafka-ui.local" target="_blank">http://kafka-ui.local</a></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td><img style="height: 24px;" src="https://clickhouse.com/favicon.ico" /> Lighthouse (Clickhouse)</td>
+	<td><a href="/lighthouse/" target="_blank">/lighthouse/</a></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td><img style="height: 24px;" src="https://postgis.net/favicon/favicon.svg" /> PostGIS UI</td>
+	<td><a href="http://postgis-ui.local" target="_blank">http://postgis-ui.local</a></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td><img style="height: 24px;" src="https://www.postgresql.org/favicon.ico" /> Postgres UI</td>
+	<td><a href="http://postgres-ui.local" target="_blank">http://postgres-ui.local</a></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td><img style="height: 24px;" src="https://prometheus.io/assets/favicons/favicon.ico" /> Prometheus</td>
+	<td><a href="http://prometheus.local" target="_blank">http://prometheus.local</a></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td><img style="height: 24px;" src="https://www.timescale.com/favicon-32x32.png?v=7045a84914f0d48a1c822d466332225b" /> Timescale DB</td>
+	<td><a href="http://timescaledb-ui.local" target="_blank">http://timescaledb-ui.local</a></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td><img style="height: 24px;" src="https://camo.githubusercontent.com/bf64c32e4e66828e9dcc6c7e4c015512691e04340ab2a5cbc8ca840daf615546/68747470733a2f2f7777772e78757875656c692e636f6d2f646f632f7374617469632f78786c2d6a6f622f696d616765732f78786c2d6c6f676f2e6a7067" /> XXL Job</td>
+	<td><a href="http://xxljob.local/xxl-job-admin" target="_blank">http://xxljob.local/xxl-job-admin</a></td>
+	<td>admin</td>
+	<td>123456</td>
+</tr>
+<tr>
+	<td><img style="height: 24px;" src="https://zipkin.io/public/favicon.ico" /> ZipKin</td>
+	<td><a href="http://zipkin.local" target="_blank">http://zipkin.local</a></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+
+</div>
+
+</body>
+</html>
+
+
+
+
+
 <html>
 <head>
 <title>minikube INDEX</title>
