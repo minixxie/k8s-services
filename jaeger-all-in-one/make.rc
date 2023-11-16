@@ -1,0 +1,2 @@
+NAMESPACE=jaeger
+HELM_REPO_ALIAS=jaeger

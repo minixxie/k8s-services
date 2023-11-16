@@ -84,3 +84,8 @@ kube-prometheus-stack:
 kafka:
 	make -C ./kafka up \
 		&& make -C ./kafka-ui up
+
+.PHONY: local-monitoring
+local-monitoring:
+	make -C ./jaeger-all-the-one local
+	make -C ./kube-prometheus-stack local
