@@ -15,8 +15,6 @@ kube-prometheus-stack:
       enabled: true
       hosts:
         - grafana.local
-
-    #
     dashboardProviders:
       dashboardprovider.yaml:
         apiVersion: 1

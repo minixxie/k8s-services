@@ -1,0 +1,40 @@
+kube-prometheus-stack:
+  prometheus:
+    enabled: true
+    ingress:
+      enabled: true
+      hosts:
+        - prometheus.local
+  alertmanager:
+    enabled: true
+    ingress:
+      enabled: true
+      hosts:
+        - alertmanager.local
+  grafana:
+    enabled: true
+    adminPassword: hello123
+    ingress:
+      enabled: true
+      hosts:
+        - grafana.local
+  kubernetesServiceMonitors:
+    enabled: false
+  kubeApiServer:
+    enabled: false
+  kubelet:
+    enabled: false
+  kubeControllerManager:
+    enabled: false
+  kubeEtcd:
+    enabled: false
+  kubeScheduler:
+    enabled: false
+  kubeProxy:
+    enabled: false
+  kubeStateMetrics:
+    enabled: false
+  nodeExporter:
+    enabled: true
+  prometheusOperator:
+    enabled: true
