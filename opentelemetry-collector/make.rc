@@ -1,0 +1,2 @@
+NAMESPACE=otel
+HELM_REPO_ALIAS=otel

@@ -1,5 +1,6 @@
 opentelemetry-collector:
   mode: "deployment"
+  replicaCount: 2
   service:
     type: ClusterIP
   ingress:
@@ -12,34 +13,72 @@ opentelemetry-collector:
             port: 4318
   config:
     exporters:
-      jaeger:  # https://cloud.redhat.com/blog/using-opentelemetry-and-jaeger-with-your-own-services/application
-        endpoint: jaeger-all-in-one-collector.jaeger.svc:14250
+      debug: {}
+      otlp:
+        endpoint: jaeger-all-in-one-collector.jaeger.svc:4317
         tls:
           insecure: true
+      # to deprecate jaeger exporter as jaeger can receive OTLP protocol
+      #jaeger:  # https://cloud.redhat.com/blog/using-opentelemetry-and-jaeger-with-your-own-services/application
+      #  endpoint: jaeger-all-in-one-collector.jaeger.svc:14250
+      #  tls:
+      #    insecure: true
+      # Traces send to Zipkin
       zipkin:  # https://opentelemetry.io/blog/2022/collector-builder-sample/
         endpoint: "http://zipkin.zipkin.svc:9411/api/v2/spans"
       #skywalking:  # https://github.com/open-telemetry/opentelemetry-collector-contrib/blob/main/exporter/skywalkingexporter/README.md
         #endpoint: "skywalking-oap.skywalking.svc:11800"
         #tls:
           #insecure: true
+      prometheus:
+        endpoint: "0.0.0.0:8889"
+        const_labels:
+          label1: value1
+          otel: 1
+      logging:
+        verbosity: detailed
+        sampling_initial: 5
+        sampling_thereafter: 200
 
     receivers:
-      jaeger: null
-      prometheus: null
-      zipkin: null
+      jaeger: {}
+      prometheus: {}
+      zipkin: {}
+
+    extensions:
+      health_check: {}
+      pprof:
+        endpoint: :1888
+      zpages:
+        endpoint: :55679
+
     service:
+      telemetry:
+        logs:
+          level: "debug"
+      extensions: [pprof, zpages, health_check]
       pipelines:
         traces:
           receivers:
             - otlp
+          processors:
+            - batch
           exporters:
+            - otlp
             - logging
-            - jaeger
             - zipkin
-            #- skywalking
         metrics:
           receivers:
             - otlp
-          #exporters:
-            #- skywalking
-        logs: null
+          processors:
+            - batch
+          exporters:
+            - debug
+            - prometheus
+        logs:
+          receivers:
+            - otlp
+          processors:
+            - batch
+          exporters:
+            - logging
