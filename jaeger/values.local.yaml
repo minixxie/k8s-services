@@ -1,4 +1,5 @@
-jaeger:  # https://github.com/jaegertracing/helm-charts/blob/main/charts/jaeger/values.yaml
+# https://github.com/jaegertracing/helm-charts/blob/main/charts/jaeger/values.yaml
+jaeger:
   provisionDataStore:  # set all to false as we are using 'allInOne' for demo purpose
     cassandra: false
     elasticsearch: false

@@ -1,1 +1,2 @@
-jaeger:  # https://github.com/jaegertracing/helm-charts/blob/main/charts/jaeger/values.yaml
+# https://github.com/jaegertracing/helm-charts/blob/main/charts/jaeger/values.yaml
+jaeger: {}
