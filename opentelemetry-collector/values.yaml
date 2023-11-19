@@ -3,6 +3,14 @@ opentelemetry-collector:
   replicaCount: 2
   service:
     type: ClusterIP
+    annotations:
+      # https://developers.ibm.com/tutorials/monitoring-kubernetes-prometheus/
+      prometheus.io/scrape: "true"
+      prometheus.io/path: "/metrics"
+      prometheus.io/port: "8888"
+  ports:
+    metrics:
+      enabled: true
   ingress:
     enabled: true
     hosts:
@@ -24,8 +32,8 @@ opentelemetry-collector:
       #  tls:
       #    insecure: true
       # Traces send to Zipkin
-      zipkin:  # https://opentelemetry.io/blog/2022/collector-builder-sample/
-        endpoint: "http://zipkin.zipkin.svc:9411/api/v2/spans"
+      #zipkin:  # https://opentelemetry.io/blog/2022/collector-builder-sample/
+      #  endpoint: "http://zipkin.zipkin.svc:9411/api/v2/spans"
       #skywalking:  # https://github.com/open-telemetry/opentelemetry-collector-contrib/blob/main/exporter/skywalkingexporter/README.md
         #endpoint: "skywalking-oap.skywalking.svc:11800"
         #tls:
@@ -40,10 +48,8 @@ opentelemetry-collector:
         sampling_initial: 5
         sampling_thereafter: 200
 
-    receivers:
-      jaeger: {}
-      prometheus: {}
-      zipkin: {}
+    processors:
+      batch: {}
 
     extensions:
       health_check: {}
@@ -66,7 +72,7 @@ opentelemetry-collector:
           exporters:
             - otlp
             - logging
-            - zipkin
+            #- zipkin
         metrics:
           receivers:
             - otlp

@@ -91,3 +91,10 @@ local-monitoring:
 	make -C ./jaeger local
 	make -C ./opentelemetry-collector local
 	make -C ./kube-prometheus-stack local
+
+.PHONY: local
+local: mysql local-monitoring
+
+.PHONY: ubuntu
+ubuntu:
+	kubectl run ubuntu --rm --tty -i --restart='Never' --image ubuntu --command -- bash
