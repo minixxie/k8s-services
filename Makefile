@@ -58,16 +58,6 @@ colima:
 		--cpu $$(expr $$(make -s ncpu) / 2) \
 		--memory $$(expr $$(make -s mem) / 2)
 
-.PHONY: colima-for-test
-colima-for-test:
-	colima list -p k3s-for-test | grep "^k3s-for-test"; \
-	if [ $$? -eq 0 ]; then \
-		colima delete -f -p k3s-for-test; \
-	fi; \
-	colima start -p k3s-for-test -k --runtime containerd \
-		--cpu $$(expr $$(make -s ncpu) / 2) \
-		--memory $$(expr $$(make -s mem) / 2)
-
 .PHONY: index
 index:
 	./bin/gen-index-html.sh
@@ -95,20 +85,22 @@ kafka:
 	make -C ./kafka up \
 		&& make -C ./kafka-ui up
 
-.PHONY: local-monitoring
-local-monitoring:
+.PHONY: ingress-controller
+ingress-controller:
 	make -C ./ingress-controller up
+
+.PHONY: local-monitoring
+local-monitoring: ingress-controller
 	make -C ./jaeger local
 	make -C ./opentelemetry-collector local
 	make -C ./kube-prometheus-stack local
 
 .PHONY: local
-local: mysql local-monitoring
+local: ingress-controller mysql local-monitoring
 
 .PHONY: ubuntu
 ubuntu:
 	kubectl run ubuntu --rm --tty -i --restart='Never' --image ubuntu --command -- bash
 
 .PHONY: test
-test: colima-for-test
-	make local
+test: local
