@@ -58,6 +58,16 @@ colima:
 		--cpu $$(expr $$(make -s ncpu) / 2) \
 		--memory $$(expr $$(make -s mem) / 2)
 
+.PHONY: colima-for-test
+colima-for-test:
+	colima list -p k3s-for-test | grep "^k3s-for-test"; \
+	if [ $? -eq 0 ]; then \
+		colima delete -f -p k3s-for-test; \
+	fi; \
+	colima start -p k3s-for-test -k --runtime containerd \
+		--cpu $$(expr $$(make -s ncpu) / 2) \
+		--memory $$(expr $$(make -s mem) / 2)
+
 .PHONY: index
 index:
 	./bin/gen-index-html.sh
@@ -98,3 +108,7 @@ local: mysql local-monitoring
 .PHONY: ubuntu
 ubuntu:
 	kubectl run ubuntu --rm --tty -i --restart='Never' --image ubuntu --command -- bash
+
+.PHONY: test
+test: colima-for-test
+	make local
