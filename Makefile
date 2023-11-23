@@ -61,7 +61,7 @@ colima:
 .PHONY: colima-for-test
 colima-for-test:
 	colima list -p k3s-for-test | grep "^k3s-for-test"; \
-	if [ $? -eq 0 ]; then \
+	if [ $$? -eq 0 ]; then \
 		colima delete -f -p k3s-for-test; \
 	fi; \
 	colima start -p k3s-for-test -k --runtime containerd \
