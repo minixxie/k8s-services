@@ -1,0 +1,13 @@
+xxl-job-admin:
+  database:
+    url: mysql.db.svc:3306
+    user: xxl_job
+    password: xxl_job
+    db: xxl_job
+  ingress:
+    enabled: true
+    hosts:
+      - host: xxljob.local
+        paths:
+          - path: /xxl-job-admin
+            pathType: ImplementationSpecific

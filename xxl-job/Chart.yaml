@@ -1,0 +1,7 @@
+apiVersion: v2
+name: xxl-job
+version: 1.1.0
+dependencies:
+  - name: xxl-job-admin
+    version: 1.1.0
+    repository: https://joelee2012.github.io/helm-charts

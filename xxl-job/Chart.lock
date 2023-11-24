@@ -1,0 +1,6 @@
+dependencies:
+- name: xxl-job-admin
+  repository: https://joelee2012.github.io/helm-charts
+  version: 1.1.0
+digest: sha256:94959c546381f0316e92e0604dc73ea28a93794ed497dc91e5dfdef85a434693
+generated: "2023-11-24T21:37:26.260415+08:00"

@@ -1,0 +1,2 @@
+NAMESPACE=xxl-job
+HELM_REPO_ALIAS=xxl-job
