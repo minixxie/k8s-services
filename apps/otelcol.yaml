@@ -1,0 +1,33 @@
+apiVersion: opentelemetry.io/v1alpha1
+kind: OpenTelemetryCollector
+metadata:
+  name: sidecar
+  namespace: apps
+spec:
+  mode: sidecar
+  config: |
+    receivers:
+      otlp:
+        protocols:
+          grpc:
+            endpoint: 127.0.0.1:4317
+          http:
+            endpoint: 127.0.0.1:4318
+    processors:
+      batch:
+    exporters:
+      logging:
+        otlp:
+          #endpoint: "http://otel-collector-collector.opentelemetry.svc.cluster.local:4317"
+          endpoint: jaeger-collector.jaeger.svc:4317
+          tls:
+            insecure: true
+    service:
+      telemetry:
+        logs:
+          level: "debug"
+      pipelines:
+        traces:
+          receivers: [otlp]
+          processors: []
+          exporters: [logging, otlp]

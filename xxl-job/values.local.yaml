@@ -1,13 +1,26 @@
 xxl-job-admin:
-  database:
-    url: mysql.db.svc:3306
-    user: xxl_job
-    password: xxl_job
-    db: xxl_job
+  image:
+    repository: minixxie/xxl-job-admin
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: "2.3.1"
+  mysql:
+    host: mysql.db.svc
+    port: 3306
+    user: root
+    password: hello123
+    database: xxl_job
+  initDB:
+    enabled: true
   ingress:
     enabled: true
     hosts:
       - host: xxljob.local
         paths:
-          - path: /xxl-job-admin
+          - path: /
             pathType: ImplementationSpecific
+  properties:
+    server:
+      port: 8080
+      servlet:
+        context-path: /

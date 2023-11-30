@@ -75,6 +75,10 @@ mysql:
 mysql-exporter:
 	make -C ./prometheus-mysql-exporter up
 
+.PHONY: xxl-job
+xxl-job:
+	make -C ./xxl-job local
+
 .PHONY: kube-prometheus-stack
 kube-prometheus-stack:
 	make -C ./kube-prometheus-stack up \
@@ -87,13 +91,17 @@ kafka:
 
 .PHONY: ingress-controller
 ingress-controller:
-	make -C ./ingress-controller up
+	make -C ./ingress-controller local wait
 
 .PHONY: local-monitoring
 local-monitoring: ingress-controller
-	make -C ./jaeger local
-	make -C ./opentelemetry-collector local
-	make -C ./kube-prometheus-stack local
+	make -C ./operator-framework local wait
+	make -C ./ingress-controller local wait
+	make -C ./cert-manager local wait
+	make -C ./jaeger local wait
+	make -C ./opentelemetry-operator local wait
+	make -C ./kube-prometheus-stack local wait
+	make -C ./apps local wait
 
 .PHONY: local
 local: ingress-controller mysql local-monitoring
@@ -103,4 +111,4 @@ ubuntu:
 	kubectl run ubuntu --rm --tty -i --restart='Never' --image ubuntu --command -- bash
 
 .PHONY: test
-test: local
+test:

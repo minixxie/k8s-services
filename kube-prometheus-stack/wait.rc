@@ -1,0 +1,6 @@
+NS=$NAMESPACE DAEMONSET="kube-prometheus-stack-prometheus-node-exporter" ../scripts/k8s-wait-daemonset.sh
+NS=$NAMESPACE STATEFULSET="alertmanager-kube-prometheus-stack-alertmanager" ../scripts/k8s-wait-statefulset.sh
+NS=$NAMESPACE STATEFULSET="prometheus-kube-prometheus-stack-prometheus" ../scripts/k8s-wait-statefulset.sh
+NS=$NAMESPACE DEPLOYMENT="kube-prometheus-stack-operator" ../scripts/k8s-wait-deployment.sh
+NS=$NAMESPACE DEPLOYMENT="kube-prometheus-stack-kube-state-metrics" ../scripts/k8s-wait-deployment.sh
+NS=$NAMESPACE DEPLOYMENT="kube-prometheus-stack-grafana" ../scripts/k8s-wait-deployment.sh

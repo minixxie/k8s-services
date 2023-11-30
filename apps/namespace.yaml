@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+meta:
+  labels:
+    istio-injection: enabled
+    kubernetes.io/metadata.name: apps
+  name: apps

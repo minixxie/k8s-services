@@ -16,7 +16,7 @@ ns:
 
 .PHONY: check
 check:
-	helm repo list
+	helm list -n $$(make -s ns) -f $$(make -s chart-name) || true
 
 
 .PHONY: ps
@@ -29,14 +29,23 @@ up:
 	helm dep update .
 	helm upgrade --install $$(make -s chart-name) . -n $$(make -s ns) --create-namespace
 
+# values.yaml used as default, values.local.yaml as override
 .PHONY: local
 local:
-	helm dep update .
-	helm upgrade --install $$(make -s chart-name) . -n $$(make -s ns) --create-namespace -f values.local.yaml  # values.yaml used as default, values.local.yaml as override
+	if [ -f local.rc ]; then \
+		source local.rc; \
+	else \
+		helm dep update .; \
+		helm upgrade --install $$(make -s chart-name) . -n $$(make -s ns) --create-namespace -f values.local.yaml; \
+	fi
 
 .PHONY: down
 down:
 	helm uninstall $$(make -s chart-name) -n $$(make -s ns) || true
+
+.PHONY: cli
+cli:
+	if [ -f cli.rc ]; then source cli.rc; fi
 
 .PHONY: repo-add
 repo-add:
@@ -53,3 +62,15 @@ repo-search: repo-add
 .PHONY: show-val
 show-val: repo-add
 	helm show values $$(make -s helm-repo-alias)/$$(make -s chart-name)
+
+.PHONY: tpl
+tpl: repo-add
+	helm template $$(make -s chart-name) $$(make -s helm-repo-alias)/$$(make -s chart-name)
+
+.PHONY: wait
+wait:
+	@if [ -f wait.rc ]; then \
+		source make.rc ; NS=$$NAMESPACE source wait.rc; \
+	else \
+		source make.rc ; NS=$$NAMESPACE DEPLOYMENT="$DEPLOYMENT" ../scripts/k8s-wait-deployment.sh; \
+	fi
