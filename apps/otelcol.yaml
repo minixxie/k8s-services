@@ -17,11 +17,11 @@ spec:
       batch:
     exporters:
       logging:
-        otlp:
-          #endpoint: "http://otel-collector-collector.opentelemetry.svc.cluster.local:4317"
-          endpoint: jaeger-collector.jaeger.svc:4317
-          tls:
-            insecure: true
+      otlp:
+        #endpoint: "http://otel-collector-collector.opentelemetry.svc.cluster.local:4317"
+        endpoint: jaeger-collector.jaeger.svc:4317
+        tls:
+          insecure: true
     service:
       telemetry:
         logs:

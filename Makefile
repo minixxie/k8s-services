@@ -94,7 +94,7 @@ ingress-controller:
 	make -C ./ingress-controller local wait
 
 .PHONY: local-monitoring
-local-monitoring: ingress-controller
+local-monitoring:
 	make -C ./operator-framework local wait
 	make -C ./ingress-controller local wait
 	make -C ./cert-manager local wait
@@ -102,6 +102,16 @@ local-monitoring: ingress-controller
 	make -C ./opentelemetry-operator local wait
 	make -C ./kube-prometheus-stack local wait
 	make -C ./apps local wait
+
+.PHONY: local-monitoring-wait
+local-monitoring-wait:
+	make -C ./operator-framework wait
+	make -C ./ingress-controller wait
+	make -C ./cert-manager wait
+	make -C ./jaeger wait
+	make -C ./opentelemetry-operator wait
+	make -C ./kube-prometheus-stack wait
+	make -C ./apps wait
 
 .PHONY: local
 local: ingress-controller mysql local-monitoring
