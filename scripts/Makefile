@@ -72,5 +72,5 @@ wait:
 	@if [ -f wait.rc ]; then \
 		source make.rc ; NS=$$NAMESPACE source wait.rc; \
 	else \
-		source make.rc ; NS=$$NAMESPACE DEPLOYMENT="$DEPLOYMENT" ../scripts/k8s-wait-deployment.sh; \
+		source make.rc ; NS=$$NAMESPACE DEPLOYMENT="$$DEPLOYMENT" ../scripts/k8s-wait-deployment.sh; \
 	fi
