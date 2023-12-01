@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: static-web
+  namespace: apps
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      appID: static-web
+  template:
+    metadata:
+      annotations:
+      labels:
+        appID: static-web
+    spec:
+      containers:
+      - name: nginx
+        image: static-web:dont_push
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: http
+          containerPort: 80
