@@ -1,0 +1,7 @@
+apiVersion: v2
+name: jaeger-operator
+version: 2.47.0
+dependencies:
+  - name: jaeger-operator
+    version: 2.47.0
+    repository: https://jaegertracing.github.io/helm-charts

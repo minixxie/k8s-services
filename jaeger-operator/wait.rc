@@ -1,0 +1,2 @@
+NS=$NAMESPACE DEPLOYMENT="jaeger-operator" ../scripts/k8s-wait-deployment.sh
+NS=$NAMESPACE DEPLOYMENT="jaeger-operator-jaeger" ../scripts/k8s-wait-deployment.sh

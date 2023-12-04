@@ -98,7 +98,7 @@ local-monitoring:
 	make -C ./operator-framework local wait
 	make -C ./ingress-controller local wait
 	make -C ./cert-manager local wait
-	make -C ./jaeger local wait
+	make -C ./jaeger-operator local wait
 	make -C ./opentelemetry-operator local wait
 	make -C ./kube-prometheus-stack local wait
 	make -C ./apps local wait
@@ -108,7 +108,7 @@ local-monitoring-wait:
 	make -C ./operator-framework wait
 	make -C ./ingress-controller wait
 	make -C ./cert-manager wait
-	make -C ./jaeger wait
+	make -C ./jaeger-operator wait
 	make -C ./opentelemetry-operator wait
 	make -C ./kube-prometheus-stack wait
 	make -C ./apps wait

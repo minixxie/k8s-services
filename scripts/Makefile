@@ -19,10 +19,11 @@ check:
 	helm list -n $$(make -s ns) -f $$(make -s chart-name) || true
 
 
-.PHONY: ps
-ps:
+.PHONY: get
+get:
 	kubectl -n $$(make -s ns) get all
 	kubectl -n $$(make -s ns) get ing
+	if [ -f get.rc ]; then source get.rc; fi
 
 .PHONY: up
 up:

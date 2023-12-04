@@ -1,0 +1,9 @@
+jaeger-operator:
+  jaeger:
+    create: true
+    # https://www.jaegertracing.io/docs/1.51/operator/
+    spec:
+      ingress:
+        enabled: true
+        hosts:
+          - jaeger.local

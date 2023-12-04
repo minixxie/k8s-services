@@ -1,2 +1,3 @@
 - [Ingest Prometheus Metrics with OpenTelemetry](https://trstringer.com/opentelemetry-prometheus-metrics/)
 - Istio
+- Pick up log and ELK / fluentd

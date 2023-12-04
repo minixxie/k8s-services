@@ -19,7 +19,8 @@ spec:
       logging:
       otlp:
         #endpoint: "http://otel-collector-collector.opentelemetry.svc.cluster.local:4317"
-        endpoint: jaeger-collector.jaeger.svc:4317
+        #endpoint: jaeger-collector.jaeger.svc:4317  # with ../jaeger/ helm-chart
+        endpoint: jaeger-operator-jaeger-collector.jaeger.svc:4317  # with ../jaeger-operator/ helm-chart
         tls:
           insecure: true
     service:

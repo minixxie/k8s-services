@@ -1,0 +1,1 @@
+kubectl -n $(make -s ns) get jaeger
