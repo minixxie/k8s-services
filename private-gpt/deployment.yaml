@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: private-gpt
+  namespace: private-gpt
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      appID: private-gpt
+  template:
+    metadata:
+      annotations:
+      labels:
+        appID: private-gpt
+    spec:
+      containers:
+        - name: main
+          image: 3x3cut0r/privategpt:0.2.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080  # HTTP port
+          volumeMounts:
+            - name: datascience-models
+              # mountPath: /home/worker/app/models/ggml-gpt4all-j-v1.3-groovy.bin
+              # subPath: ggml-gpt4all-j-v1.3-groovy.bin
+              #mountPath: /home/worker/app/models/mistral-7b-instruct-v0.1.Q8_0.gguf
+              #subPath: mistral-7b-instruct-v0.1.Q8_0.gguf
+          #env:
+          #  - name: PGPT_HF_MODEL_FILE
+          #    value: mistral-7b-instruct-v0.1.Q8_0.gguf
+      volumes:
+        - name: datascience-models
+          persistentVolumeClaim:
+            claimName: datascience-models
