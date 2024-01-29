@@ -52,11 +52,36 @@ mem:
 		echo 0; \
 	fi
 
+.PHONY: colima-small
+colima-small:
+	colima start -k --runtime containerd \
+		--cpu $$(expr $$(make -s ncpu) / 4) \
+		--memory $$(expr $$(make -s mem) / 4) \
+		--disk 20 \
+		-p small
+
 .PHONY: colima
 colima:
 	colima start -k --runtime containerd \
 		--cpu $$(expr $$(make -s ncpu) / 2) \
-		--memory $$(expr $$(make -s mem) / 2)
+		--memory $$(expr $$(make -s mem) / 2) \
+		--disk 100
+
+.PHONY: colima-amd64
+colima-amd64:
+	colima start -k --runtime containerd \
+		--cpu $$(expr $$(make -s ncpu) / 2) \
+		--memory $$(expr $$(make -s mem) / 2) \
+		--disk 100 \
+		--arch amd64 --vm-type=vz --vz-rosetta
+
+.PHONY: colima-aarch64
+colima-aarch64:
+	colima start -k --runtime containerd \
+		--cpu $$(expr $$(make -s ncpu) / 2) \
+		--memory $$(expr $$(make -s mem) / 2) \
+		--disk 100 \
+		--arch aarch64 --vm-type=vz --vz-rosetta
 
 .PHONY: index
 index:
@@ -93,6 +118,15 @@ kafka:
 ingress-controller:
 	make -C ./ingress-controller local wait
 
+.PHONY: local
+local:
+	make -C ./operator-framework local wait
+	make -C ./ingress-controller local wait
+	make -C ./cert-manager local wait
+	make -C ./jaeger-operator local wait
+	make -C ./opentelemetry-operator local wait
+	make -C ./apps local wait
+
 .PHONY: local-monitoring
 local-monitoring:
 	make -C ./operator-framework local wait
@@ -119,6 +153,10 @@ local: ingress-controller mysql local-monitoring
 .PHONY: ubuntu
 ubuntu:
 	kubectl run ubuntu --rm --tty -i --restart='Never' --image ubuntu --command -- bash
+
+.PHONY: busybox
+busybox:
+	kubectl run busybox --rm --tty -i --restart='Never' --image busybox --command -- bash
 
 .PHONY: test
 test:
