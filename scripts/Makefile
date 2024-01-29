@@ -21,8 +21,15 @@ check:
 
 .PHONY: get
 get:
+	@echo "----------------------------------------"
 	kubectl -n $$(make -s ns) get all
+	@echo "----------------------------------------"
 	kubectl -n $$(make -s ns) get ing
+	@echo "----------------------------------------"
+	kubectl -n $$(make -s ns) get pvc
+	@echo "----------------------------------------"
+	kubectl -n $$(make -s ns) get pv
+	@echo "----------------------------------------"
 	if [ -f get.rc ]; then source get.rc; fi
 
 .PHONY: up

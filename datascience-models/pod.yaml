@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: datascience-models
+  labels:
+    name: datascience-models
+spec:
+  volumes:
+    - name: datascience-models
+      persistentVolumeClaim:
+        claimName: datascience-models
+  containers:
+    - name: main
+      image: busybox:latest
+      volumeMounts:
+        - mountPath: "/datascience-models"
+          name: datascience-models
+      command:
+        - sleep
+        - infinity
