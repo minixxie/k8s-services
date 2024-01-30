@@ -1,0 +1,9 @@
+qdrant:
+  ingress:
+    enabled: true
+    hosts:
+      - host: qdrant.local
+        paths:
+          - path: /
+            pathType: Prefix
+            servicePort: 6333

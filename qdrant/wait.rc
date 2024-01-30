@@ -1,0 +1,1 @@
+NS=$NAMESPACE STATEFULSET="qdrant" ../scripts/k8s-wait-statefulset.sh
