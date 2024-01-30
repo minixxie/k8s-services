@@ -1,0 +1,2 @@
+NAMESPACE=infra-nvidia-gpu-operator
+HELM_REPO_ALIAS=nv-gpu-op

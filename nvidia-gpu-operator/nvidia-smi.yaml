@@ -1,0 +1,18 @@
+# https://medium.com/sparque-labs/serving-ai-models-on-the-edge-using-nvidia-gpu-with-k3s-on-aws-part-4-dd48f8699116
+# nvidia-smi.yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+ name: nvidia-smi
+spec:
+ template:
+  spec:
+   runtimeClassName: nvidia
+   restartPolicy: Never
+   containers:
+     - name: cuda-container
+       image: nvidia/cuda:11.6.2-base-ubuntu20.04
+       command: ["nvidia-smi"]
+       resources:
+         limits:
+           nvidia.com/gpu: 1 # requesting 1 GPU

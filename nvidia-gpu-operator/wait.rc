@@ -1,0 +1,21 @@
+#NS=$NAMESPACE DAEMONSET="gpu-operator-node-feature-discovery-worker" ../scripts/k8s-wait-daemonset.sh
+NS=$NAMESPACE LABELS="app.kubernetes.io/name=node-feature-discovery" ../scripts/k8s-wait-daemonset.sh
+#NS=$NAMESPACE DAEMONSET="nvidia-driver-daemonset" ../scripts/k8s-wait-daemonset.sh
+#NS=$NAMESPACE LABELS="app=nvidia-driver-daemonset" ../scripts/k8s-wait-daemonset.sh
+#NS=$NAMESPACE DAEMONSET="nvidia-container-toolkit-daemonset" ../scripts/k8s-wait-daemonset.sh
+#NS=$NAMESPACE LABELS="app=nvidia-container-toolkit-daemonset" ../scripts/k8s-wait-daemonset.sh
+
+#NS=$NAMESPACE DAEMONSET="nvidia-operator-validator" ../scripts/k8s-wait-daemonset.sh
+NS=$NAMESPACE LABELS="app=nvidia-operator-validator" ../scripts/k8s-wait-daemonset.sh
+#NS=$NAMESPACE DAEMONSET="nvidia-device-plugin-daemonset" ../scripts/k8s-wait-daemonset.sh
+NS=$NAMESPACE LABELS="app=nvidia-device-plugin-daemonset" ../scripts/k8s-wait-daemonset.sh
+#NS=$NAMESPACE DAEMONSET="nvidia-dcgm-exporter" ../scripts/k8s-wait-daemonset.sh
+NS=$NAMESPACE LABELS="app=nvidia-dcgm-exporter" ../scripts/k8s-wait-daemonset.sh
+#NS=$NAMESPACE DAEMONSET="nvidia-mig-manager" ../scripts/k8s-wait-daemonset.sh
+#NS=$NAMESPACE LABELS="app=nvidia-mig-manager" ../scripts/k8s-wait-daemonset.sh
+#NS=$NAMESPACE DAEMONSET="gpu-feature-discovery" ../scripts/k8s-wait-daemonset.sh
+NS=$NAMESPACE LABELS="app=gpu-feature-discovery" ../scripts/k8s-wait-daemonset.sh
+
+NS=$NAMESPACE DEPLOYMENT="gpu-operator-node-feature-discovery-gc" ../scripts/k8s-wait-deployment.sh
+NS=$NAMESPACE DEPLOYMENT="gpu-operator" ../scripts/k8s-wait-deployment.sh
+NS=$NAMESPACE DEPLOYMENT="gpu-operator-node-feature-discovery-master" ../scripts/k8s-wait-deployment.sh

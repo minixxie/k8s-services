@@ -37,7 +37,7 @@ get:
 .PHONY: up
 up: imp-img
 	helm dep update .
-	helm upgrade --install $$(make -s chart-name) . -n $$(make -s ns) --create-namespace
+	helm upgrade --install --wait $$(make -s chart-name) . -n $$(make -s ns) --create-namespace
 
 # values.yaml used as default, values.local.yaml as override
 .PHONY: local
@@ -46,7 +46,7 @@ local: imp-img
 		source local.rc; \
 	else \
 		helm dep update .; \
-		helm upgrade --install $$(make -s chart-name) . -n $$(make -s ns) --create-namespace -f values.local.yaml; \
+		helm upgrade --install --wait $$(make -s chart-name) . -n $$(make -s ns) --create-namespace -f values.local.yaml; \
 	fi
 
 .PHONY: down

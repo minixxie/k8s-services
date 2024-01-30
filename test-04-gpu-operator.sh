@@ -16,4 +16,3 @@ fi
 make -s -C ./nvidia-gpu-operator local wait test
 
 ### the application
-make -s -C ./ai-ollama local wait test
