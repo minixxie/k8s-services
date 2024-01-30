@@ -16,4 +16,4 @@ down:
 
 .PHONY: exec
 exec:
-	kubectl exec -it pod/datascience-models -- sh
+	kubectl exec -it pod/datascience-models -- sh -c 'cd /datascience-models && sh'
