@@ -1,0 +1,1 @@
+NS=$NAMESPACE DEPLOYMENT="mongodb" ../scripts/k8s-wait-deployment.sh

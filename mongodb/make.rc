@@ -1,0 +1,2 @@
+NAMESPACE=db
+HELM_REPO_ALIAS=mongodb
