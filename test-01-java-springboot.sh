@@ -1,9 +1,11 @@
 #!/bin/bash
 
 ### k8s nodes
-colima stop --force
-colima delete --force
-make colima
+if [ "$1" == colima ]; then
+	colima stop --force
+	colima delete --force
+	make colima
+fi
 
 ### basic softwares
 make local-monitoring
