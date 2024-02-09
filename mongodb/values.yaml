@@ -2,9 +2,20 @@ mongodb:
   image:
     repository: mongo
     tag: 7.0.5-jammy
+  useStatefulSet: true
   persistence:
     mountPath: /data/db
   auth:
     enabled: true
     rootUser: "root"
-    rootPassword: "hello123"
+    #rootPassword: "hello123"
+  extraEnvVars:
+    # compatible for mongo official docker image, per differences from bitnami/mongo image
+    - name: MONGO_INITDB_ROOT_USERNAME
+      value: "root"
+    # compatible for mongo official docker image, per differences from bitnami/mongo image
+    - name: MONGO_INITDB_ROOT_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: mongodb
+          key: mongodb-root-password
