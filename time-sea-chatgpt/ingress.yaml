@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: time-sea-chatgpt-web
+  namespace: time-sea-chatgpt
+spec:
+  rules:
+    - host: time-sea-chatgpt.local
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: time-sea-chatgpt-web
+                port:
+                  number: 80

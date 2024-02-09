@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: time-sea-chatgpt
+  namespace: time-sea-chatgpt
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      appID: time-sea-chatgpt-web
+  template:
+    metadata:
+      annotations:
+      labels:
+        appID: time-sea-chatgpt-web
+    spec:
+      containers:
+        - name: main
+          image: minixxie/time-sea-chatgpt-web:fb299162f18498dd9cf17da906886d80a077d53b
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80  # HTTP port
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 30
