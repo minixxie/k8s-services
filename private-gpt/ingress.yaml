@@ -12,6 +12,13 @@ spec:
             path: "/"
             backend:
               service:
+                name: private-gpt-web
+                port:
+                  number: 8080
+          - pathType: Prefix
+            path: "/v1"
+            backend:
+              service:
                 name: private-gpt
                 port:
                   number: 8080

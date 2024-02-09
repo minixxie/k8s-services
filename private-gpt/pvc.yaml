@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: datascience-models
+  name: private-gpt-models
   namespace: private-gpt
 spec:
   selector:
     matchLabels:
-      name: datascience-models
+      name: private-gpt-models
   storageClassName: manual
   accessModes:
     - ReadWriteOnce

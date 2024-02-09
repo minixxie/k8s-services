@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: private-gpt
+  name: private-gpt-web
   namespace: private-gpt
 spec:
-  replicas: 2
+  replicas: 1  # note: must be 1 pod
   selector:
     matchLabels:
-      appID: private-gpt
+      appID: private-gpt-web
   template:
     metadata:
       annotations:
       labels:
-        appID: private-gpt
+        appID: private-gpt-web
     spec:
       containers:
         - name: main

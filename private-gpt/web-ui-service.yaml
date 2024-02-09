@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: private-gpt
+  name: private-gpt-web
   namespace: private-gpt
   annotations:
     traefik.ingress.kubernetes.io/service.sticky.cookie: "true"
@@ -9,7 +9,7 @@ metadata:
     traefik.ingress.kubernetes.io/service.sticky.cookie.secure: "true"
 spec:
   selector:
-    appID: private-gpt
+    appID: private-gpt-web
   type: LoadBalancer
   ports:
     - name: http

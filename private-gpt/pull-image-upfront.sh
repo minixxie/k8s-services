@@ -2,13 +2,12 @@
 
 startTS=$(date +"%s")
 
-#tag=latest
-tag=0.2.0
+tag=a79e02c36dedb0b981e6cfbcd16b4010cb3a909d
 
 cont=0
 while [ $cont ]; do
 	echo "While loop..."
-	nerdctl pull 3x3cut0r/privategpt:$tag --namespace=k8s.io
+	nerdctl pull minixxie/privategpt:$tag --namespace=k8s.io
 	cont=$?
 done
 

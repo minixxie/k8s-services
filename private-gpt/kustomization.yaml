@@ -3,13 +3,13 @@ kind: Kustomization
 metadata:
   name: private-gpt
 
-commonLabels:
-  appID: private-gpt
-
 resources:
   - namespace.yaml
   - pv.yaml
   - pvc.yaml
+  - configmap.yaml
   - deployment.yaml
+  - web-ui-deployment.yaml
   - service.yaml
+  - web-ui-service.yaml
   - ingress.yaml
