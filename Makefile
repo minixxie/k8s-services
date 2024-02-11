@@ -83,6 +83,12 @@ colima-aarch64:
 		--disk 100 \
 		--arch aarch64 --vm-type=vz --vz-rosetta
 
+.PHONY: k3s
+k3s:
+	sudo ./scripts/k3s.sh
+	sudo ./scripts/nerdctl.sh
+	sudo ./scripts/buildkit.sh
+
 .PHONY: index
 index:
 	./bin/gen-index-html.sh
