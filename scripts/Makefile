@@ -1,3 +1,5 @@
+SHELL := /bin/bash
+
 .PHONY: helm-repo
 helm-repo:
 	@cat Chart.yaml | grep repository | sed 's/^.*: //'

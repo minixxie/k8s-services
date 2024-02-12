@@ -5,7 +5,6 @@ check:
 .PHONY: up
 up:
 	helm dep update .
-	make -s down
 	helm upgrade --install traefik .
 
 .PHONY: local

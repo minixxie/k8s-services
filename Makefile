@@ -89,6 +89,11 @@ k3s:
 	sudo ./scripts/nerdctl.sh
 	sudo ./scripts/buildkit.sh
 
+.PHONY: k3s-redo
+k3s-redo:
+	sudo k3s-uninstall.sh
+	sudo ./scripts/k3s.sh
+
 .PHONY: index
 index:
 	./bin/gen-index-html.sh
@@ -136,7 +141,7 @@ local:
 .PHONY: local-monitoring
 local-monitoring:
 	make -C ./operator-framework local wait
-	make -C ./ingress-controller local wait
+	#make -C ./ingress-controller local wait
 	make -C ./cert-manager local wait
 	make -C ./jaeger-operator local wait
 	make -C ./opentelemetry-operator local wait
