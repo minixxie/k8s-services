@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 ### k8s nodes
 if [ "$1" == colima ]; then
 	colima stop --force

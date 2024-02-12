@@ -140,23 +140,23 @@ local:
 
 .PHONY: local-monitoring
 local-monitoring:
-	make -C ./operator-framework local wait
-	#make -C ./ingress-controller local wait
-	make -C ./cert-manager local wait
-	make -C ./jaeger-operator local wait
-	make -C ./opentelemetry-operator local wait
-	make -C ./kube-prometheus-stack local wait
-	make -C ./apps local wait
+	make -s -C ./operator-framework local wait
+	#make -s -C ./ingress-controller local wait
+	make -s -C ./cert-manager local wait
+	make -s -C ./jaeger-operator local wait
+	make -s -C ./opentelemetry-operator local wait
+	make -s -C ./kube-prometheus-stack local wait
+	make -s -C ./apps local wait
 
 .PHONY: local-monitoring-wait
 local-monitoring-wait:
-	make -C ./operator-framework wait
-	make -C ./ingress-controller wait
-	make -C ./cert-manager wait
-	make -C ./jaeger-operator wait
-	make -C ./opentelemetry-operator wait
-	make -C ./kube-prometheus-stack wait
-	make -C ./apps wait
+	make -s -C ./operator-framework wait
+	make -s -C ./ingress-controller wait
+	make -s -C ./cert-manager wait
+	make -s -C ./jaeger-operator wait
+	make -s -C ./opentelemetry-operator wait
+	make -s -C ./kube-prometheus-stack wait
+	make -s -C ./apps wait
 
 .PHONY: local
 local: ingress-controller mysql local-monitoring
