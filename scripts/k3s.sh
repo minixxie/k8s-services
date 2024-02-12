@@ -10,7 +10,6 @@ fi
 curl -sfL https://get.k3s.io | K3S_KUBECONFIG_MODE="644" sh -
 systemctl start k3s
 systemctl enable k3s
-systemctl status k3s
 
 set +e
 grep 'export KUBECONFIG=' /etc/bash.bashrc

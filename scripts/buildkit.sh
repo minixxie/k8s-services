@@ -30,4 +30,4 @@ EOF
 systemctl daemon-reload
 systemctl restart buildkitd
 systemctl enable buildkitd
-systemctl status buildkitd
+#systemctl status buildkitd
