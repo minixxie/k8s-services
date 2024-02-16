@@ -1,0 +1,2 @@
+NS=$NAMESPACE JOB="xxl-job-admin-init-db" ../scripts/k8s-wait-job.sh
+NS=$NAMESPACE DEPLOYMENT="xxl-job-admin" ../scripts/k8s-wait-deployment.sh
