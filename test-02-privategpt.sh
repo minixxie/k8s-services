@@ -7,6 +7,8 @@ if [ "$1" == colima ]; then
 	colima stop --force
 	colima delete --force
 	make colima
+else  # assume k3s on ubuntu
+	make k3s-redo
 fi
 
 ### basic softwares
