@@ -1,2 +1,2 @@
 helm dep update .
-helm upgrade --install $(make -s chart-name) . -n $(make -n ns) --create-namespace -f values.local.yaml --set xxl-job-admin.mysql.password=$(kubectl get secret --namespace db mysql -o jsonpath="{.data.mysql-root-password}" | base64 -d)
+helm upgrade --install $(make -s chart-name) . -n $(make -s ns) --create-namespace -f values.local.yaml --set xxl-job-admin.mysql.password=$(kubectl get secret --namespace db mysql -o jsonpath="{.data.mysql-root-password}" | base64 -d)
