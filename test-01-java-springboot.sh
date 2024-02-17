@@ -14,8 +14,12 @@ fi
 ### basic softwares
 make local-monitoring
 
-### the application
-cd mysql && make local wait && cd -
-cd xxl-job && make local wait && cd -
+### Application's dependencies
+cd mysql && make local wait test && cd -
+cd xxl-job && make local wait test && cd -
+### Application
 cd java-springboot-svc && make build && cd ./k8s/ && make up && cd .. && make wait && cd ..
-cd java-springboot-svc/test && ./call-api.sh < Book.getBooks.http && cd -
+#cd java-springboot-svc/test && ./call-api.sh < Book.getBooks.http && cd -
+
+### TESTS
+cd java-springboot-svc && make test && cd - > /dev/null

@@ -16,3 +16,7 @@ local: up
 .PHONY: wait
 wait:
 	NS=operators DEPLOYMENT="opentelemetry-operator-controller-manager" ../scripts/k8s-wait-deployment.sh
+
+.PHONY: test
+test:
+	# NOOP

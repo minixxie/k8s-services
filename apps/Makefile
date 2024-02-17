@@ -14,3 +14,7 @@ down:
 .PHONY: wait
 wait:
 	# NOOP
+
+.PHONY: test
+test:
+	# NOOP

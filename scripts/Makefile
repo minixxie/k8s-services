@@ -57,6 +57,10 @@ down:
 cli:
 	if [ -f cli.rc ]; then source cli.rc; fi
 
+.PHONY: test
+test:
+	if [ -x test.sh ]; then ./test.sh; fi
+
 .PHONY: repo-add
 repo-add:
 	helm repo add $$(make -s helm-repo-alias) $$(make -s helm-repo)

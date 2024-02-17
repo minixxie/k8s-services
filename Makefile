@@ -143,10 +143,10 @@ local-monitoring:
 	make -s -C ./operator-framework local wait
 	#make -s -C ./ingress-controller local wait
 	make -s -C ./cert-manager local wait
-	make -s -C ./jaeger-operator local wait
-	make -s -C ./opentelemetry-operator local wait
-	make -s -C ./kube-prometheus-stack local wait
-	make -s -C ./apps local wait
+	make -s -C ./jaeger-operator local wait test
+	make -s -C ./opentelemetry-operator local wait test
+	make -s -C ./kube-prometheus-stack local wait test
+	make -s -C ./apps local wait test
 
 .PHONY: local-monitoring-wait
 local-monitoring-wait:
