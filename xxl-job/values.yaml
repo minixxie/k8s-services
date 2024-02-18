@@ -5,7 +5,7 @@ xxl-job-admin:
     # Overrides the image tag whose default is the chart appVersion.
     tag: "2.3.1"
   mysql:
-    host: mysql.db.svc
+    host: mysql.infra-mysql.svc
     port: 3306
     user: xxl_job
     password: xxl_job
