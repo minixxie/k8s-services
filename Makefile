@@ -100,43 +100,43 @@ index:
 
 .PHONY: kubeapps
 kubeapps:
-	make -C ./kubeapps up
+	make -s -C ./kubeapps up
 
 .PHONY: mysql
 mysql:
-	make -C ./mysql up \
-		&& make mysql-exporter
+	make -s -C ./mysql up \
+		&& make -s mysql-exporter
 
 .PHONY: mysql-exporter
 mysql-exporter:
-	make -C ./prometheus-mysql-exporter up
+	make -s -C ./prometheus-mysql-exporter up
 
 .PHONY: xxl-job
 xxl-job:
-	make -C ./xxl-job local
+	make -s -C ./xxl-job local
 
 .PHONY: kube-prometheus-stack
 kube-prometheus-stack:
-	make -C ./kube-prometheus-stack up \
-		&& make mysql-exporter
+	make -s -C ./kube-prometheus-stack up \
+		&& make -s mysql-exporter
 
 .PHONY: kafka
 kafka:
-	make -C ./kafka up \
-		&& make -C ./kafka-ui up
+	make -s -C ./kafka up \
+		&& make -s -C ./kafka-ui up
 
 .PHONY: ingress-controller
 ingress-controller:
-	make -C ./ingress-controller local wait
+	make -s -C ./ingress-controller local wait
 
 .PHONY: local
 local:
-	make -C ./operator-framework local wait
-	make -C ./ingress-controller local wait
-	make -C ./cert-manager local wait
-	make -C ./jaeger-operator local wait
-	make -C ./opentelemetry-operator local wait
-	make -C ./apps local wait
+	make -s -C ./operator-framework local wait
+	make -s -C ./ingress-controller local wait
+	make -s -C ./cert-manager local wait
+	make -s -C ./jaeger-operator local wait
+	make -s -C ./opentelemetry-operator local wait
+	make -s -C ./apps local wait
 
 .PHONY: local-monitoring
 local-monitoring:

@@ -1,0 +1,2 @@
+NAMESPACE=local-ai
+HELM_REPO_ALIAS=go-skynet
