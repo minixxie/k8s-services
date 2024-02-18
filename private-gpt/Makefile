@@ -26,3 +26,7 @@ top:
 wait:
 	NS=private-gpt DEPLOYMENT="private-gpt" ../scripts/k8s-wait-deployment.sh
 	NS=private-gpt DEPLOYMENT="private-gpt-web" ../scripts/k8s-wait-deployment.sh
+
+.PHONY: test
+test:
+	./test.sh

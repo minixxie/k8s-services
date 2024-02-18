@@ -1,5 +1,7 @@
 #!/bin/bash
 
+scriptPath=$(cd $(dirname "$0") && pwd)
+
 set -e
 
 if [ $UID -ne 0 ]; then
@@ -21,3 +23,5 @@ else
 	echo 'export KUBECONFIG=/etc/rancher/k3s/k3s.yaml' >> /etc/bash.bashrc
 fi
 #chmod 600 /etc/rancher/k3s/k3s.yaml
+
+NS=default SERVICE_ACCOUNT=default "$scriptPath"/k8s-wait-serviceaccount.sh

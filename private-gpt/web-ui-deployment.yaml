@@ -28,13 +28,13 @@ spec:
             initialDelaySeconds: 10
             periodSeconds: 30
           volumeMounts:
-            - name: private-gpt-models
-              # mountPath: /home/worker/app/models/ggml-gpt4all-j-v1.3-groovy.bin
-              # subPath: ggml-gpt4all-j-v1.3-groovy.bin
-              # mountPath: /home/worker/app/models/mistral-7b-instruct-v0.1.Q8_0.gguf
-              # subPath: mistral-7b-instruct-v0.1.Q8_0.gguf
-              mountPath: /home/worker/app/models/mistral-7b-instruct-v0.2.Q4_K_M.gguf
-              subPath: mistral-7b-instruct-v0.2.Q4_K_M.gguf
+            #- name: private-gpt-models
+            #  # mountPath: /home/worker/app/models/ggml-gpt4all-j-v1.3-groovy.bin
+            #  # subPath: ggml-gpt4all-j-v1.3-groovy.bin
+            #  # mountPath: /home/worker/app/models/mistral-7b-instruct-v0.1.Q8_0.gguf
+            #  # subPath: mistral-7b-instruct-v0.1.Q8_0.gguf
+            #  mountPath: /home/worker/app/models/mistral-7b-instruct-v0.2.Q4_K_M.gguf
+            #  subPath: mistral-7b-instruct-v0.2.Q4_K_M.gguf
             - name: private-gpt-settings-yaml
               mountPath: /home/worker/app/settings.yaml
               subPath: settings.yaml
