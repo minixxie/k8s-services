@@ -59,6 +59,7 @@ colima-small:
 		--memory $$(expr $$(make -s mem) / 4) \
 		--disk 20 \
 		-p small
+	make -s -C ./ingress-controller local wait
 
 .PHONY: colima
 colima:
@@ -66,6 +67,7 @@ colima:
 		--cpu $$(expr $$(make -s ncpu) / 2) \
 		--memory $$(expr $$(make -s mem) / 2) \
 		--disk 100
+	make -s -C ./ingress-controller local wait
 
 .PHONY: colima-amd64
 colima-amd64:
@@ -74,6 +76,7 @@ colima-amd64:
 		--memory $$(expr $$(make -s mem) / 2) \
 		--disk 100 \
 		--arch amd64 --vm-type=vz --vz-rosetta
+	make -s -C ./ingress-controller local wait
 
 .PHONY: colima-aarch64
 colima-aarch64:
@@ -82,6 +85,7 @@ colima-aarch64:
 		--memory $$(expr $$(make -s mem) / 2) \
 		--disk 100 \
 		--arch aarch64 --vm-type=vz --vz-rosetta
+	make -s -C ./ingress-controller local wait
 
 .PHONY: k3s
 k3s:
