@@ -1,0 +1,10 @@
+127.0.0.1  grafana.local
+127.0.0.1  prometheus.local
+127.0.0.1  alertmanager.local
+127.0.0.1  java-springboot-svc.local
+127.0.0.1  jaeger.local
+127.0.0.1  xxljob.local
+127.0.0.1  qdrant.local
+127.0.0.1  private-gpt.local
+127.0.0.1  redisinsight.local
+

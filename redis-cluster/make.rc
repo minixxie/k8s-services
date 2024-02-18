@@ -1,0 +1,3 @@
+NAMESPACE=infra-redis
+HELM_REPO_ALIAS=redis-cluster
+DEPLOYMENT=redis-cluster

@@ -8,6 +8,8 @@ argocdPwd=$(kubectl get -n argo-cd secret argocd-initial-admin-secret -o go-temp
 kubeappPwd=$(kubectl get --namespace default secret kubeapps-operator-token -o go-template='{{.data.token | base64decode}}' ; echo)
 #grafanaPwd=$(kubectl get secret -n tools grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo)
 grafanaPwd=$(kubectl get secret -n monitor kube-prometheus-stack-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo)
+grafanaPwd=hello123
+
 mysqlPwd=$(kubectl get secret --namespace db mysql -o jsonpath="{.data.mysql-root-password}" | base64 -d)
 postgresqlPwd=$(kubectl get secret --namespace db postgresql -o jsonpath="{.data.postgres-password}" | base64 -d)
 
@@ -56,13 +58,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	<td></td>
 </tr>
 <tr>
-	<td><img style="height: 24px;" src="https://prometheus.io/assets/favicons/favicon.ico" /> AlertManager</td>
+	<td><img style="height: 24px;" src="https://argo-cd.readthedocs.io/en/stable/assets/logo.png" /> ArgoCD</td>
 	<td><a href="http://argo-cd.local" target="_blank">http://argo-cd.local</a></td>
 	<td>admin</td>
 	<td>$argocdPwd <button title="copy to clipboard" id="copyArgoCDPasswordButton">&#x2398;</button></td>
 </tr>
 <tr>
-	<td><img style="height: 24px;" src="https://about.gitea.com/favicon.ico" /> Gitea</td>
+	<td><img style="height: 24px;" src="https://about.gitea.com/gitea.svg?color=indigo&shade=600" /> Gitea</td>
 	<td><a href="http://gitea.local" target="_blank">http://gitea.local</a></td>
 	<td></td>
 	<td></td>
@@ -71,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	<td><img style="height: 24px;" src="https://grafana.com/static/assets/img/fav32.png" /> Grafana</td>
 	<td><a href="http://grafana.local" target="_blank">http://grafana.local</a></td>
 	<td>admin</td>
-	<td>admin</td>
+	<td>$grafanaPwd <button title="copy to clipboard" id="copyGrafanaPasswordButton">&#x2398;</button></td>
 </tr>
 <tr>
 	<td><img style="height: 24px;" src="https://graylog.org/wp-content/uploads/2022/08/favicon32.png" /> Graylog</td>
@@ -116,13 +118,25 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	<td></td>
 </tr>
 <tr>
+	<td><img style="height: 24px;" src="https://qdrant.tech/images/logo_with_text.svg" /> Qdrant</td>
+	<td><a href="http://qdrant.local/dashboard" target="_blank">http://qdrant.local/dashboard</a></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td><img style="height: 24px;" src="https://redis.com/wp-content/themes/wpx/assets/images/logo-redis.svg?auto=webp&quality=85,75&width=120" /> RedisInsight</td>
+	<td><a href="http://redisinsight.local" target="_blank">http://redisinsight.local</a></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td><img style="height: 24px;" src="https://www.timescale.com/favicon-32x32.png?v=7045a84914f0d48a1c822d466332225b" /> Timescale DB</td>
 	<td><a href="http://timescaledb-ui.local" target="_blank">http://timescaledb-ui.local</a></td>
 	<td></td>
 	<td></td>
 </tr>
 <tr>
-	<td><img style="height: 24px;" src="https://camo.githubusercontent.com/bf64c32e4e66828e9dcc6c7e4c015512691e04340ab2a5cbc8ca840daf615546/68747470733a2f2f7777772e78757875656c692e636f6d2f646f632f7374617469632f78786c2d6a6f622f696d616765732f78786c2d6c6f676f2e6a7067" /> XXL Job</td>
+	<td><img style="height: 24px;" src="https://www.xuxueli.com/doc/static/xxl-job/images/xxl-logo.jpg" /> XXL Job</td>
 	<td><a href="http://xxljob.local/xxl-job-admin" target="_blank">http://xxljob.local/xxl-job-admin</a></td>
 	<td>admin</td>
 	<td>123456</td>
@@ -161,9 +175,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	document.getElementById("copyKubeappsPasswordButton").onclick = async() => {
 		await navigator.clipboard.writeText("$kubeappPwd");
 	};
-	document.getElementById("copyGrafanaPasswordButton").onclick = async() => {
-		await navigator.clipboard.writeText("$grafanaPwd");
-	};
 	document.getElementById("copyArgoCDPasswordButton").onclick = async() => {
 		await navigator.clipboard.writeText("$argocdPwd");
 	};
@@ -201,21 +212,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		</td>
 	</tr>
 	<tr>
-		<td>RedisInsight</td>
-		<td>
-			<a target="_blank" href="http://redisinsight.local/">http://redisinsight.local/</a><br />
-		</td>
-	</tr>
-	<tr>
 		<td>pgAdmin4</td>
 		<td>
 			<a target="_blank" href="http://pgadmin4.local/">http://pgadmin4.local/</a><br />
-		</td>
-	</tr>
-	<tr>
-		<td>Kafka</td>
-		<td>
-			<a target="_blank" href="http://kafka-ui.local/">http://kafka-ui.local/</a><br />
 		</td>
 	</tr>
 	<tr>
