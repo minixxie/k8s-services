@@ -1,0 +1,2 @@
+NAMESPACE=ai-stable-diffusion
+HELM_REPO_ALIAS=ivatin

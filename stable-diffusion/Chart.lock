@@ -1,0 +1,6 @@
+dependencies:
+- name: stable-diffusion
+  repository: https://ibytechaos.github.io/charts/
+  version: 1.0.18
+digest: sha256:babb34172a1cacc006730cc89e76f5bb65d8081b7f5c312b6dfb6aaa3528ff10
+generated: "2024-02-20T23:39:08.391284733+08:00"

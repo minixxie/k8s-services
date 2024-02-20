@@ -1,0 +1,20 @@
+stable-diffusion:
+  image:
+    repository: siutin/stable-diffusion-webui-docker
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    #tag: "cuda-v1.5.1-2023-08-02"
+    #tag: "cuda-v1.7.0-2024-01-06"
+    tag: "cpu-v1.7.0-2024-01-06"
+  service:
+    type: ClusterIP
+    port: 7860
+    nodePort: 0
+  ingress:
+    enabled: true
+    hosts:
+      - host: stable-diffusion.local
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+  resources: {}

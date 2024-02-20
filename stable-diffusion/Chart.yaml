@@ -1,0 +1,7 @@
+apiVersion: v2
+name: stable-diffusion
+version: 1.0.18
+dependencies:
+  - name: stable-diffusion
+    version: 1.0.18
+    repository: https://ibytechaos.github.io/charts/
