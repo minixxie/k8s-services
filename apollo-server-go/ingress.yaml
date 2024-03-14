@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: apollo-server-go
+  namespace: apollo-server-go
+spec:
+  rules:
+    - host: apollo-server-go.local
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: apollo-server-go
+                port:
+                  number: 80

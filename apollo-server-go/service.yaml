@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: apollo-server-go
+  namespace: apollo-server-go
+  annotations:
+    traefik.ingress.kubernetes.io/service.sticky.cookie: "true"
+    traefik.ingress.kubernetes.io/service.sticky.cookie.name: "__traefik_sticky"
+    traefik.ingress.kubernetes.io/service.sticky.cookie.secure: "true"
+spec:
+  selector:
+    app: apollo-server-go
+  type: LoadBalancer
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80

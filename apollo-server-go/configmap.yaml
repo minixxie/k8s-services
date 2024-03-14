@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: apollo-server-go-config-json
+  namespace: apollo-server-go
+data:
+  config.json: |
+    {
+        "myAppID": {
+            "myCluster": {
+                "myNamespace": {
+                    "releaseKey": "20200309212653-7fec91b6d277b5ab",
+                    "configurations": {
+                        "mysql.uri": "mysql://root@localhost/mysql",
+                        "snowflake.uri": "http://192.168.0.1/snowflake"
+                    }
+                }
+            }
+        }
+    }

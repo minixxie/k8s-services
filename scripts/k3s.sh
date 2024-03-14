@@ -25,3 +25,4 @@ fi
 #chmod 600 /etc/rancher/k3s/k3s.yaml
 
 NS=default SERVICE_ACCOUNT=default "$scriptPath"/k8s-wait-serviceaccount.sh
+NS=kube-system LABELS=svccontroller.k3s.cattle.io/svcname=traefik "$scriptPath"/k8s-wait-daemonset.sh

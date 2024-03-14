@@ -8,3 +8,4 @@
 127.0.0.1  private-gpt.local
 127.0.0.1  redisinsight.local
 127.0.0.1  local-ai.local
+127.0.0.1  apollo-server-go.local

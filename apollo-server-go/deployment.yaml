@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apollo-server-go
+  namespace: apollo-server-go
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apollo-server-go
+  template:
+    metadata:
+      annotations:
+      labels:
+        app: apollo-server-go
+    spec:
+      containers:
+        - name: main
+          image: minixxie/apollo-server-go:0.0.4
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80  # HTTP port
+          readinessProbe:
+            httpGet:
+              path: /services/config
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          volumeMounts:
+            - name: apollo-server-go-config-json
+              mountPath: /config.json
+              subPath: config.json
+              readOnly: true
+          env:
+            - name: GIN_MODE
+              value: release
+            - name: CONFIG_FORMAT
+              value: json
+            - name: URL_PREFIX
+              value: http://apollo-server-go.local
+      volumes:
+        - name: apollo-server-go-config-json
+          configMap:
+            name: apollo-server-go-config-json
+            items:
+              - key: "config.json"
+                path: "config.json"
