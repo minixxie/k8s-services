@@ -41,7 +41,7 @@ spec:
               readOnly: true
           env:
             - name: MONGO_URI
-              value: mongodb://root:hello123@mongodb.db.svc.cluster.local:27017/
+              value: mongodb://root:hello123@mongodb.infra-mongodb.svc.cluster.local:27017/
           #  - name: PGPT_HF_MODEL_FILE
           #    value: mistral-7b-instruct-v0.1.Q8_0.gguf
       volumes:
