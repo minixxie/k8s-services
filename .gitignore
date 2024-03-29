@@ -1,5 +1,6 @@
 VAL
 TPL
+*.tar
 charts/
 TODO
 .DS_Store

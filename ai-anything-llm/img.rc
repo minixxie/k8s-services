@@ -1,0 +1,2 @@
+IMG=ghcr.io/mintplex-labs/anything-llm
+IMG_TAG=latest@sha256:1bc80b319a09aaeaf344356d61a1a80c588c1949c1151b21dc67af43794270db

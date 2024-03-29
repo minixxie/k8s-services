@@ -61,6 +61,25 @@ cli:
 test:
 	if [ -x test.sh ]; then ./test.sh; fi
 
+.PHONY: exp-img
+exp-img:
+	if [ -f img.rc ]; then \
+		source img.rc; \
+		nerdctl --namespace=k8s.io images | grep $$IMG | grep $$IMG_TAG; \
+		f=$$(echo $$IMG | sed 's/\//__/g'); \
+		nerdctl save $$IMG:$$IMG_TAG --output "$$f"___"$$IMG_TAG.tar" --namespace=k8s.io; \
+		ls -lt "$$f"___"$$IMG_TAG.tar"; \
+	fi
+
+.PHONY: imp-img
+imp-img:
+	if [ -f img.rc ]; then \
+		source img.rc; \
+		f=$$(echo $$IMG | sed 's/\//__/g'); \
+		nerdctl load -i "$$f"___"$$IMG_TAG.tar" --namespace=k8s.io; \
+		nerdctl --namespace=k8s.io images | grep $$IMG | grep $$IMG_TAG; \
+	fi
+
 .PHONY: repo-add
 repo-add:
 	helm repo add $$(make -s helm-repo-alias) $$(make -s helm-repo)
