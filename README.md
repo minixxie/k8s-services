@@ -36,6 +36,10 @@ Spin up on local machine
 cd mysql
 make local
 ```
+Spin up on local machine, with mysql-exporter
+```bash
+make mysql
+```
 Destroy
 ```bash
 cd mysql
