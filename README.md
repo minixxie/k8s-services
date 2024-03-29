@@ -6,6 +6,28 @@ This repository provides easy, consistent way for spinning up various common sof
 
 This repository is also meant to be runnable on k8s with ArgoCD with GitOps methodology, to spin up most softwares.
 
+## Setting up k8s environment on local
+Mac
+```bash
+make colima
+```
+Mac - destroy and redo
+```bash
+colima stop --force
+colima delete --force
+make colima
+```
+
+Linux
+```bash
+make k3s
+```
+Linux - destroy and redo
+```bash
+make k3s-redo
+```
+
+
 ## Components
 
 ### mysql
@@ -54,6 +76,62 @@ mysql cli
 cd mysql
 make cli
 ```
+
+### mongodb
+Spin up on local machine
+```bash
+cd mongodb
+make local
+```
+Destroy
+```bash
+cd mongodb
+make down
+```
+Show k8s resources
+```bash
+cd mongodb
+make get
+
+----------------------------------------
+kubectl -n $(make -s ns) get all
+NAME            READY   STATUS    RESTARTS   AGE
+pod/mongodb-0   1/1     Running   0          35s
+
+NAME              TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)     AGE
+service/mongodb   ClusterIP   10.43.209.29   <none>        27017/TCP   35s
+
+NAME                       READY   AGE
+statefulset.apps/mongodb   1/1     35s
+----------------------------------------
+kubectl -n $(make -s ns) get ing
+No resources found in db namespace.
+----------------------------------------
+kubectl -n $(make -s ns) get pvc
+NAME                STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+datadir-mongodb-0   Bound    pvc-c21e8702-999e-4943-87a3-a69bbb8b6474   8Gi        RWO            local-path     35s
+----------------------------------------
+kubectl get pv
+NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                      STORAGECLASS   REASON   AGE
+pvc-c21e8702-999e-4943-87a3-a69bbb8b6474   8Gi        RWO            Delete           Bound    db/datadir-mongodb-0       local-path              33s
+----------------------------------------
+if [ -f get.rc ]; then source get.rc; fi
+
+```
+mongodb cli
+```bash
+cd mongodb
+make cli
+
+if [ -f cli.rc ]; then source cli.rc; fi
+If you don't see a command prompt, try pressing enter.
+admin> show dbs;
+admin   100.00 KiB
+config   12.00 KiB
+local    40.00 KiB
+admin> 
+```
+
 
 ### ollama
 Spin up on local machine
