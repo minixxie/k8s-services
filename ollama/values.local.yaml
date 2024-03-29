@@ -1,0 +1,16 @@
+ollama:
+  ollama:
+    gpu:
+      # enable gpu if your k8s containerd/docker has gpu support
+      enabled: false
+    models:
+      - mistral
+      - llama2
+  ingress:
+    enabled: true
+    hosts:
+    - host: ollama-api.local
+      paths:
+        - path: /
+          pathType: Prefix
+
