@@ -30,7 +30,7 @@ get:
 	@echo "----------------------------------------"
 	kubectl -n $$(make -s ns) get pvc
 	@echo "----------------------------------------"
-	kubectl -n $$(make -s ns) get pv
+	kubectl get pv
 	@echo "----------------------------------------"
 	if [ -f get.rc ]; then source get.rc; fi
 
