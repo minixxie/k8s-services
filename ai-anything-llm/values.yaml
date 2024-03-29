@@ -1,0 +1,11 @@
+anything-llm:
+  workload:
+    main:
+      podSpec:
+        containers:
+          main:
+            env:
+              LLM_PROVIDER: 'ollama'
+              OLLAMA_BASE_PATH: 'http://ollama.ai-ollama.svc.cluster.local:11434'
+              OLLAMA_MODEL_PREF: 'llama2'
+              OLLAMA_MODEL_TOKEN_LIMIT: 4096

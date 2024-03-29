@@ -141,18 +141,18 @@ admin>
 Spin up on local machine
 ```bash
 # ollama will download models from the internet, it needs long time to be pod ready
-cd ollama
+cd ai-ollama
 make local
 ```
 
 Destory
 ```bash
-cd ollama
+cd ai-ollama
 make down
 ```
 Show k8s resources:
 ```bash
-cd ollama && make get
+cd ai-ollama && make get
 
 ----------------------------------------
 kubectl -n $(make -s ns) get all
@@ -173,7 +173,7 @@ NAME     CLASS     HOSTS              ADDRESS         PORTS   AGE
 ollama   traefik   ollama-api.local   192.168.3.128   80      11h
 ----------------------------------------
 kubectl -n $(make -s ns) get pvc
-No resources found in ollama namespace.
+No resources found in ai-ollama namespace.
 ----------------------------------------
 kubectl get pv
 No resources found
@@ -182,7 +182,7 @@ if [ -f get.rc ]; then source get.rc; fi
 ```
 To test (with `127.0.0.1  ollama-api.local` in `/etc/hosts`):
 ```bash
-cd ollama
+cd ai-ollama
 ./test.sh
 
 * processing: http://ollama-api.local/api/generate

@@ -1,0 +1,7 @@
+apiVersion: v2
+name: anything-llm
+version: 1.4.13
+dependencies:
+  - name: anything-llm
+    version: 1.4.13
+    repository: https://charts.truecharts.org

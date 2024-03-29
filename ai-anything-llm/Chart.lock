@@ -1,0 +1,6 @@
+dependencies:
+- name: anything-llm
+  repository: https://charts.truecharts.org
+  version: 1.4.13
+digest: sha256:93ac7ae0577a512e194515f5c6fbbf822d229553281a7179b5e172d8c0435731
+generated: "2024-03-29T12:19:32.516857382+08:00"

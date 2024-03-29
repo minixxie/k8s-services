@@ -1,2 +1,2 @@
-NAMESPACE=ollama
+NAMESPACE=ai-ollama
 HELM_REPO_ALIAS=ollama

@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ai-anything-llm
+  namespace: ai-anything-llm
+spec:
+  rules:
+    - host: anything-llm.local
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: anything-llm
+                port:
+                  number: 3001
