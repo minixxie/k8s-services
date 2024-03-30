@@ -35,13 +35,13 @@ get:
 	if [ -f get.rc ]; then source get.rc; fi
 
 .PHONY: up
-up:
+up: imp-img
 	helm dep update .
 	helm upgrade --install $$(make -s chart-name) . -n $$(make -s ns) --create-namespace
 
 # values.yaml used as default, values.local.yaml as override
 .PHONY: local
-local:
+local: imp-img
 	if [ -f local.rc ]; then \
 		source local.rc; \
 	else \
@@ -76,7 +76,13 @@ imp-img:
 	if [ -f img.rc ]; then \
 		source img.rc; \
 		f=$$(echo $$IMG | sed 's/\//__/g'); \
-		nerdctl load -i "$$f"___"$$IMG_TAG.tar" --namespace=k8s.io; \
+		if [ -f "$$f"___"$$IMG_TAG.tar" ]; then \
+			nerdctl load -i "$$f"___"$$IMG_TAG.tar" --namespace=k8s.io; \
+		else \
+			echo >&2 "WARN: file not exists: $$f"___"$$IMG_TAG.tar"; \
+			nerdctl pull "$$IMG:$$IMG_TAG" --namespace=k8s.io; \
+			make -s exp-img; \
+		fi; \
 		nerdctl --namespace=k8s.io images | grep $$IMG | grep $$IMG_TAG; \
 	fi
 
