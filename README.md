@@ -33,7 +33,7 @@ make k3s-redo
 ### mysql
 Spin up on local machine
 ```bash
-cd mysql
+cd infra-mysql@8.2.0/
 make local
 ```
 Spin up on local machine, with mysql-exporter
@@ -42,12 +42,12 @@ make mysql
 ```
 Destroy
 ```bash
-cd mysql
+cd infra-mysql@8.2.0/
 make down
 ```
 Show k8s resources
 ```bash
-cd mysql
+cd infra-mysql@8.2.0/
 make get
 
 ----------------------------------------
@@ -77,24 +77,24 @@ if [ -f get.rc ]; then source get.rc; fi
 ```
 mysql cli
 ```bash
-cd mysql
+cd infra-mysql@8.2.0/
 make cli
 ```
 
 ### mongodb
 Spin up on local machine
 ```bash
-cd mongodb
+cd infra-mongodb@7.0.5/
 make local
 ```
 Destroy
 ```bash
-cd mongodb
+cd infra-mongodb@7.0.5/
 make down
 ```
 Show k8s resources
 ```bash
-cd mongodb
+cd infra-mongodb@7.0.5/
 make get
 
 ----------------------------------------
@@ -124,7 +124,7 @@ if [ -f get.rc ]; then source get.rc; fi
 ```
 mongodb cli
 ```bash
-cd mongodb
+cd infra-mongodb@7.0.5/
 make cli
 
 if [ -f cli.rc ]; then source cli.rc; fi

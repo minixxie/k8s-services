@@ -108,7 +108,7 @@ kubeapps:
 
 .PHONY: mysql
 mysql:
-	make -s -C ./mysql up \
+	make -s -C ./infra-mysql@8.2.0 up \
 		&& make -s mysql-exporter
 
 .PHONY: mysql-exporter

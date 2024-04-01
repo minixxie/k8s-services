@@ -10,7 +10,7 @@ kubeappPwd=$(kubectl get --namespace default secret kubeapps-operator-token -o g
 grafanaPwd=$(kubectl get secret -n monitor kube-prometheus-stack-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo)
 grafanaPwd=hello123
 
-mysqlPwd=$(kubectl get secret --namespace db mysql -o jsonpath="{.data.mysql-root-password}" | base64 -d)
+mysqlPwd=$(kubectl get secret --namespace infra-mysql mysql -o jsonpath="{.data.mysql-root-password}" | base64 -d)
 postgresqlPwd=$(kubectl get secret --namespace db postgresql -o jsonpath="{.data.postgres-password}" | base64 -d)
 
 time=$(TZ=UTC date +"%Y-%m-%d %H:%M:%SZ")
@@ -223,11 +223,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			root pass: $mysqlPwd<br />
 			<br />
 			<div class="xterm">
-			kubectl run mysql-client --rm --tty -i --restart='Never' --image  docker.io/bitnami/mysql:8.0.31-debian-11-r10 --namespace db --env MYSQL_ROOT_PASSWORD=$(kubectl get secret --namespace db mysql -o jsonpath="{.data.mysql-root-password}" | base64 -d) --command -- bash -c 'mysql -h mysql.infra-mysql.svc.cluster.local -uroot -p"\$MYSQL_ROOT_PASSWORD"'
+			kubectl run mysql-client --rm --tty -i --restart='Never' --image  docker.io/bitnami/mysql:8.2.0-debian-11-r0 --namespace infra-mysql --env MYSQL_ROOT_PASSWORD=$(kubectl get secret --namespace infra-mysql mysql -o jsonpath="{.data.mysql-root-password}" | base64 -d) --command -- bash -c 'mysql -h mysql.infra-mysql.svc.cluster.local -uroot -p"\$MYSQL_ROOT_PASSWORD"'
 			</div>
 			OR
 			<div class="xterm">
-			cd mysql/ && make cli
+			cd infra-mysql@8.2.0/ && make cli
 			</div>
 			MySQL exporter metrics: <a target="_blank" href="http://mysql-exporter.local/">http://mysql-exporter.local/</a>
 		</td>

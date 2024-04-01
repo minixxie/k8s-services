@@ -24,7 +24,7 @@ argocd-apps:
       source:
         repoURL: https://github.com/minixxie/k8s-services
         targetRevision: HEAD
-        path: mysql
+        path: infra-mysql@8.2.0
         helm:
           releaseName: mysql
       destination:

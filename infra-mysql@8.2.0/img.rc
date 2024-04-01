@@ -1,0 +1,2 @@
+IMG=bitnami/mysql
+IMG_TAG=8.2.0-debian-11-r0
