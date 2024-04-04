@@ -4,8 +4,8 @@ ollama:
       # enable gpu if your k8s containerd/docker has gpu support
       enabled: false
     models:
-      - mistral
       - llama2
+      #- mistral
   ingress:
     enabled: true
     hosts:
