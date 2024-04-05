@@ -1,4 +1,6 @@
 ollama:
+  image:
+    tag: "0.1.30"
   ollama:
     gpu:
       # enable gpu if your k8s containerd/docker has gpu support

@@ -1,0 +1,1 @@
+NS=$NAMESPACE DEPLOYMENT="ollama" ../scripts/k8s-wait-deployment.sh
