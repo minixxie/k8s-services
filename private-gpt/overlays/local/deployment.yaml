@@ -1,0 +1,14 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: private-gpt
+  namespace: private-gpt
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - name: main
+          env:
+            - name: MONGO_URI
+              value: ''

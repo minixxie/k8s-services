@@ -57,7 +57,7 @@ local: imp-img
 			helm dep update .; \
 			helm upgrade --install --wait $$(make -s chart-name) . -n $$(make -s ns) --create-namespace -f values.local.yaml; \
 		elif [ -d kustomize ]; then \
-			cd kustomize/ ; kubectl apply -k . ; \
+			kubectl apply -k overlays/local ; \
 		fi; \
 	fi
 
@@ -93,7 +93,10 @@ imp-img:
 		source img.rc; \
 		f=$$(echo $$IMG | sed 's/\//__/g'); \
 		if [ -f "$$f"___"$$IMG_TAG.tar" ]; then \
-			nerdctl load -i "$$f"___"$$IMG_TAG.tar" --namespace=k8s.io; \
+			nerdctl --namespace=k8s.io images | grep $$IMG | grep $$IMG_TAG; \
+			if [ $$? -ne 0 ]; then \
+				nerdctl load -i "$$f"___"$$IMG_TAG.tar" --namespace=k8s.io; \
+			fi; \
 		else \
 			echo >&2 "WARN: file not exists: $$f"___"$$IMG_TAG.tar"; \
 			nerdctl pull "$$IMG:$$IMG_TAG" --namespace=k8s.io; \

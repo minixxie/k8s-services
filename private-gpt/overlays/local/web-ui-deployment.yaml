@@ -1,0 +1,12 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: private-gpt-web
+spec:
+  template:
+    spec:
+      containers:
+        - name: main
+          env:
+            - name: MONGO_URI
+              value: ''

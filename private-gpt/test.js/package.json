@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha.js index.js"
+  },
+  "dependencies": {
+    "axios": "^1.6.8",
+    "mocha": "^10.4.0"
+  }
+}
