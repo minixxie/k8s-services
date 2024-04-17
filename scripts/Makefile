@@ -24,20 +24,28 @@ check:
 .PHONY: get
 get:
 	@echo "----------------------------------------"
-	kubectl -n $$(make -s ns) get all
+	# kubectl -n $$(make -s ns) get all
+	@kubectl -n $$(make -s ns) get all
 	@echo "----------------------------------------"
-	kubectl -n $$(make -s ns) get ing
+	# kubectl -n $$(make -s ns) get ing
+	@kubectl -n $$(make -s ns) get ing
 	@echo "----------------------------------------"
-	kubectl -n $$(make -s ns) get pvc
+	# kubectl -n $$(make -s ns) get pvc
+	@kubectl -n $$(make -s ns) get pvc
 	@echo "----------------------------------------"
-	kubectl get pv
+	# kubectl get pv
+	@kubectl get pv
 	@echo "----------------------------------------"
-	if [ -f get.rc ]; then source get.rc; fi
+	@if [ -f get.rc ]; then source get.rc; fi
 
 .PHONY: up
 up: imp-img
-	helm dep update .
-	helm upgrade --install --wait $$(make -s chart-name) . -n $$(make -s ns) --create-namespace
+	if [ -f Chart.yaml ]; then \
+		helm dep update .; \
+		helm upgrade --install --wait $$(make -s chart-name) . -n $$(make -s ns) --create-namespace; \
+	elif [ -d kustomize ]; then \
+		cd kustomize/ ; kubectl apply -k . ; \
+	fi
 
 # values.yaml used as default, values.local.yaml as override
 .PHONY: local
@@ -45,13 +53,21 @@ local: imp-img
 	if [ -f local.rc ]; then \
 		source local.rc; \
 	else \
-		helm dep update .; \
-		helm upgrade --install --wait $$(make -s chart-name) . -n $$(make -s ns) --create-namespace -f values.local.yaml; \
+		if [ -f Chart.yaml ]; then \
+			helm dep update .; \
+			helm upgrade --install --wait $$(make -s chart-name) . -n $$(make -s ns) --create-namespace -f values.local.yaml; \
+		elif [ -d kustomize ]; then \
+			cd kustomize/ ; kubectl apply -k . ; \
+		fi; \
 	fi
 
 .PHONY: down
 down:
-	helm uninstall $$(make -s chart-name) -n $$(make -s ns) || true
+	if [ -f Chart.yaml ]; then \
+		helm uninstall $$(make -s chart-name) -n $$(make -s ns) || true; \
+	elif [ -d kustomize ]; then \
+		cd kustomize/ ; kubectl delete -k . ; \
+	fi
 
 .PHONY: cli
 cli:
