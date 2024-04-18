@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-ragflow
+  namespace: ai-ragflow
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      appID: ai-ragflow
+  template:
+    metadata:
+      annotations:
+      labels:
+        appID: ai-ragflow
+    spec:
+      containers:
+        - name: main
+          image: minixxie/ragflow-cuda:1dada69daadf7cabd6d9cfebb08b269a379630db
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80  # HTTP port
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          volumeMounts:
+            - name: service-conf-yaml
+              mountPath: /ragflow/conf/service_conf.yaml
+              subPath: service_conf.yaml
+              readOnly: true
+      volumes:
+        - name: service-conf-yaml
+          configMap:
+            name: service-conf-yaml
+            items:
+              - key: "service_conf.yaml"
+                path: "service_conf.yaml"

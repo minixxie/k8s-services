@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ai-ragflow
+  namespace: ai-ragflow
+  annotations:
+    traefik.ingress.kubernetes.io/service.sticky.cookie: "true"
+    traefik.ingress.kubernetes.io/service.sticky.cookie.name: "__traefik_sticky"
+    traefik.ingress.kubernetes.io/service.sticky.cookie.secure: "true"
+spec:
+  selector:
+    appID: ai-ragflow
+  type: LoadBalancer
+  ports:
+    - name: http
+      protocol: TCP
+      port: 9380
+      targetPort: 9380

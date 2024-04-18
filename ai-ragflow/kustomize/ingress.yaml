@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ai-ragflow
+  namespace: ai-ragflow
+spec:
+  rules:
+    - host: ai-ragflow.local
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: ai-ragflow
+                port:
+                  number: 9380

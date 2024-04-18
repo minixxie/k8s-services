@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: service-conf-yaml
+  namespace: ai-ragflow
+data:
+  service_conf.yaml: |
+    ragflow:
+      host: 0.0.0.0
+      http_port: 9380
+    mysql:
+      name: 'ai-ragflow'
+      user: 'ai-ragflow'
+      password: 'ai-ragflow'
+      host: 'mysql.infra-mysql.svc'
+      port: 3306
+      max_connections: 100
+      stale_timeout: 30
+    minio:
+      user: 'rag_flow'
+      password: 'infini_rag_flow'
+      host: 'minio:9000'
+    es:
+      hosts: 'http://elasticsearch.infra-elasticsearch.svc.cluster.local:9200'
+    user_default_llm:
+      factory: 'Tongyi-Qianwen'
+      api_key: 'sk-xxxxxxxxxxxxx'
+      base_url: ''
+    oauth:
+      github:
+        client_id: xxxxxxxxxxxxxxxxxxxxxxxxx
+        secret_key: xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        url: https://github.com/login/oauth/access_token
+    authentication:
+      client:
+        switch: false
+        http_app_key:
+        http_secret_key:
+      site:
+        switch: false
+    permission:
+      switch: false
+      component: false
+      dataset: false

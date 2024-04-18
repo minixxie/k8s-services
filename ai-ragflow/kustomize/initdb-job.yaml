@@ -1,0 +1,40 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ragflow-mysql-db
+  namespace: infra-mysql
+  annotations:
+  labels:
+    appID: ai-ragflow
+spec:
+  template:
+    metadata:
+      labels:
+        appID: ai-ragflow
+    spec:
+      containers:
+        - name: init-db
+          image: bitnami/mysql:8.2.0-debian-11-r0
+          imagePullPolicy: Never
+          command: ["bash", "-c"]
+          args:
+            - |
+              mysql -A --default-character-set=utf8mb4 -h$HOST -u$USER -p$MYSQL_PWD -e "CREATE DATABASE IF NOT EXISTS \`ai-ragflow\` DEFAULT CHARACTER SET utf8mb4 DEFAULT COLLATE utf8mb4_unicode_ci;"
+              mysql -A --default-character-set=utf8mb4 -h$HOST -u$USER -p$MYSQL_PWD -e "CREATE USER IF NOT EXISTS \`ai-ragflow\`; GRANT ALL ON \`ai-ragflow\`.* TO 'ai-ragflow'@'%'; ALTER USER 'ai-ragflow'@'%' IDENTIFIED WITH mysql_native_password BY 'ai-ragflow'; FLUSH PRIVILEGES;"
+          envFrom:
+            - secretRef:
+                name: mysql
+          env:
+            - name: HOST
+              value: mysql.infra-mysql.svc.cluster.local
+            - name: USER
+              value: root
+            - name: MYSQL_PWD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql
+                  key: mysql-root-password
+      restartPolicy: OnFailure
+  parallelism: 1
+  completions: 1
+  backoffLimit: 6

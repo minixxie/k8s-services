@@ -1,0 +1,3 @@
+NAMESPACE=ai-ragflow
+HELM_REPO_ALIAS=
+DEPLOYMENT=ai-ragflow

@@ -1,0 +1,7 @@
+POST http://ai-ragflow.local/login
+Content-Type: application/json; charset=utf-8
+
+{
+	"email": "",
+	"password": ""
+}
