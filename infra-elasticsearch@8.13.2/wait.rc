@@ -1,0 +1,4 @@
+NS=$NAMESPACE STATEFULSET="elasticsearch-master" ../scripts/k8s-wait-statefulset.sh
+NS=$NAMESPACE STATEFULSET="elasticsearch-data" ../scripts/k8s-wait-statefulset.sh
+NS=$NAMESPACE STATEFULSET="elasticsearch-ingest" ../scripts/k8s-wait-statefulset.sh
+NS=$NAMESPACE STATEFULSET="elasticsearch-coordinating" ../scripts/k8s-wait-statefulset.sh
