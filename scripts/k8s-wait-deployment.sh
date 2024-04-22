@@ -11,4 +11,4 @@ done; \
 kubectl -n $NS rollout status --watch --timeout=10m deployment "$DEPLOYMENT"
 
 labels=$(kubectl -n $NS describe deployment $DEPLOYMENT | grep Selector: | awk '{print $NF}')
-kubectl -n $NS wait --for condition=ready --timeout=10m pod -l "$labels"
+kubectl -n $NS wait --for condition=ready --timeout=10m pod -l "$labels" --field-selector=status.phase!=Succeeded,status.phase!=Failed

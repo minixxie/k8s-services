@@ -82,6 +82,9 @@ exp-img:
 	if [ -f img.rc ]; then \
 		source img.rc; \
 		nerdctl --namespace=k8s.io images | grep $$IMG | grep $$IMG_TAG; \
+		if [ $$? -ne 0 ]; then \
+			nerdctl pull "$$IMG:$$IMG_TAG" --namespace=k8s.io; \
+		fi; \
 		f=$$(echo $$IMG | sed 's/\//__/g'); \
 		nerdctl save $$IMG:$$IMG_TAG --output "$$f"___"$$IMG_TAG.tar" --namespace=k8s.io; \
 		ls -lt "$$f"___"$$IMG_TAG.tar"; \

@@ -87,6 +87,17 @@ colima-aarch64:
 		--arch aarch64 --vm-type=vz --vz-rosetta
 	make -s -C ./ingress-controller local wait
 
+.PHONY: k8s-redo
+k8s-redo:
+	sys=$$(uname -s); echo $$sys; \
+	if [ "$$sys" == "Darwin" ]; then \
+		colima stop --force; \
+		colima delete --force; \
+		make -s colima; \
+	else \
+		make -s k3s-redo; \
+	fi
+
 .PHONY: k3s
 k3s:
 	sudo ./scripts/k3s.sh
