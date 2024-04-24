@@ -7,10 +7,9 @@ fi
 set -e
 
 cd /tmp/
-curl -OL https://github.com/moby/buildkit/releases/download/v0.13.0-beta3/buildkit-v0.13.0-beta3.linux-amd64.tar.gz
-exit 0
+curl -OL https://github.com/moby/buildkit/releases/download/v0.13.1/buildkit-v0.13.1.linux-amd64.tar.gz
 cd /usr/
-tar xzvf /tmp/buildkit-v0.13.0-beta3.linux-amd64.tar.gz
+tar xzvf /tmp/buildkit-v0.13.1.linux-amd64.tar.gz
 
 cat <<EOF > /etc/systemd/system/buildkitd.service
 [Unit]

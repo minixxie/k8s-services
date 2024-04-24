@@ -106,7 +106,7 @@ k3s:
 
 .PHONY: k3s-redo
 k3s-redo:
-	sudo k3s-uninstall.sh
+	sudo k3s-uninstall.sh || true
 	sudo ./scripts/k3s.sh
 
 .PHONY: index
