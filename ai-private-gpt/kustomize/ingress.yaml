@@ -1,24 +1,24 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: private-gpt
-  namespace: private-gpt
+  name: ai-private-gpt
+  namespace: ai-private-gpt
 spec:
   rules:
-    - host: private-gpt.local
+    - host: ai-private-gpt.local
       http:
         paths:
           - pathType: Prefix
             path: "/"
             backend:
               service:
-                name: private-gpt-web
+                name: ai-private-gpt-web
                 port:
                   number: 8080
           - pathType: Prefix
             path: "/v1"
             backend:
               service:
-                name: private-gpt
+                name: ai-private-gpt
                 port:
                   number: 8080

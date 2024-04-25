@@ -1,7 +1,7 @@
 #!/bin/bash
 
 curl -X POST \
-	--url "http://private-gpt.local/v1/ingest/text" \
+	--url "http://ai-private-gpt.local/v1/ingest/text" \
 	--header "Content-Type: application/json" \
 	--header "Accept: application/json" \
 	--data '
@@ -12,7 +12,7 @@ curl -X POST \
 '
 
 curl -X POST \
-	--url "http://private-gpt.local/v1/ingest/text" \
+	--url "http://ai-private-gpt.local/v1/ingest/text" \
 	--header "Content-Type: application/json" \
 	--header "Accept: application/json" \
 	--data '
@@ -22,4 +22,4 @@ curl -X POST \
 }
 '
 
-curl -X GET --url "http://private-gpt.local/v1/ingest/list" --header "Accept: application/json"
+curl -X GET --url "http://ai-private-gpt.local/v1/ingest/list" --header "Accept: application/json"

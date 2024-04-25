@@ -3,5 +3,5 @@ kind: Namespace
 metadata:
   labels:
     istio-injection: enabled
-    kubernetes.io/metadata.name: private-gpt
-  name: private-gpt
+    kubernetes.io/metadata.name: ai-private-gpt
+  name: ai-private-gpt

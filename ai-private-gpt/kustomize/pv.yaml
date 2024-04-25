@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: private-gpt-models
-  namespace: private-gpt
+  name: ai-private-gpt-models
+  namespace: ai-private-gpt
   labels:
-    name: private-gpt-models
+    name: ai-private-gpt-models
 spec:
   storageClassName: manual
   capacity:

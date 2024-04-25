@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: private-gpt-web
-  namespace: private-gpt
+  name: ai-private-gpt-web
+  namespace: ai-private-gpt
 spec:
   replicas: 1  # note: must be 1 pod
   selector:
     matchLabels:
-      appID: private-gpt-web
+      appID: ai-private-gpt-web
   template:
     metadata:
       annotations:
       labels:
-        appID: private-gpt-web
+        appID: ai-private-gpt-web
     spec:
       containers:
         - name: main
@@ -28,7 +28,7 @@ spec:
             initialDelaySeconds: 10
             periodSeconds: 30
           volumeMounts:
-            #- name: private-gpt-models
+            #- name: ai-private-gpt-models
             #  # mountPath: /home/worker/app/models/ggml-gpt4all-j-v1.3-groovy.bin
             #  # subPath: ggml-gpt4all-j-v1.3-groovy.bin
             #  # mountPath: /home/worker/app/models/mistral-7b-instruct-v0.1.Q8_0.gguf
@@ -45,9 +45,9 @@ spec:
           #  - name: PGPT_HF_MODEL_FILE
           #    value: mistral-7b-instruct-v0.1.Q8_0.gguf
       volumes:
-        - name: private-gpt-models
+        - name: ai-private-gpt-models
           persistentVolumeClaim:
-            claimName: private-gpt-models
+            claimName: ai-private-gpt-models
         - name: private-gpt-settings-yaml
           configMap:
             name: private-gpt-settings-yaml

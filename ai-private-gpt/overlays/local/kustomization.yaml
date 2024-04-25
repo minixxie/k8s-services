@@ -3,7 +3,7 @@ kind: Kustomization
 resources:
   - ../../kustomize
 metadata:
-  name: private-gpt
+  name: ai-private-gpt
 
 patches:
   - path: configmap.yaml
@@ -16,10 +16,10 @@ patches:
       group: apps
       version: v1
       kind: Deployment
-      name: private-gpt
+      name: ai-private-gpt
   - path: web-ui-deployment.yaml
     target:
       group: apps
       version: v1
       kind: Deployment
-      name: private-gpt-web
+      name: ai-private-gpt-web

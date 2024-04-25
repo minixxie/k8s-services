@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: private-gpt-web
+  name: ai-private-gpt-web
 spec:
   template:
     spec:

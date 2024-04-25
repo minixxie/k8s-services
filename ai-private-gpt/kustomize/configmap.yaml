@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: private-gpt-settings-yaml
-  namespace: private-gpt
+  namespace: ai-private-gpt
 data:
   settings.yaml: |
     server:
