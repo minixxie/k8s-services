@@ -1,18 +1,11 @@
 #!/bin/bash
 
 set -e
+scriptPath=$(cd $(dirname "$0") && pwd)
+cd "$scriptPath"/..
 
 ### k8s nodes
-if [ "$1" == colima ]; then
-	colima stop --force
-	colima delete --force
-	make colima
-else  # assume k3s on ubuntu
-	make k3s-redo
-fi
-
-### basic softwares
-#make -s -C ./ingress-controller local wait
+make -s k8s-redo
 
 ### the application
 make -s -C ./datascience-models local wait test
