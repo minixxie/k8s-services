@@ -1,0 +1,8 @@
+#!/bin/bash
+
+scriptPath=$(cd $(dirname "$0") && pwd)
+
+source "$scriptPath"/var.rc
+cd "$scriptPath"
+
+echo $NS

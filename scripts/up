@@ -1,0 +1,13 @@
+#!/bin/bash
+
+scriptPath=$(cd $(dirname "$0") && pwd)
+
+source "$scriptPath"/var.rc
+cd "$scriptPath"
+
+if [ -f Chart.yaml ]; then
+	helm dep update .
+	helm upgrade --install --wait $(./chart-name) . -n $(./ns) --create-namespace
+elif [ -d kustomize ]; then
+	cd kustomize/ ; kubectl apply -k .
+fi

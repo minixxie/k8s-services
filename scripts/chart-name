@@ -1,0 +1,9 @@
+#!/bin/bash
+
+scriptPath=$(cd $(dirname "$0") && pwd)
+
+source "$scriptPath"/var.rc
+cd "$scriptPath"
+
+echo $NS
+cat Chart.yaml | grep "^name: " | sed 's/^name: //'

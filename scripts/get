@@ -1,0 +1,18 @@
+#!/bin/bash
+
+scriptPath=$(cd $(dirname "$0") && pwd)
+
+source "$scriptPath"/var.rc
+cd "$scriptPath"
+
+echo '# kubectl -n $(./ns) get all'
+kubectl -n $(./ns) get all
+
+echo '# kubectl -n $(./ns) get ing'
+kubectl -n $(./ns) get ing 
+
+echo '# kubectl -n $(./ns) get pvc'
+kubectl -n $(./ns) get pvc
+
+echo '# kubectl get pv'
+kubectl get pv
