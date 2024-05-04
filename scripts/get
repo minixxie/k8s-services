@@ -5,14 +5,57 @@ scriptPath=$(cd $(dirname "$0") && pwd)
 source "$scriptPath"/var.rc
 cd "$scriptPath"
 
-echo '# kubectl -n $(./ns) get all'
-kubectl -n $(./ns) get all
+all=0
+ing=0
+pvc=0
+pv=0
+pod=0
+svc=0
+deploy=0
+if [ "$1" == "" ]; then
+	all=1
+	ing=1
+	pvc=1
+	pv=1
+elif [ "$1" == pod ]; then
+	pod=1
+elif [ "$1" == svc ]; then
+	svc=1
+elif [ "$1" == deploy ]; then
+	deploy=1
+elif [ "$1" == ing ]; then
+	ing=1
+elif [ "$1" == pvc ]; then
+	pvc=1
+elif [ "$1" == pv ]; then
+	pv=1
+fi
 
-echo '# kubectl -n $(./ns) get ing'
-kubectl -n $(./ns) get ing 
-
-echo '# kubectl -n $(./ns) get pvc'
-kubectl -n $(./ns) get pvc
-
-echo '# kubectl get pv'
-kubectl get pv
+if [ $all -eq 1 ]; then
+	echo '# kubectl -n $(./ns) get all'
+	kubectl -n $(./ns) get all
+fi
+if [ $pod -eq 1 ]; then
+	echo '# kubectl -n $(./ns) get pod'
+	kubectl -n $(./ns) get pod
+fi
+if [ $svc -eq 1 ]; then
+	echo '# kubectl -n $(./ns) get svc'
+	kubectl -n $(./ns) get svc
+fi
+if [ $deploy -eq 1 ]; then
+	echo '# kubectl -n $(./ns) get deploy'
+	kubectl -n $(./ns) get deploy
+fi
+if [ $ing -eq 1 ]; then
+	echo '# kubectl -n $(./ns) get ing'
+	kubectl -n $(./ns) get ing
+fi
+if [ $pvc -eq 1 ]; then
+	echo '# kubectl -n $(./ns) get pvc'
+	kubectl -n $(./ns) get pvc
+fi
+if [ $pv -eq 1 ]; then
+	echo '# kubectl get pv'
+	kubectl get pv
+fi

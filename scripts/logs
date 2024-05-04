@@ -1,0 +1,30 @@
+#!/bin/bash
+
+scriptPath=$(cd $(dirname "$0") && pwd)
+
+source "$scriptPath"/var.rc
+cd "$scriptPath"
+
+
+pods=$(kubectl -n $(./ns) get pod)
+counter=0
+while IFS= read -r pod; do
+	# Add your code here to process each pod
+	if [[ $counter -gt 0 ]]; then
+		printf "%02d " $counter
+		echo "$pod"
+	else
+		echo "   $pod"
+	fi
+	counter=$((counter+1))
+done <<< "$pods"
+
+echo -n "Input the pod number to get the logs: "
+read podNumber
+podNumber=$((10#$podNumber+1))
+
+podName=$(echo "$pods" | sed -n "$podNumber"p | awk '{print $1}')
+
+echo "# kubectl -n $(./ns) logs -f $podName"
+echo "=========================================================="
+kubectl -n $(./ns) logs -f $podName
