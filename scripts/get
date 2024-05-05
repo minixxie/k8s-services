@@ -9,6 +9,7 @@ all=0
 ing=0
 pvc=0
 pv=0
+img=0
 pod=0
 svc=0
 deploy=0
@@ -17,6 +18,7 @@ if [ "$1" == "" ]; then
 	ing=1
 	pvc=1
 	pv=1
+	img=1
 elif [ "$1" == pod ]; then
 	pod=1
 elif [ "$1" == svc ]; then
@@ -29,6 +31,8 @@ elif [ "$1" == pvc ]; then
 	pvc=1
 elif [ "$1" == pv ]; then
 	pv=1
+elif [ "$1" == img ]; then
+	img=1
 fi
 
 if [ $all -eq 1 ]; then
@@ -58,4 +62,14 @@ fi
 if [ $pv -eq 1 ]; then
 	echo '# kubectl get pv'
 	kubectl get pv
+fi
+if [ $img -eq 1 ]; then
+	echo ""
+	for img in $CONTAINER_IMAGES; do
+		echo "[$img]"
+		imgName=$(echo -n "$img" | cut -f 1 -d ':')
+		imgTag=$(echo -n "$img" | cut -f 2 -d ':')
+		echo "# nerdctl --namespace=k8s.io images | grep $imgName | grep $imgTag"
+		nerdctl --namespace=k8s.io images | grep $imgName | grep $imgTag
+	done	
 fi

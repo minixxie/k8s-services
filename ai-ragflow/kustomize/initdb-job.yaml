@@ -5,12 +5,12 @@ metadata:
   namespace: infra-mysql
   annotations:
   labels:
-    appID: ai-ragflow
+    app: ai-ragflow
 spec:
   template:
     metadata:
       labels:
-        appID: ai-ragflow
+        app: ai-ragflow
     spec:
       containers:
         - name: init-db

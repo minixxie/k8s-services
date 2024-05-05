@@ -7,12 +7,12 @@ spec:
   replicas: 1  # note: must be 1 pod
   selector:
     matchLabels:
-      appID: ai-private-gpt-web
+      app: ai-private-gpt-web
   template:
     metadata:
       annotations:
       labels:
-        appID: ai-private-gpt-web
+        app: ai-private-gpt-web
     spec:
       containers:
         - name: main

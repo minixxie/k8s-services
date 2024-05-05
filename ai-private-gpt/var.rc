@@ -1,0 +1,5 @@
+NS=ai-private-gpt
+HELM_REPO_ALIAS=
+CONTAINER_IMAGES="
+minixxie/privategpt:a79e02c36dedb0b981e6cfbcd16b4010cb3a909d
+"

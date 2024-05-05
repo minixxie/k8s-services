@@ -1,0 +1,5 @@
+POST http://ai-ragflow.local/new_token
+Content-Type: application/json; charset=utf-8
+
+{
+}

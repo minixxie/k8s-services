@@ -9,7 +9,7 @@ metadata:
     traefik.ingress.kubernetes.io/service.sticky.cookie.secure: "true"
 spec:
   selector:
-    appID: ai-private-gpt-web
+    app: ai-private-gpt-web
   type: LoadBalancer
   ports:
     - name: http

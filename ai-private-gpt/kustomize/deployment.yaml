@@ -7,12 +7,12 @@ spec:
   replicas: 2
   selector:
     matchLabels:
-      appID: ai-private-gpt
+      app: ai-private-gpt
   template:
     metadata:
       annotations:
       labels:
-        appID: ai-private-gpt
+        app: ai-private-gpt
     spec:
       containers:
         - name: main

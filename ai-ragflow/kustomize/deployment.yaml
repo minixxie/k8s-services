@@ -7,12 +7,12 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      appID: ai-ragflow
+      app: ai-ragflow
   template:
     metadata:
       annotations:
       labels:
-        appID: ai-ragflow
+        app: ai-ragflow
     spec:
       containers:
         - name: main
