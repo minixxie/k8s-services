@@ -8,6 +8,6 @@ cd "$scriptPath"/..
 make -s k8s-redo
 
 ### Application
-cd infra-mysql@8.2.0 && make local wait test && cd ..
+cd infra-mysql@8.2.0 && ./local ./test.sh && cd ..
 
 ### TESTS
