@@ -8,7 +8,7 @@ cd "$scriptPath"/..
 make -s k8s-redo
 
 ### the application
-make -s -C ./datascience-models local wait test
+#make -s -C ./datascience-models local wait test
 make -s -C ./qdrant local wait test
-make -s -C ./infra-mongodb@7.0.5 local wait test
-make -s -C ./ai-private-gpt local wait test
+cd ./infra-mongodb@7.0.5 && ./local && ./test.sh && cd -
+cd ./ai-private-gpt && ./local && ./test.sh && cd -

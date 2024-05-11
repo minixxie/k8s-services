@@ -18,12 +18,14 @@ async function injectDoc(filename, text) {
         file_name: filename,
         text: text,
     };
-    const response = await axios.post('http://private-gpt.local/v1/ingest/text', requestData, {
+	console.log("before axios.post");
+    const response = await axios.post('http://ai-private-gpt.local/v1/ingest/text', requestData, {
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
         }
     });
+	console.log("after axios.post");
     // {
     //     "object":"list",
     //     "model":"private-gpt",
@@ -45,7 +47,7 @@ async function ask(docIds, prompt) {
         context_filter: {docs_ids: docIds},
         use_context: true,
     };
-    const response = await axios.post('http://private-gpt.local/v1/completions', requestData, {
+    const response = await axios.post('http://ai-private-gpt.local/v1/completions', requestData, {
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
