@@ -24,3 +24,6 @@ xxl-job-admin:
       port: 8080
       servlet:
         context-path: /
+    xxl:
+      job:
+        accessToken: "0123456789"

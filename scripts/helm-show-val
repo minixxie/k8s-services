@@ -1,0 +1,9 @@
+#!/bin/bash
+
+scriptPath=$(cd $(dirname "$0") && pwd)
+
+source "$scriptPath"/var.rc
+cd "$scriptPath"
+
+./helm-repo-add > /dev/null 2>&1 || true
+helm show values "$HELM_REPO_ALIAS"/$(./chart-name)
