@@ -1,0 +1,11 @@
+NS=apollo-server-go
+HELM_REPO_ALIAS=
+CONTAINER_IMAGES="
+minixxie/apollo-server-go:0.0.4
+"
+WAIT_DEPLOYS="
+apollo-server-go
+"
+TEST_URLS="
+http://apollo-server-go.apollo-server-go.svc.cluster.local/services/config
+"

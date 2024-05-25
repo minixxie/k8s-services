@@ -1,0 +1,8 @@
+NS=infra-pgsql
+HELM_REPO_ALIAS=postgresql
+CONTAINER_IMAGES="
+bitnami/postgresql:15.1.0-debian-11-r7
+"
+WAIT_STATEFULSETS="
+postgresql
+"

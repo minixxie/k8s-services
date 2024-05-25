@@ -9,5 +9,5 @@ if [ -f Chart.yaml ]; then
 	helm dep update .
 	helm upgrade --install --wait $(./chart-name) . -n $(./ns) --create-namespace
 elif [ -d kustomize ]; then
-	cd kustomize/ ; kubectl apply -k .
+	kubectl apply -k kustomization/base
 fi

@@ -1,0 +1,13 @@
+#!/bin/bash
+
+scriptPath=$(cd $(dirname "$0") && pwd)
+
+source "$scriptPath"/var.rc
+cd "$scriptPath"
+
+for url in $TEST_URLS; do
+	echo "[$url]"
+	kubectl run test-$(date +%s) --rm -it --restart=Never \
+		--image curlimages/curl:latest --command -- \
+		sh -c "curl -f -v $url"
+done

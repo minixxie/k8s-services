@@ -1,2 +1,0 @@
-NAMESPACE=infra-mysql
-HELM_REPO_ALIAS=mysql

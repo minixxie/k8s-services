@@ -1,1 +1,0 @@
-NS=$NAMESPACE STATEFULSET="mongodb" ../scripts/k8s-wait-statefulset.sh

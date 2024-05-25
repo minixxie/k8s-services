@@ -3,3 +3,6 @@ HELM_REPO_ALIAS=mongodb
 CONTAINER_IMAGES="
 mongo:7.0.5-jammy
 "
+WAIT_STATEFULSETS="
+mongodb
+"

@@ -2,7 +2,7 @@ SHELL := /bin/bash
 
 .PHONY: helm-repo
 helm-repo:
-	@cat Chart.yaml | grep repository | sed 's/^.*: //'
+	@./helm-repo
 
 .PHONY: helm-repo-alias
 helm-repo-alias:
@@ -10,11 +10,11 @@ helm-repo-alias:
 
 .PHONY: chart-name
 chart-name:
-	@cat Chart.yaml | grep "^name: " | sed 's/^name: //'
+	@./chart-name
 
 .PHONY: ns
 ns:
-	@source make.rc ; echo $$NAMESPACE
+	@./ns
 
 .PHONY: check
 check:
@@ -23,59 +23,29 @@ check:
 
 .PHONY: get
 get:
-	@echo "----------------------------------------"
-	# kubectl -n $$(make -s ns) get all
-	@kubectl -n $$(make -s ns) get all
-	@echo "----------------------------------------"
-	# kubectl -n $$(make -s ns) get ing
-	@kubectl -n $$(make -s ns) get ing
-	@echo "----------------------------------------"
-	# kubectl -n $$(make -s ns) get pvc
-	@kubectl -n $$(make -s ns) get pvc
-	@echo "----------------------------------------"
-	# kubectl get pv
-	@kubectl get pv
-	@echo "----------------------------------------"
-	@if [ -f get.rc ]; then source get.rc; fi
+	@./get
 
 .PHONY: up
-up: imp-img
-	if [ -f Chart.yaml ]; then \
-		helm dep update .; \
-		helm upgrade --install --wait $$(make -s chart-name) . -n $$(make -s ns) --create-namespace; \
-	elif [ -d kustomize ]; then \
-		cd kustomize/ ; kubectl apply -k . ; \
-	fi
+up:
+	@./up
 
 # values.yaml used as default, values.local.yaml as override
 .PHONY: local
-local: imp-img
-	if [ -f local.rc ]; then \
-		source local.rc; \
-	else \
-		if [ -f Chart.yaml ]; then \
-			helm dep update .; \
-			helm upgrade --install --wait $$(make -s chart-name) . -n $$(make -s ns) --create-namespace -f values.local.yaml; \
-		elif [ -d kustomize ]; then \
-			kubectl apply -k overlays/local ; \
-		fi; \
-	fi
+local:
+	@./local
 
 .PHONY: down
 down:
-	if [ -f Chart.yaml ]; then \
-		helm uninstall $$(make -s chart-name) -n $$(make -s ns) || true; \
-	elif [ -d kustomize ]; then \
-		cd kustomize/ ; kubectl delete -k . ; \
-	fi
+	@./down
 
 .PHONY: cli
 cli:
-	if [ -f cli.rc ]; then source cli.rc; fi
+	@./cli
 
 .PHONY: test
 test:
 	if [ -x test.sh ]; then ./test.sh; fi
+	if [ -x test ]; then ./test; fi
 
 .PHONY: exp-img
 exp-img:
@@ -110,19 +80,19 @@ imp-img:
 
 .PHONY: repo-add
 repo-add:
-	helm repo add $$(make -s helm-repo-alias) $$(make -s helm-repo)
+	@./helm-repo-add
 
 .PHONY: repo-remove
 repo-remove:
-	helm repo remove $$(make -s helm-repo-alias) || true
+	@./helm-repo-remove
 
 .PHONY: repo-search
 repo-search: repo-add
 	helm search repo $$(make -s helm-repo-alias)
 
 .PHONY: show-val
-show-val: repo-add
-	helm show values $$(make -s helm-repo-alias)/$$(make -s chart-name)
+show-val:
+	@./helm-show-val
 
 .PHONY: tpl
 tpl: repo-add
@@ -130,8 +100,4 @@ tpl: repo-add
 
 .PHONY: wait
 wait:
-	@if [ -f wait.rc ]; then \
-		source make.rc ; NS=$$NAMESPACE source wait.rc; \
-	else \
-		source make.rc ; NS=$$NAMESPACE DEPLOYMENT="$$DEPLOYMENT" ../scripts/k8s-wait-deployment.sh; \
-	fi
+	@./wait

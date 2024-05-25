@@ -8,6 +8,6 @@ cd "$scriptPath"/..
 make -s k8s-redo
 
 ### Application
-cd infra-mongodb@7.0.5 && ./local && ./test.sh && cd ..
+cd infra-mongodb@7.0.5 && ./img && ./local && ./wait && ./test && cd -
 
 ### TESTS

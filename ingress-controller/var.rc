@@ -1,0 +1,7 @@
+NS=default
+HELM_REPO_ALIAS=traefik
+CONTAINER_IMAGES="
+"
+WAIT_DEPLOYS="
+traefik
+"

@@ -1,2 +1,0 @@
-NAMESPACE=infra-elasticsearch
-HELM_REPO_ALIAS=elasticsearch

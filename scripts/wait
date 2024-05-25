@@ -1,0 +1,16 @@
+#!/bin/bash
+
+scriptPath=$(cd $(dirname "$0") && pwd)
+
+source "$scriptPath"/var.rc
+cd "$scriptPath"
+
+for d in $WAIT_DEPLOYS; do
+	NS=$NS DEPLOYMENT=$d ../scripts/k8s-wait-deployment.sh
+done
+for s in $WAIT_STATEFULSETS; do
+	NS=$NS STATEFULSET=$s ../scripts/k8s-wait-statefulset.sh
+done
+for j in $WAIT_JOBS; do
+	NS=$NS JOB=$j ../scripts/k8s-wait-job.sh
+done

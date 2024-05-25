@@ -8,10 +8,6 @@ cd "$scriptPath"
 if [ -f Chart.yaml ]; then
 	helm dep update .
 	helm upgrade --install --wait $(./chart-name) . -n $(./ns) --create-namespace -f values.local.yaml
-elif [ -d kustomize ]; then
-	kubectl apply --wait -k overlays/local
-	#kubectl apply --wait -f <(kubectl kustomize ./overlays/local)
-	for d in $WAIT_DEPLOYS; do
-		NS=$NS DEPLOYMENT=$d ../scripts/k8s-wait-deployment.sh
-	done
+elif [ -d kustomization ]; then
+	kubectl apply -k kustomization/overlays/local
 fi

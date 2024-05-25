@@ -3,3 +3,6 @@ HELM_REPO_ALIAS=mysql
 CONTAINER_IMAGES="
 bitnami/mysql:8.2.0-debian-11-r0
 "
+WAIT_STATEFULSETS="
+mysql
+"

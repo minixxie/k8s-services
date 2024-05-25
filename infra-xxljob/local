@@ -1,1 +1,12 @@
-../scripts/local
+#!/bin/bash
+
+scriptPath=$(cd $(dirname "$0") && pwd)
+
+source "$scriptPath"/var.rc
+cd "$scriptPath"
+
+helm dep update .
+helm upgrade --install --wait $(./chart-name) . \
+	-n $(./ns) --create-namespace \
+	-f values.local.yaml \
+	--set xxl-job-admin.mysql.password=$(kubectl get secret --namespace infra-mysql mysql -o jsonpath="{.data.mysql-root-password}" | base64 -d)

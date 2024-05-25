@@ -1,2 +1,0 @@
-NAMESPACE=infra-mongodb
-HELM_REPO_ALIAS=mongodb

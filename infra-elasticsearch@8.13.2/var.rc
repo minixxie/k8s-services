@@ -1,0 +1,14 @@
+NS=infra-es
+HELM_REPO_ALIAS=elasticsearch
+CONTAINER_IMAGES="
+bitnami/elasticsearch:8.13.2-debian-12-r2
+"
+WAIT_STATEFULSETS="
+elasticsearch-master
+elasticsearch-data
+elasticsearch-ingest
+elasticsearch-coordinating
+"
+TEST_URLS="
+http://elasticsearch.infra-es.svc.cluster.local:9200/
+"

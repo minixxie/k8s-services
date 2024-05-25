@@ -11,11 +11,11 @@ make -s k8s-redo
 make local-monitoring
 
 ### Application's dependencies
-cd infra-mysql@8.2.0 && ./local && ./test.sh && cd ..
-cd infra-xxljob && ./local && ./test.sh && cd ..
+cd infra-mysql@8.2.0 && ./img && ./local && ./wait && ./test && cd -
+cd infra-xxljob && ./img && ./local && ./wait && ./test && cd -
 
 ### Application
-cd java-springboot-svc && make build && make up get wait && cd ..
+cd java-springboot-svc && make build && make up get wait && cd -
 #cd java-springboot-svc/test && ./call-api.sh < Book.getBooks.http && cd -
 
 ### TESTS

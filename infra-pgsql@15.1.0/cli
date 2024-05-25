@@ -1,0 +1,16 @@
+#!/bin/bash
+
+echo -n "Postgres Password: "
+echo $(kubectl get secret --namespace infra-pgsql postgresql -o jsonpath="{.data.postgres-password}" | base64 -d)
+
+echo "\\l - list all databases"
+echo "\\c - switch to another db"
+echo "\\dt - list all the tables"
+echo "\\d <table_name> - describe a table"
+echo "\\d+ <table_name> - describe a table with more info"
+echo "\\dn - list all the schemas"
+echo "\\du - list users and their roles"
+echo "reference: https://www.postgresql.org/docs/current/app-psql.html"
+echo ""
+
+kubectl run postgresql-cli-$(date +%s) --rm --tty -i --restart='Never' --namespace infra-pgsql --image docker.io/bitnami/postgresql:15.1.0-debian-11-r0 --env=PGPASSWORD=$(kubectl get secret --namespace infra-pgsql postgresql -o jsonpath="{.data.postgres-password}" | base64 -d) --command -- psql --host postgresql -U postgres -d postgres -p 5432
