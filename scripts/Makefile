@@ -2,7 +2,7 @@ SHELL := /bin/bash
 
 .PHONY: helm-repo
 helm-repo:
-	@./helm-repo
+	@if [ -x ./helm-repo ]; then ./helm-repo; else ../scripts/helm-repo; fi
 
 .PHONY: helm-repo-alias
 helm-repo-alias:
@@ -10,11 +10,11 @@ helm-repo-alias:
 
 .PHONY: chart-name
 chart-name:
-	@./chart-name
+	@if [ -x ./chart-name ]; then ./chart-name; else ../scripts/chart-name; fi
 
 .PHONY: ns
 ns:
-	@./ns
+	@if [ -x ./ns ]; then ./ns; else ../scripts/ns; fi
 
 .PHONY: check
 check:
@@ -23,20 +23,20 @@ check:
 
 .PHONY: get
 get:
-	@./get
+	@if [ -x ./get ]; then ./get; else ../scripts/get; fi
 
 .PHONY: up
 up:
-	@./up
+	@if [ -x ./up ]; then ./up; else ../scripts/up; fi
 
 # values.yaml used as default, values.local.yaml as override
 .PHONY: local
 local:
-	@./local
+	@if [ -x ./local ]; then ./local; else ../scripts/local; fi
 
 .PHONY: down
 down:
-	@./down
+	@if [ -x ./down ]; then ./down; else ../scripts/down; fi
 
 .PHONY: cli
 cli:
@@ -44,60 +44,32 @@ cli:
 
 .PHONY: test
 test:
-	if [ -x test.sh ]; then ./test.sh; fi
-	if [ -x test ]; then ./test; fi
+	@if [ -x ./test ]; then ./test; else ../scripts/test; fi
 
-.PHONY: exp-img
-exp-img:
-	if [ -f img.rc ]; then \
-		source img.rc; \
-		nerdctl --namespace=k8s.io images | grep $$IMG | grep $$IMG_TAG; \
-		if [ $$? -ne 0 ]; then \
-			nerdctl pull "$$IMG:$$IMG_TAG" --namespace=k8s.io; \
-		fi; \
-		f=$$(echo $$IMG | sed 's/\//__/g'); \
-		nerdctl save $$IMG:$$IMG_TAG --output "$$f"___"$$IMG_TAG.tar" --namespace=k8s.io; \
-		ls -lt "$$f"___"$$IMG_TAG.tar"; \
-	fi
+.PHONY: img
+img:
+	@if [ -x ./img ]; then ./img; else ../scripts/img; fi
 
-.PHONY: imp-img
-imp-img:
-	if [ -f img.rc ]; then \
-		source img.rc; \
-		f=$$(echo $$IMG | sed 's/\//__/g'); \
-		if [ -f "$$f"___"$$IMG_TAG.tar" ]; then \
-			nerdctl --namespace=k8s.io images | grep $$IMG | grep $$IMG_TAG; \
-			if [ $$? -ne 0 ]; then \
-				nerdctl load -i "$$f"___"$$IMG_TAG.tar" --namespace=k8s.io; \
-			fi; \
-		else \
-			echo >&2 "WARN: file not exists: $$f"___"$$IMG_TAG.tar"; \
-			nerdctl pull "$$IMG:$$IMG_TAG" --namespace=k8s.io; \
-			make -s exp-img; \
-		fi; \
-		nerdctl --namespace=k8s.io images | grep $$IMG | grep $$IMG_TAG; \
-	fi
+.PHONY: helm-repo-add
+helm-repo-add:
+	@if [ -x ./helm-repo-add ]; then ./helm-repo-add; else ../scripts/helm-repo-add; fi
 
-.PHONY: repo-add
-repo-add:
-	@./helm-repo-add
+.PHONY: helm-repo-remove
+helm-repo-remove:
+	@if [ -x ./helm-repo-remove ]; then ./helm-repo-remove; else ../scripts/helm-repo-remove; fi
 
-.PHONY: repo-remove
-repo-remove:
-	@./helm-repo-remove
-
-.PHONY: repo-search
-repo-search: repo-add
+.PHONY: helm-repo-search
+helm-repo-search: helm-repo-add
 	helm search repo $$(make -s helm-repo-alias)
 
-.PHONY: show-val
-show-val:
-	@./helm-show-val
+.PHONY: helm-show-val
+helm-show-val:
+	@if [ -x ./helm-show-val ]; then ./helm-show-val; else ../scripts/helm-show-val; fi
 
 .PHONY: tpl
-tpl: repo-add
+tpl: helm-repo-add
 	helm template $$(make -s chart-name) $$(make -s helm-repo-alias)/$$(make -s chart-name)
 
 .PHONY: wait
 wait:
-	@./wait
+	@if [ -x ./wait ]; then ./wait; else ../scripts/wait; fi

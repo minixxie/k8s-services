@@ -2,8 +2,8 @@
 
 scriptPath=$(cd $(dirname "$0") && pwd)
 
-source "$scriptPath"/var.rc
-cd "$scriptPath"
+source "$PWD"/var.rc
+cd "$PWD"
 
 all=0
 ing=0
@@ -36,28 +36,28 @@ elif [ "$1" == img ]; then
 fi
 
 if [ $all -eq 1 ]; then
-	echo '# kubectl -n $(./ns) get all'
-	kubectl -n $(./ns) get all
+	echo '# kubectl -n $(make -s ns) get all'
+	kubectl -n $(make -s ns) get all
 fi
 if [ $pod -eq 1 ]; then
-	echo '# kubectl -n $(./ns) get pod'
-	kubectl -n $(./ns) get pod
+	echo '# kubectl -n $(make -s ns) get pod'
+	kubectl -n $(make -s ns) get pod
 fi
 if [ $svc -eq 1 ]; then
-	echo '# kubectl -n $(./ns) get svc'
-	kubectl -n $(./ns) get svc
+	echo '# kubectl -n $(make -s ns) get svc'
+	kubectl -n $(make -s ns) get svc
 fi
 if [ $deploy -eq 1 ]; then
-	echo '# kubectl -n $(./ns) get deploy'
-	kubectl -n $(./ns) get deploy
+	echo '# kubectl -n $(make -s ns) get deploy'
+	kubectl -n $(make -s ns) get deploy
 fi
 if [ $ing -eq 1 ]; then
-	echo '# kubectl -n $(./ns) get ing'
-	kubectl -n $(./ns) get ing
+	echo '# kubectl -n $(make -s ns) get ing'
+	kubectl -n $(make -s ns) get ing
 fi
 if [ $pvc -eq 1 ]; then
-	echo '# kubectl -n $(./ns) get pvc'
-	kubectl -n $(./ns) get pvc
+	echo '# kubectl -n $(make -s ns) get pvc'
+	kubectl -n $(make -s ns) get pvc
 fi
 if [ $pv -eq 1 ]; then
 	echo '# kubectl get pv'

@@ -11,3 +11,6 @@ make -s k8s-redo
 make -s -C ./nvidia-gpu-operator local wait test
 
 ### the application
+
+
+echo SUCCESS

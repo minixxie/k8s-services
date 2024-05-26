@@ -8,6 +8,9 @@ cd "$scriptPath"/..
 make -s k8s-redo
 
 ### Application
-cd infra-elasticsearch@8.13.2 && ./img && ./local && ./wait && ./test && cd -
+make -s -C infra-elasticsearch@8.13.2 img local wait test
 
 ### TESTS
+
+
+echo SUCCESS

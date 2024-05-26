@@ -11,3 +11,7 @@ make -s k8s-redo
 make -s ragflow
 
 ### TESTS
+
+
+
+echo SUCCESS

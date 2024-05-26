@@ -2,7 +2,7 @@
 
 scriptPath=$(cd $(dirname "$0") && pwd)
 
-source "$scriptPath"/var.rc
-cd "$scriptPath"
+source "$PWD"/var.rc
+cd "$PWD"
 
-helm repo add "$HELM_REPO_ALIAS" $(./helm-repo)
+helm repo add "$HELM_REPO_ALIAS" $(make -s helm-repo)

@@ -1,0 +1,8 @@
+NS=infra-qdrant
+HELM_REPO_ALIAS=qdrant
+CONTAINER_IMAGES="
+qdrant/qdrant:v1.7.3
+"
+WAIT_STATEFULSETS="
+qdrant
+"

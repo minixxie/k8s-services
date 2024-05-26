@@ -2,7 +2,7 @@
 
 scriptPath=$(cd $(dirname "$0") && pwd)
 
-source "$scriptPath"/var.rc
-cd "$scriptPath"
+source "$PWD"/var.rc
+cd "$PWD"
 
 helm repo remove "$HELM_REPO_ALIAS" || true

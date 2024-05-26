@@ -8,7 +8,7 @@ cd "$scriptPath"/..
 make -s k8s-redo
 
 ### Application
-make -s -C apollo-server-go img local wait test
+make -s -C infra-qdrant img local wait test
 
 ### TESTS
 

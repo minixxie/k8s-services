@@ -2,8 +2,8 @@
 
 scriptPath=$(cd $(dirname "$0") && pwd)
 
-source "$scriptPath"/var.rc
-cd "$scriptPath"
+source "$PWD"/var.rc
+cd "$PWD"
 
 for img in $CONTAINER_IMAGES; do
 	echo "[$img]"

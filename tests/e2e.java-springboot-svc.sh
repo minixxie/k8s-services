@@ -11,8 +11,8 @@ make -s k8s-redo
 make local-monitoring
 
 ### Application's dependencies
-cd infra-mysql@8.2.0 && ./img && ./local && ./wait && ./test && cd -
-cd infra-xxljob && ./img && ./local && ./wait && ./test && cd -
+make -s -C infra-mysql@8.2.0 img local wait test
+make -s -C infra-xxljob img local wait test
 
 ### Application
 cd java-springboot-svc && make build && make up get wait && cd -
@@ -20,3 +20,7 @@ cd java-springboot-svc && make build && make up get wait && cd -
 
 ### TESTS
 cd java-springboot-svc && make test && cd - > /dev/null
+
+
+
+echo SUCCESS

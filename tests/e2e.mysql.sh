@@ -8,9 +8,9 @@ cd "$scriptPath"/..
 make -s k8s-redo
 
 ### Application
-cd infra-mysql@8.2.0 && ./img && ./local && ./wait && ./test && cd -
+make -s -C infra-mysql@8.2.0 img local wait test
 
 ### TESTS
 
 
-echo "SUCCESS"
+echo SUCCESS
