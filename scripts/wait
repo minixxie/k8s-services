@@ -14,3 +14,6 @@ done
 for j in $WAIT_JOBS; do
 	NS=$NS JOB=$j ../scripts/k8s-wait-job.sh
 done
+for l in $WAIT_DAEMONSETS; do
+	NS=$NS LABELS=$l ../scripts/k8s-wait-statefulset.sh
+done

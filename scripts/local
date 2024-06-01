@@ -7,7 +7,14 @@ cd "$PWD"
 
 if [ -f Chart.yaml ]; then
 	helm dep update .
-	helm upgrade --install --wait $(make -s chart-name) . -n $(make -s ns) --create-namespace -f values.local.yaml
+	opts=""
+	if [ -f values.yaml ]; then
+		opts="$opts -f values.yaml"
+	fi
+	if [ -f values.local.yaml ]; then
+		opts="$opts -f values.local.yaml"
+	fi
+	helm upgrade --install --wait $(make -s chart-name) . -n $(make -s ns) --create-namespace $opts
 elif [ -d kustomization ]; then
 	kubectl apply -k kustomization/overlays/local
 fi
