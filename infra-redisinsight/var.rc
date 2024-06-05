@@ -1,0 +1,8 @@
+NS=infra-redis
+HELM_REPO_ALIAS=redisinsight
+CONTAINER_IMAGES="
+redislabs/redisinsight:latest
+"
+WAIT_DEPLOYS="
+redisinsight
+"

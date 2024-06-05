@@ -1,3 +1,0 @@
-NAMESPACE=infra-redis
-HELM_REPO_ALIAS=redisinsight
-DEPLOYMENT=redisinsight
