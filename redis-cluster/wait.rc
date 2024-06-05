@@ -1,1 +1,0 @@
-NS=$NAMESPACE STATEFULSET="redis-cluster" ../scripts/k8s-wait-statefulset.sh

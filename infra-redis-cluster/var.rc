@@ -1,0 +1,8 @@
+NS=infra-redis
+HELM_REPO_ALIAS=redis-cluster
+CONTAINER_IMAGES="
+bitnami/redis-cluster:7.0.5-debian-11-r19
+"
+WAIT_STATEFULSETS="
+redis-cluster
+"

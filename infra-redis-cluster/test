@@ -1,0 +1,6 @@
+#!/bin/bash
+
+pass=$(kubectl get secret redis-cluster -n infra-redis -o go-template='{{index .data "redis-password" | base64decode}}')
+echo "redis-cli -c -h redis-cluster.infra-redis.svc.cluster.local -p 6379 -a $pass CLUSTER INFO"
+
+kubectl run redis-cli-$(date "+%s") --rm --tty -i --restart='Never' --image docker.io/bitnami/redis-cluster:7.0.5-debian-11-r19 -n infra-redis --command -- bash -c "sleep 3; redis-cli -c -h redis-cluster.infra-redis.svc.cluster.local -p 6379 -a $pass CLUSTER INFO"
