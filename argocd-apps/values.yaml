@@ -132,12 +132,12 @@ argocd-apps:
       source:
         repoURL: https://github.com/minixxie/k8s-services
         targetRevision: HEAD
-        path: kafka
+        path: infra-kafka
         helm:
           releaseName: kafka
       destination:
         server: https://kubernetes.default.svc
-        namespace: kafka
+        namespace: infra-kafka
       syncPolicy:
         syncOptions:
           - CreateNamespace=true
@@ -161,14 +161,14 @@ argocd-apps:
             - name: 'yamlApplicationConfig.kafka.clusters[0].name'
               value: kafka-01
             - name: 'yamlApplicationConfig.kafka.clusters[0].bootstrapServers'
-              value: kafka.kafka.svc:9092
+              value: kafka.infra-kafka.svc:9092
             - name: 'yamlApplicationConfig.auth.type'
               value: disabled
             - name: 'yamlApplicationConfig.management.health.ldap.enabled'
               value: 'false'
       destination:
         server: https://kubernetes.default.svc
-        namespace: kafka
+        namespace: infra-kafka
       syncPolicy:
         syncOptions:
           - CreateNamespace=true
@@ -181,12 +181,12 @@ argocd-apps:
       source:
         repoURL: https://github.com/minixxie/k8s-services
         targetRevision: HEAD
-        path: kafka-ui
+        path: infra-kafka-ui
         helm:
           releaseName: kafka-ui
       destination:
         server: https://kubernetes.default.svc
-        namespace: kafka
+        namespace: infra-kafka
       syncPolicy:
         syncOptions:
           - CreateNamespace=true

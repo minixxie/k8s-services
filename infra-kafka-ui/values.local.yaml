@@ -1,0 +1,27 @@
+kafka-ui:
+  ingress:
+    enabled: true
+    host: 'kafka-ui.local'
+  yamlApplicationConfig:
+    kafka:
+      clusters:
+        - name: kafka-01
+          bootstrapServers: kafka.infra-kafka.svc.cluster.local:9092
+      #brokerConnect: "kafka.infra-kafka.svc.cluster.local:9092"
+      #properties:
+      #  security.protocol: SASL_PLAINTEXT
+      #  sasl.mechanism: PLAIN
+      #  sasl.jaas.config: |
+      #    org.apache.kafka.common.security.plain.PlainLoginModule required
+      #    username="admin"
+      #    password="hello123";
+    spring:
+      security:
+        oauth2:
+    auth:
+      #type: sasl
+      type: disabled
+    management:
+      health:
+        ldap:
+          enabled: false

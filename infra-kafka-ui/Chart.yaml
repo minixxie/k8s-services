@@ -1,0 +1,7 @@
+apiVersion: v2
+name: kafka-ui
+version: 1.4.2
+dependencies:
+  - name: kafka-ui
+    version: 1.4.2
+    repository: https://ui.charts.kafbat.io/

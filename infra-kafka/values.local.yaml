@@ -1,0 +1,10 @@
+kafka:
+  listeners:
+    client:
+      protocol: PLAINTEXT
+#  sasl:
+#    interbroker:
+#      user: admin
+#      password: "hello123"
+#      clientId: inter_broker_client
+#      clientSecret: ""

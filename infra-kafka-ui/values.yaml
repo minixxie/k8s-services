@@ -1,0 +1,18 @@
+kafka-ui:
+  ingress:
+    enabled: true
+    host: 'kafka-ui.local'
+  yamlApplicationConfig:
+    kafka:
+      clusters:
+        - name: kafka-01
+          bootstrapServers: kafka.infra-kafka.svc.cluster.local:9092
+    spring:
+      security:
+        oauth2:
+    auth:
+      type: disabled
+    management:
+      health:
+        ldap:
+          enabled: false

@@ -1,0 +1,6 @@
+dependencies:
+- name: kafka-ui
+  repository: https://ui.charts.kafbat.io/
+  version: 1.4.2
+digest: sha256:410e7bf0bdbc304c32fb74bfb5b692ca6b59eb104616840c64f3fc634200587b
+generated: "2024-08-09T17:30:43.639277305+08:00"

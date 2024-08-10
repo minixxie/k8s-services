@@ -1,0 +1,8 @@
+NS=infra-kafka
+HELM_REPO_ALIAS=kafka
+CONTAINER_IMAGES="
+bitnami/kafka:3.8.0-debian-12-r2
+"
+WAIT_STATEFULSETS="
+kafka-controller
+"

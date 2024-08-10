@@ -1,0 +1,7 @@
+NS=infra-kafka
+HELM_REPO_ALIAS=kafka-ui
+CONTAINER_IMAGES="
+ghcr.io/kafbat/kafka-ui:v1.0.0
+"
+WAIT_STATEFULSETS="
+"
