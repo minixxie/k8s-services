@@ -8,3 +8,4 @@ commonLabels:
 
 resources:
 - job.yaml
+- deployment.yaml

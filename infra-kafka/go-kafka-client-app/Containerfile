@@ -20,11 +20,13 @@ RUN go mod download
 ADD . .
 RUN ./scripts/build.sh
 RUN cp ./bin/kafka-producer /tmp/
+RUN cp ./bin/kafka-consumer /tmp/
 
 # RUN cp ./gen/openapiv2/all.swagger.json /tmp/swagger.json
 
 FROM gcr.io/distroless/base
 COPY --from=golang /tmp/kafka-producer /kafka-producer
+COPY --from=golang /tmp/kafka-consumer /kafka-consumer
 # To be served with http://xxx/swagger.json (loaded by http://xxx/docs):
 # COPY --from=golang /tmp/swagger.json /swagger.json
 # /go/bin/swagger to load /swagger.json and serve at :8888 (mux :80 => :8888)
@@ -34,4 +36,4 @@ COPY --from=golang /tmp/kafka-producer /kafka-producer
 EXPOSE 80
 # gRPC
 EXPOSE 9090
-ENTRYPOINT ["/kafka-producer"]
+ENTRYPOINT ["/kafka-consumer"]

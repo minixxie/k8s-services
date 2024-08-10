@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-kafka-client-app
+  namespace: default
+spec:
+  template:
+    metadata:
+      labels:
+        appID: go-kafka-client-app
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: golang
+        image: go-kafka-client-app:dont_push
+        imagePullPolicy: IfNotPresent
+        command: ["/kafka-consumer"]

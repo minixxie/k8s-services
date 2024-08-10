@@ -4,12 +4,14 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"time"
 
 	"github.com/IBM/sarama"
 )
 
 type Message struct {
 	Greeting string `json:"greeting"`
+	DateTime string `json:"datetime"`
 }
 
 func main() {
@@ -25,7 +27,10 @@ func main() {
 	defer producer.Close()
 
 	// Create a message struct and marshal it to JSON
-	msg := Message{Greeting: "Hello, Kafka!"}
+	msg := Message{
+		Greeting: "Hello, Kafka!",
+		DateTime: time.Now().Format(time.RFC3339),
+	}
 	jsonValue, err := json.Marshal(msg)
 	if err != nil {
 		log.Fatalf("Failed to marshal message to JSON: %v", err)
