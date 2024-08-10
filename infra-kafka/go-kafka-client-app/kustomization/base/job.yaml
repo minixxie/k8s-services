@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: go-kafka-client-app
+  namespace: default
+spec:
+  template:
+    metadata:
+      labels:
+        appID: go-kafka-client-app
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: golang
+        image: go-kafka-client-app:dont_push
+        imagePullPolicy: IfNotPresent
+        command: ["/kafka-producer"]
+  completions: 1
+  parallelism: 1

@@ -1,0 +1,37 @@
+FROM --platform=$BUILDPLATFORM minixxie/golang:1.21.0 as golang
+
+ARG BUILDPLATFORM
+
+WORKDIR /go/src/app
+
+#ADD ./micro ./micro
+COPY ./go.mod .
+COPY ./go.sum .
+ADD ./scripts ./scripts
+# RUN ./scripts/install-protoc-plugins.sh
+RUN go mod download
+
+# ADD ./pb ./pb
+# ADD ./buf.yaml ./buf.yaml
+# ADD ./buf.lock ./buf.lock
+# ADD ./buf.gen.yaml ./buf.gen.yaml
+# RUN buf generate
+
+ADD . .
+RUN ./scripts/build.sh
+RUN cp ./bin/kafka-producer /tmp/
+
+# RUN cp ./gen/openapiv2/all.swagger.json /tmp/swagger.json
+
+FROM gcr.io/distroless/base
+COPY --from=golang /tmp/kafka-producer /kafka-producer
+# To be served with http://xxx/swagger.json (loaded by http://xxx/docs):
+# COPY --from=golang /tmp/swagger.json /swagger.json
+# /go/bin/swagger to load /swagger.json and serve at :8888 (mux :80 => :8888)
+#COPY --from=golang /go/bin/swagger /go/bin/swagger
+
+# HTTP API via grpc-gateway
+EXPOSE 80
+# gRPC
+EXPOSE 9090
+ENTRYPOINT ["/kafka-producer"]
