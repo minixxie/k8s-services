@@ -12,6 +12,6 @@ kube-prometheus-stack-operator
 kube-prometheus-stack-kube-state-metrics
 kube-prometheus-stack-grafana
 "
-WAIT_DAEMONSETS="
-app.kubernetes.io/name=prometheus-node-exporter
-"
+#WAIT_DAEMONSETS="
+#app.kubernetes.io/name=prometheus-node-exporter
+#"
