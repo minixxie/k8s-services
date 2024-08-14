@@ -8,6 +8,7 @@ cd "$scriptPath"/..
 make -s k8s-redo
 
 ### Application
+make -s -C kube-prometheus-stack img local wait test
 make -s -C infra-kafka img local wait test
 make -s -C infra-kafka-ui img local wait test
 
