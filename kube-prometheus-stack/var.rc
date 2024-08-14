@@ -12,4 +12,6 @@ kube-prometheus-stack-operator
 kube-prometheus-stack-kube-state-metrics
 kube-prometheus-stack-grafana
 "
-#NS=$NAMESPACE LABELS="app.kubernetes.io/name=prometheus-node-exporter" ../scripts/k8s-wait-daemonset.sh
+WAIT_DAEMONSETS="
+app.kubernetes.io/name=prometheus-node-exporter
+"
