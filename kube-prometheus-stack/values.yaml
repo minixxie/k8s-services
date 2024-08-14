@@ -46,3 +46,7 @@ kube-prometheus-stack:
           gnetId: 17175
           revision: 1
           datasource: Prometheus
+        kubernetes-kafka:  # https://grafana.com/grafana/dashboards/12483-kubernetes-kafka/
+          gnetId: 12483
+          revision: 1
+          datasource: Prometheus

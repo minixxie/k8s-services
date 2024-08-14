@@ -1,2 +1,0 @@
-NAMESPACE=monitor
-HELM_REPO_ALIAS=prom

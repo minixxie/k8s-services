@@ -2,6 +2,17 @@ kafka:
   listeners:
     client:
       protocol: PLAINTEXT
+  metrics:
+    jmx:
+      enabled: true
+      kafkaJmxPort: 5555
+    serviceMonitor:
+      enabled: true
+      labels:
+        release: kube-prometheus-stack  # let helm release kube-prometheus-stack to discover this
+  provisioning:
+    enabled: true
+    numPartitions: 3
 #  sasl:
 #    interbroker:
 #      user: admin

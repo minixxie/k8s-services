@@ -1,0 +1,15 @@
+NS=monitor
+HELM_REPO_ALIAS=prom
+CONTAINER_IMAGES="
+quay.io/prometheus/prometheus:v2.39.1
+"
+WAIT_STATEFULSETS="
+alertmanager-kube-prometheus-stack-alertmanager
+prometheus-kube-prometheus-stack-prometheus
+"
+WAIT_DEPLOYS="
+kube-prometheus-stack-operator
+kube-prometheus-stack-kube-state-metrics
+kube-prometheus-stack-grafana
+"
+#NS=$NAMESPACE LABELS="app.kubernetes.io/name=prometheus-node-exporter" ../scripts/k8s-wait-daemonset.sh
