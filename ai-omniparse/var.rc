@@ -1,0 +1,8 @@
+NS=ai-omniparse
+HELM_REPO_ALIAS=
+CONTAINER_IMAGES="
+minixxie/omniparse-cuda:ec48e85c253165381797e4e760f5e244bccbfb8f
+"
+WAIT_DEPLOYS="
+ai-omniparse
+"

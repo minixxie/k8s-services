@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-omniparse
+  namespace: ai-omniparse
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ai-omniparse
+  template:
+    metadata:
+      annotations:
+      labels:
+        app: ai-omniparse
+    spec:
+      containers:
+        - name: main
+          image: minixxie/omniparse-cuda:ec48e85c253165381797e4e760f5e244bccbfb8f
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8000  # HTTP port
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 30

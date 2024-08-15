@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ai-omniparse
+  namespace: ai-omniparse
+spec:
+  rules:
+    - host: ai-omniparse.local
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: ai-ominparse
+                port:
+                  number: 8000
