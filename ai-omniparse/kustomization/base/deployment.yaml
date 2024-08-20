@@ -14,16 +14,29 @@ spec:
       labels:
         app: ai-omniparse
     spec:
+      hostAliases:
+        - ip: "127.0.0.1"
+          hostnames:
+            - "ai-omniparse.local"
       containers:
         - name: main
-          image: minixxie/omniparse-cuda:ec48e85c253165381797e4e760f5e244bccbfb8f
+          #image: minixxie/omniparse-cuda:ec48e85c253165381797e4e760f5e244bccbfb8f
+          image: savatar101/omniparse:0.1
           imagePullPolicy: IfNotPresent
+          command:
+            - /bin/bash
+            - -c
+            - |
+              python server.py --host 0.0.0.0 --port 80 --documents --media --web
+          resources:
+            limits:
+              nvidia.com/gpu: 1 # requesting 1 GPU
           ports:
             - name: http
-              containerPort: 8000  # HTTP port
+              containerPort: 80  # HTTP port
           readinessProbe:
             httpGet:
               path: /
-              port: 8000
+              port: 80
             initialDelaySeconds: 10
             periodSeconds: 30

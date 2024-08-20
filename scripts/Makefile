@@ -29,6 +29,10 @@ get:
 logs:
 	@if [ -x ./logs ]; then ./logs; else ../scripts/logs; fi
 
+.PHONY: exec
+exec:
+	@if [ -x ./exec ]; then ./exec; else ../scripts/exec; fi
+
 .PHONY: up
 up:
 	@if [ -x ./up ]; then ./up; else ../scripts/up; fi

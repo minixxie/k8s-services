@@ -12,6 +12,6 @@ spec:
             path: "/"
             backend:
               service:
-                name: ai-ominparse
+                name: ai-omniparse
                 port:
-                  number: 8000
+                  number: 80
