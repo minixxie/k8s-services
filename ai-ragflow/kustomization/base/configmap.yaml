@@ -7,7 +7,7 @@ data:
   service_conf.yaml: |
     ragflow:
       host: 0.0.0.0
-      http_port: 9380
+      http_port: 80
     mysql:
       name: 'ai-ragflow'
       user: 'ai-ragflow'
@@ -21,7 +21,7 @@ data:
       password: 'infini_rag_flow'
       host: 'minio:9000'
     es:
-      hosts: 'http://elasticsearch.infra-elasticsearch.svc.cluster.local:9200'
+      hosts: 'http://elasticsearch.infra-es.svc.cluster.local:9200'
     user_default_llm:
       factory: 'Tongyi-Qianwen'
       api_key: 'sk-xxxxxxxxxxxxx'

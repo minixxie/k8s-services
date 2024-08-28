@@ -14,4 +14,4 @@ spec:
               service:
                 name: ai-ragflow
                 port:
-                  number: 9380
+                  number: 80
