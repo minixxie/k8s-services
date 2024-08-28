@@ -3,3 +3,6 @@ HELM_REPO_ALIAS=
 CONTAINER_IMAGES="
 minixxie/ragflow-cuda:1dada69daadf7cabd6d9cfebb08b269a379630db
 "
+WAIT_DEPLOYS="
+ai-ragflow
+"

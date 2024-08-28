@@ -143,9 +143,9 @@ kafka:
 .PHONY: ragflow
 ragflow:
 	make -s -C ./nvidia-gpu-operator local wait \
-		&& make -s -C ./infra-mysql@8.2.0 local wait \
-		&& make -s -C ./infra-elasticsearch@8.13.2 local wait \
-		&& make -s -C ./ai-ragflow up wait
+		&& make -s -C ./infra-mysql@8.2.0 img local wait \
+		&& make -s -C ./infra-elasticsearch@8.13.2 img local wait \
+		&& make -s -C ./ai-ragflow img local wait
 
 .PHONY: ingress-controller
 ingress-controller:
