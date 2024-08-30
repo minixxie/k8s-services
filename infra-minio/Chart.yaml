@@ -1,0 +1,7 @@
+apiVersion: v2
+name: minio
+version: 14.7.4
+dependencies:
+  - name: minio
+    version: 14.7.4
+    repository: https://charts.bitnami.com/bitnami

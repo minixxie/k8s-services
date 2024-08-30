@@ -1,0 +1,4 @@
+#!/bin/bash
+
+curl -v -f -H 'Host: minio.local' http://127.0.0.1/
+curl -v -f -H 'Host: minio-api.local' http://127.0.0.1/

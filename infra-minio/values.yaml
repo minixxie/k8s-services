@@ -1,0 +1,10 @@
+minio:
+  ingress:
+    enabled: true
+    hostname: minio.local
+  apiIngress:
+    enabled: true
+    hostname: minio-api.local
+  auth:
+    rootUser: "admin"
+    rootPassword: "hello123"

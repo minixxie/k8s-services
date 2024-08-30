@@ -1,0 +1,7 @@
+NS=infra-minio
+HELM_REPO_ALIAS=minio
+CONTAINER_IMAGES="
+"
+WAIT_DEPLOYS="
+minio
+"
