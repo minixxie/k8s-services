@@ -8,7 +8,7 @@ cd "$scriptPath"/..
 make -s k8s-redo
 
 ### basic softwares
-make -s -C ./nvidia-gpu-operator local wait test
+make -s -C ./nvidia-gpu-operator img local wait test
 
 ### the application
 make -s -C ./ai-omniparse img local wait test

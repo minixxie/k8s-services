@@ -1,0 +1,21 @@
+ollama:
+  workload:
+    main:
+      podSpec:
+        nodeSelector: {}
+          #kubernetes.io/arch: "amd64"
+    ui:
+      podSpec:
+        nodeSelector: {}
+          #kubernetes.io/arch: "amd64"
+  ingress:
+    api:
+      enabled: true
+      primary: true
+#      hosts:
+      class: traefik
+      hosts:
+        - host: ollama-api.local
+          paths:
+            - path: /
+              pathType: ImplementationSpecific

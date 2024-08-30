@@ -14,15 +14,15 @@ for img in $CONTAINER_IMAGES; do
 	fileImgName=$(echo -n "$imgName" | sed 's/\//__/g')
 	f="$fileImgName"___"$imgTag.tar"
 	if [ -f "$f" ]; then
-		nerdctl --namespace=k8s.io images | grep "$imgName" | grep "$imgTag"
+		nerdctl --namespace=k8s.io images | grep "$imgName " | grep "$imgTag"
 		if [ $? -ne 0 ]; then
 			echo "Import from file..."
 			nerdctl load -i "$f" --namespace=k8s.io
-			nerdctl --namespace=k8s.io images | grep "$imgName" | grep "$imgTag"
+			nerdctl --namespace=k8s.io images | grep "$imgName " | grep "$imgTag"
 		fi
 	else
 		echo >&2 "WARN: file not exists: $f"
-		nerdctl --namespace=k8s.io images | grep "$imgName" | grep "$imgTag"
+		nerdctl --namespace=k8s.io images | grep "$imgName " | grep "$imgTag"
 		if [ $? -ne 0 ]; then
 			echo "Pulling image..."
 			nerdctl pull "$img" --namespace=k8s.io
