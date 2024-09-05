@@ -1,0 +1,14 @@
+NS=jaeger
+HELM_REPO_ALIAS=jaeger-operator
+CONTAINER_IMAGES="
+jaegertracing/jaeger-operator:1.57.0
+"
+WAIT_DEPLOYS="
+jaeger-operator
+"
+#jaeger-operator-jaeger
+
+WAIT_PODS="
+app.kubernetes.io/name=jaeger-operator
+"
+#app.kubernetes.io/name=jaeger-operator-jaeger

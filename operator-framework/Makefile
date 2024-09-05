@@ -1,3 +1,5 @@
+# https://github.com/operator-framework/operator-lifecycle-manager/releases/
+
 SHELL := /bin/bash
 
 .PHONY: get
@@ -7,7 +9,7 @@ get:
 
 .PHONY: up
 up:
-	curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v0.26.0/install.sh | bash -s v0.26.0
+	curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v0.28.0/install.sh | bash -s v0.28.0
 
 .PHONY: local
 local: up

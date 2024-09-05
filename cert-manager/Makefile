@@ -1,6 +1,8 @@
+# https://operatorhub.io/operator/cert-manager
+
 SHELL := /bin/bash
 
-.PHONY: ls
+.PHONY: get 
 ls:
 	kubectl -n operators get csv -l operators.coreos.com/cert-manager.operators=
 	kubectl -n operators get subscription -l operators.coreos.com/cert-manager.operators=

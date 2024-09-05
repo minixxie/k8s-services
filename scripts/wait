@@ -17,3 +17,6 @@ done
 for l in $WAIT_DAEMONSETS; do
 	NS=$NS LABELS=$l ../scripts/k8s-wait-statefulset.sh
 done
+for l in $WAIT_PODS; do
+	NS=$NS LABELS=$l ../scripts/k8s-wait-pod.sh
+done
