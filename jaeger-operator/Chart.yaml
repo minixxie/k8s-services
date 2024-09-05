@@ -1,8 +1,8 @@
 # https://artifacthub.io/packages/helm/jaegertracing/jaeger-operator
 apiVersion: v2
 name: jaeger-operator
-version: 2.56.0
+version: 2.53.0
 dependencies:
   - name: jaeger-operator
-    version: 2.56.0
+    version: 2.53.0  # jaeger-operator-jaeger deployment and ingress are missing after this version (2024-09-05)
     repository: https://jaegertracing.github.io/helm-charts
