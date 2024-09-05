@@ -1,12 +1,12 @@
 ollama:
   image:
-    tag: "0.1.30"
+    tag: "0.3.9"
   ollama:
     gpu:
       # enable gpu if your k8s containerd/docker has gpu support
-      enabled: false
+      enabled: true
     models:
-      - llama2
+      - llama3.1
       #- mistral
   ingress:
     enabled: true
