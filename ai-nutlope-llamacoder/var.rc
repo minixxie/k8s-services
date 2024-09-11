@@ -1,0 +1,8 @@
+NS=ai-nutlope-llamacoder
+HELM_REPO_ALIAS=
+CONTAINER_IMAGES="
+minixxie/nutlope-llamacoder:1faa464713cc83ed3ae6b6fde3b5f44bf77f98da
+"
+WAIT_DEPLOYS="
+ai-nutlope-llamacoder
+"

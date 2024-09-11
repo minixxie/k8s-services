@@ -106,8 +106,11 @@ k3s:
 
 .PHONY: k3s-redo
 k3s-redo:
-	sudo k3s-uninstall.sh || true
-	sudo ./scripts/k3s.sh
+	#sudo k3s-uninstall.sh || true
+	#sudo ./scripts/k3s.sh
+	sudo systemctl stop k3s
+	sudo rm -rf /var/lib/rancher/k3s
+	sudo systemctl start k3s
 
 .PHONY: index
 index:

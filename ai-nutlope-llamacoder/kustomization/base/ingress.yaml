@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ai-nutlope-llamacoder
+  namespace: ai-nutlope-llamacoder
+spec:
+  rules:
+    - host: ai-nutlope-llamacoder.local
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: ai-nutlope-llamacoder
+                port:
+                  number: 80
