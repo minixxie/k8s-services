@@ -103,14 +103,24 @@ k3s:
 	sudo ./scripts/k3s.sh
 	sudo ./scripts/nerdctl.sh
 	sudo ./scripts/buildkit.sh
+	make -s k3s-wait
 
 .PHONY: k3s-redo
 k3s-redo:
-	#sudo k3s-uninstall.sh || true
-	#sudo ./scripts/k3s.sh
-	sudo systemctl stop k3s
-	sudo rm -rf /var/lib/rancher/k3s
-	sudo systemctl start k3s
+	sudo k3s-uninstall.sh || true
+	sudo ./scripts/k3s.sh
+	#sudo systemctl stop k3s
+	#sudo rm -rf /var/lib/rancher/k3s
+	#sudo systemctl start k3s
+	make -s k3s-wait
+
+.PHONY: k3s-wait
+k3s-wait:
+	NS=kube-system DEPLOYMENT=coredns ./scripts/k8s-wait-deployment.sh
+	NS=kube-system DEPLOYMENT=local-path-provisioner ./scripts/k8s-wait-deployment.sh
+	NS=kube-system DEPLOYMENT=metrics-server ./scripts/k8s-wait-deployment.sh
+	NS=kube-system DEPLOYMENT=traefik ./scripts/k8s-wait-deployment.sh
+	NS=kube-system LABELS="svccontroller.k3s.cattle.io/svcname=traefik" ./scripts/k8s-wait-daemonset.sh
 
 .PHONY: index
 index:

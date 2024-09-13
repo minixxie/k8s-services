@@ -7,6 +7,7 @@ ollama:
       enabled: true
     models:
       - llama3.1
+      - llava
       #- mistral
   ingress:
     enabled: true
