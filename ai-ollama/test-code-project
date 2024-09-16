@@ -1,0 +1,19 @@
+#!/bin/bash
+
+cat <<EOF | curl -v -H 'Content-Type: application/json; charset=utf-8' -X POST --data-binary @- http://ollama-api.local/api/chat
+{
+	"model": "llama3.1",
+	"messages": [
+		{
+			"role":"system",
+			"content":"You are an expert in server-side node.js programming. Please write a node.js project with multiple files. You should put these file contents into a JSON representation. For example: {\"files\":[{\"path\":\"index.js\",\"fileContent\":\"import { createServer } from 'node:http';\\n\\nconst server = createServer((req, res) => {\\nres.writeHead(200, {'Content-Type': 'text/plan'});\\nres.end('Hello World!\\\\n');\\n});\\n\\nserver.listen(3000, '127.0.0.1', handler);\\n\"}, {\"path\":\"handler/root.js\",\"fileContent\":\"const handler = function () {\\n};\\n\"}]}"
+		},
+		{
+			"role":"user",
+			"content":"Build me a calculator app\nPlease ONLY return code, NO backticks or language names."
+		}
+	],
+	"stream":true,
+	"temperature":0.2
+}
+EOF

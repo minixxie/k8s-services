@@ -1,1 +1,4 @@
 *.tar
+test-code.js
+test-code-project.js
+node_modules
