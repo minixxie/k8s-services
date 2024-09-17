@@ -38,33 +38,39 @@ fi
 if [ $all -eq 1 ]; then
 	echo '# kubectl -n $(make -s ns) get all'
 	kubectl -n $(make -s ns) get all
+	echo ""
 fi
 if [ $pod -eq 1 ]; then
 	echo '# kubectl -n $(make -s ns) get pod'
 	kubectl -n $(make -s ns) get pod
+	echo ""
 fi
 if [ $svc -eq 1 ]; then
 	echo '# kubectl -n $(make -s ns) get svc'
 	kubectl -n $(make -s ns) get svc
+	echo ""
 fi
 if [ $deploy -eq 1 ]; then
 	echo '# kubectl -n $(make -s ns) get deploy'
 	kubectl -n $(make -s ns) get deploy
+	echo ""
 fi
 if [ $ing -eq 1 ]; then
 	echo '# kubectl -n $(make -s ns) get ing'
 	kubectl -n $(make -s ns) get ing
+	echo ""
 fi
 if [ $pvc -eq 1 ]; then
 	echo '# kubectl -n $(make -s ns) get pvc'
 	kubectl -n $(make -s ns) get pvc
+	echo ""
 fi
 if [ $pv -eq 1 ]; then
 	echo '# kubectl get pv'
 	kubectl get pv
+	echo ""
 fi
 if [ $img -eq 1 ]; then
-	echo ""
 	for img in $CONTAINER_IMAGES; do
 		echo "[$img]"
 		imgName=$(echo -n "$img" | cut -f 1 -d ':')
@@ -72,4 +78,5 @@ if [ $img -eq 1 ]; then
 		echo "# nerdctl --namespace=k8s.io images | grep $imgName | grep $imgTag"
 		nerdctl --namespace=k8s.io images | grep $imgName | grep $imgTag
 	done	
+	echo ""
 fi
