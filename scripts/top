@@ -19,14 +19,12 @@ while IFS= read -r pod; do
 	counter=$((counter+1))
 done <<< "$pods"
 
-echo -n "Input the pod number to get the exec: "
+echo -n "Input the pod number to top: "
 read podNumber
 podNumber=$((10#$podNumber+1))
 
 podName=$(echo "$pods" | sed -n "$podNumber"p | awk '{print $1}')
 
-echo "# kubectl -n $(make -s ns) exec -it $podName -- bash"
-echo "# kubectl -n $(make -s ns) exec -it $podName -- sh"
+echo "# kubectl -n $(make -s ns) top pod $podName"
 echo "=========================================================="
-kubectl -n $(make -s ns) exec -it $podName -- bash || \
-	kubectl -n $(make -s ns) exec -it $podName -- sh
+kubectl -n $(make -s ns) top pod $podName

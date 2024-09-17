@@ -25,6 +25,10 @@ check:
 get:
 	@if [ -x ./get ]; then ./get; else ../scripts/get; fi
 
+.PHONY: top
+top:
+	@if [ -x ./top ]; then ./top; else ../scripts/top; fi
+
 .PHONY: logs
 logs:
 	@if [ -x ./logs ]; then ./logs; else ../scripts/logs; fi
