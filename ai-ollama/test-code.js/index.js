@@ -2,7 +2,7 @@ const axios = require('axios');
 
 const url = 'http://ollama-api.local/api/chat';
 const data = {
-	"model": "llama3.1",
+	"model": "qwen2.5-coder:7b",
 	"messages": [
 		{
 			"role":"system",
@@ -10,11 +10,11 @@ const data = {
 		},
 		{
 			"role":"user",
-			"content":"Build me a calculator app\nPlease ONLY return code, NO backticks or language names."
+			"content":"Build me a calculator app\nPlease ONLY return code, NO backticks/backquotes or language names. Don't enclose the source code in markdown."
 		}
 	],
 	"stream":true,
-	"temperature":0.2
+	"temperature":0
 };
 
 axios.post(url, data, {responseType: 'stream'})

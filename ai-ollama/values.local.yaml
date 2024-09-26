@@ -8,6 +8,8 @@ ollama:
     models:
       - llama3.1
       - llava
+      #- codellama:7b
+      - qwen2.5-coder:7b
       #- mistral
   ingress:
     enabled: true
