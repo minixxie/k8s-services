@@ -8,30 +8,6 @@ check:
 	kubectl get namespace
 	kubectl get all -A
 
-# minikube delete; minikube start --driver=virtualbox && minikube addons enable ingress
-# minikube delete; minikube start --driver=hyperkit && minikube addons enable ingress
-# minikube delete; minikube start --driver=hyperkit --cpus 4 --memory 8192 && minikube addons enable ingress
-# minikube delete; minikube start --driver=virtualbox --host-only-cidr='172.16.0.1/20' && minikube addons enable ingress
-# minikube delete; minikube start --driver=docker
-#.PHONY: minikube
-#minikube:
-#	#minikube delete ; minikube start --driver=hyperkit --cpus 4 --memory 8192
-#	#minikube delete ; minikube start --driver=hyperkit --cpus 2 --memory 4096
-#	minikube delete ; minikube start --driver=hyperkit --cpus 2 --memory 2048
-#	minikube addons enable ingress
-#	minikube addons list
-#	make check
-#	./bin/gen-hosts.sh $$(minikube ip)
-
-# Solution 1:
-# minikube addons enable ingress
-# minikube addons list
-# Solution 2:
-#	helm repo add nginx-stable https://helm.nginx.com/stable || true
-#	helm repo update
-#	helm upgrade --install nginx-ingress nginx-stable/nginx-ingress || true
-
-
 .PHONY: ncpu
 ncpu:
 	@if [ "$$(uname -s)" == "Darwin" ]; then \
@@ -86,6 +62,14 @@ colima-aarch64:
 		--disk 100 \
 		--arch aarch64 --vm-type=vz --vz-rosetta
 	make -s -C ./ingress-controller local wait
+
+.PHONY: install-docker
+install-docker:
+	./scripts/install-docker.sh
+
+.PHONY: uninstall-docker
+uninstall-docker:
+	./scripts/uninstall-docker.sh
 
 .PHONY: k8s-redo
 k8s-redo:

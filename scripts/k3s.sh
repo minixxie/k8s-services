@@ -9,7 +9,19 @@ if [ $UID -ne 0 ]; then
 	exit 1
 fi
 
-curl -sfL https://get.k3s.io | K3S_KUBECONFIG_MODE="644" sh -
+if [ "$(which docker)" != "" ]; then
+	ENGINE=docker
+else
+	ENGINE=containerd
+fi
+
+if [ "$ENGINE" == docker ]; then
+	sudo apt install -q -y docker.io
+	sudo usermod -aG docker $USER
+	curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--docker" K3S_KUBECONFIG_MODE="644" sh -
+else
+	curl -sfL https://get.k3s.io | K3S_KUBECONFIG_MODE="644" sh -
+fi
 systemctl start k3s
 systemctl enable k3s
 

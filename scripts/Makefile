@@ -33,6 +33,10 @@ top:
 logs:
 	@if [ -x ./logs ]; then ./logs; else ../scripts/logs; fi
 
+.PHONY: desc
+desc:
+	@if [ -x ./desc ]; then ./desc; else ../scripts/desc; fi
+
 .PHONY: exec
 exec:
 	@if [ -x ./exec ]; then ./exec; else ../scripts/exec; fi

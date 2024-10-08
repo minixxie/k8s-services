@@ -2,6 +2,16 @@
 
 scriptPath=$(cd $(dirname "$0") && pwd)
 
+dockerNeedSudo="sudo"
+dockerNeedSudo=""
+
+systemctl cat k3s | grep -i docker >/dev/null 2>&1
+if [ $? -eq 0 ]; then
+	cmd="$dockerNeedSudo docker"
+else
+	cmd="nerdctl --namespace=k8s.io"
+fi
+
 source "$PWD"/var.rc
 cd "$PWD"
 
@@ -75,8 +85,8 @@ if [ $img -eq 1 ]; then
 		echo "[$img]"
 		imgName=$(echo -n "$img" | cut -f 1 -d ':')
 		imgTag=$(echo -n "$img" | cut -f 2 -d ':')
-		echo "# nerdctl --namespace=k8s.io images | grep $imgName | grep $imgTag"
-		nerdctl --namespace=k8s.io images | grep $imgName | grep $imgTag
+		echo "# $cmd images | grep $imgName | grep $imgTag"
+		$cmd images | grep $imgName | grep $imgTag
 	done	
 	echo ""
 fi

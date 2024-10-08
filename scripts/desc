@@ -29,6 +29,6 @@ podNumber=$((10#$podNumber+1))
 
 podName=$(echo "$pods" | sed -n "$podNumber"p | awk '{print $1}')
 
-echo "# kubectl -n $(make -s ns) top pod $podName"
+echo "# kubectl -n $(make -s ns) describe pod $podName"
 echo "=========================================================="
-kubectl -n $(make -s ns) top pod $podName
+kubectl -n $(make -s ns) describe pod $podName

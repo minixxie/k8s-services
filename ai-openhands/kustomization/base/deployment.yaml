@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-openhands
+  namespace: ai-openhands
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ai-openhands
+  template:
+    metadata:
+      annotations:
+      labels:
+        app: ai-openhands
+    spec:
+      containers:
+      - name: openhands-app-2024
+        image: ghcr.io/all-hands-ai/openhands:main
+        env:
+        - name: SANDBOX_USER_ID
+          value: "1000"
+        - name: WORKSPACE_MOUNT_PATH
+          value: "/opt/workspace_base"
+        - name: DOCKER_HOST
+          value: unix:///var/run/docker.sock
+        volumeMounts:
+        - name: workspace-volume
+          mountPath: /opt/workspace_base
+        - name: docker-sock
+          mountPath: /var/run/docker.sock
+        ports:
+        - containerPort: 3000
+#      - name: openhands-sandbox-2024
+#        #image: ghcr.io/all-hands-ai/sandbox:main
+#        image: nikolaik/python-nodejs:python3.9-nodejs20-slim
+#        ports:
+#        - containerPort: 51963
+#        command: ["/usr/sbin/sshd", "-D", "-p 51963", "-o", "PermitRootLogin=yes"]
+      volumes:
+      - name: workspace-volume
+        persistentVolumeClaim:
+          claimName: workspace-pvc
+      - name: docker-sock
+        hostPath:
+          path: /var/run/docker.sock
+          type: Socket

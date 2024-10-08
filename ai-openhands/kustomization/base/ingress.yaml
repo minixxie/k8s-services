@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ai-openhands
+  namespace: ai-openhands
+spec:
+  rules:
+    - host: ai-openhands.local
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: ai-openhands
+                port:
+                  number: 3000

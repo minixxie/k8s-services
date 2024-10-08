@@ -19,14 +19,20 @@ while IFS= read -r pod; do
 	counter=$((counter+1))
 done <<< "$pods"
 
-echo -n "Input the pod number to get the exec: "
-read podNumber
+if [ "$counter" -eq 2 ]; then  # only 1 pod
+	podNumber=1
+else
+	echo -n "Input the pod number to get the logs: "
+	read podNumber
+fi
 podNumber=$((10#$podNumber+1))
 
 podName=$(echo "$pods" | sed -n "$podNumber"p | awk '{print $1}')
 
-echo "# kubectl -n $(make -s ns) exec -it $podName -- bash"
-echo "# kubectl -n $(make -s ns) exec -it $podName -- sh"
+sh=$(kubectl -n $(make -s ns) exec $podName -- ls /bin/bash)
+if [ "$sh" == "" ]; then
+	sh=$(kubectl -n $(make -s ns) exec $podName -- ls /bin/sh)
+fi
+echo "# kubectl -n $(make -s ns) exec -it $podName -- $sh"
 echo "=========================================================="
-kubectl -n $(make -s ns) exec -it $podName -- bash || \
-	kubectl -n $(make -s ns) exec -it $podName -- sh
+kubectl -n $(make -s ns) exec -it $podName -- $sh

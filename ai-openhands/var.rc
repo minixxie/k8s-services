@@ -1,0 +1,9 @@
+NS=ai-openhands
+HELM_REPO_ALIAS=
+CONTAINER_IMAGES="
+ghcr.io/all-hands-ai/openhands:main
+nikolaik/python-nodejs:python3.9-nodejs20-slim
+"
+WAIT_DEPLOYS="
+ai-openhands
+"

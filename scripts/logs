@@ -19,8 +19,12 @@ while IFS= read -r pod; do
 	counter=$((counter+1))
 done <<< "$pods"
 
-echo -n "Input the pod number to get the logs: "
-read podNumber
+if [ "$counter" -eq 2 ]; then  # only 1 pod
+	podNumber=1
+else
+	echo -n "Input the pod number to get the logs: "
+	read podNumber
+fi
 podNumber=$((10#$podNumber+1))
 
 podName=$(echo "$pods" | sed -n "$podNumber"p | awk '{print $1}')
