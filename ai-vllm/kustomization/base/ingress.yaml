@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ai-vllm
+  namespace: ai-vllm
+spec:
+  rules:
+    - host: ai-vllm.local
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: ai-vllm
+                port:
+                  number: 80

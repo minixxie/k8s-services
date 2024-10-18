@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ai-vllm
+  namespace: ai-vllm
+  annotations:
+    traefik.ingress.kubernetes.io/service.sticky.cookie: "true"
+    traefik.ingress.kubernetes.io/service.sticky.cookie.name: "__traefik_sticky"
+    traefik.ingress.kubernetes.io/service.sticky.cookie.secure: "true"
+spec:
+  selector:
+    app: ai-vllm
+  type: LoadBalancer
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80

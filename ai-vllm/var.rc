@@ -1,0 +1,8 @@
+NS=ai-vllm
+HELM_REPO_ALIAS=
+CONTAINER_IMAGES="
+vllm/vllm-openai:v0.6.3
+"
+WAIT_DEPLOYS="
+ai-vllm
+"

@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-vllm
+  namespace: ai-vllm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ai-vllm
+  template:
+    metadata:
+      annotations:
+      labels:
+        app: ai-vllm
+    spec:
+      containers:
+        - name: main
+          image: vllm/vllm-openai:v0.6.3
+          imagePullPolicy: IfNotPresent
+          #args: ["--port", "80", "--model", "Qwen/Qwen2.5-coder:7b"]
+          command: ["vllm", "serve", "Qwen/Qwen2.5-Coder-7B-Instruct"]
+          resources:
+            limits:
+              nvidia.com/gpu: 1 # requesting 1 GPU
+          ports:
+            - name: http
+              containerPort: 80  # HTTP port
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          env:
+            - name: TOGETHER_API_KEY
+              value: ""
