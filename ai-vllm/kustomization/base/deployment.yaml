@@ -14,12 +14,13 @@ spec:
       labels:
         app: ai-vllm
     spec:
+      runtimeClassName: nvidia
       containers:
         - name: main
           image: vllm/vllm-openai:v0.6.3
           imagePullPolicy: IfNotPresent
-          #args: ["--port", "80", "--model", "Qwen/Qwen2.5-coder:7b"]
-          command: ["vllm", "serve", "Qwen/Qwen2.5-Coder-7B-Instruct"]
+          #command: ["vllm", "serve", "--port", "80", "Qwen/Qwen2.5-Coder-7B-Instruct"]
+          command: ["vllm", "serve", "--port", "80", "Qwen/Qwen2.5-Coder-1.5B-Instruct"]
           resources:
             limits:
               nvidia.com/gpu: 1 # requesting 1 GPU
@@ -28,10 +29,16 @@ spec:
               containerPort: 80  # HTTP port
           readinessProbe:
             httpGet:
-              path: /
+              path: /health
               port: 80
             initialDelaySeconds: 10
             periodSeconds: 30
           env:
-            - name: TOGETHER_API_KEY
-              value: ""
+            - name: NVIDIA_VISIBLE_DEVICES
+              value: "all"
+            - name: NVIDIA_DRIVER_CAPABILITIES
+              value: "compute,utility"
+            - name: PYTORCH_CUDA_ALLOC_CONF
+              value: "expandable_segments:True"
+            - name: TORCH_CUDA_ARCH_LIST
+              value: "7.5"  # Adjust based on your GPU architecture
