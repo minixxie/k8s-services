@@ -41,4 +41,4 @@ spec:
             - name: PYTORCH_CUDA_ALLOC_CONF
               value: "expandable_segments:True"
             - name: TORCH_CUDA_ARCH_LIST
-              value: "7.5"  # Adjust based on your GPU architecture
+              value: "8.6"  # Adjust based on your GPU architecture

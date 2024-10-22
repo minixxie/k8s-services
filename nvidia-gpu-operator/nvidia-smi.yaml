@@ -11,7 +11,8 @@ spec:
    restartPolicy: Never
    containers:
      - name: cuda-container
-       image: nvidia/cuda:11.6.2-base-ubuntu20.04
+       #image: nvidia/cuda:11.6.2-base-ubuntu20.04
+       image: nvidia/cuda:12.4.1-base-ubuntu22.04
        #image: nvidia/cuda:12.6.2-base-ubuntu22.04  # too new, driver version not high enough, requires CUDA >= 12.6
        #image: nvidia/cuda:12.6.2-base-ubuntu24.04  # too new, driver version not high enough
        command: ["nvidia-smi"]
