@@ -2,7 +2,7 @@
 
 cat <<EOF | curl -v -H 'Content-Type: application/json; charset=utf-8' -X POST --data-binary @- http://ai-vllm.local/v1/chat/completions
 {
-	"model": "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+	"model": "Qwen/Qwen2.5-Coder-1.5B",
 	"messages": [
 		{
 			"role":"system",

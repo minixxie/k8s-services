@@ -20,7 +20,9 @@ spec:
           image: vllm/vllm-openai:v0.6.3
           imagePullPolicy: IfNotPresent
           #command: ["vllm", "serve", "--port", "80", "Qwen/Qwen2.5-Coder-7B-Instruct"]
-          command: ["vllm", "serve", "--port", "80", "Qwen/Qwen2.5-Coder-1.5B-Instruct"]
+          #command: ["vllm", "serve", "--port", "80", "Qwen/Qwen2.5-Coder-1.5B-Instruct"]
+          #command: ["vllm", "serve", "--port", "80", "Qwen/Qwen2.5-Coder-1.5B"]
+          command: ["vllm", "serve", "--port", "80", "codellama/CodeLlama-7b-hf"]
           resources:
             limits:
               nvidia.com/gpu: 1 # requesting 1 GPU

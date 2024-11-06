@@ -1,16 +1,17 @@
 ollama:
   image:
     tag: "0.3.9"
+  runtimeClassName: "nvidia"  # to use gpu
   ollama:
     gpu:
       # enable gpu if your k8s containerd/docker has gpu support
       enabled: true
     models:
-      - llama3.1
-      - llava
+      #- llama3.1
+      #- llava  # for image recognition
       #- codellama:7b
       - qwen2.5-coder:7b
-      #- mistral
+      ##- mistral
   ingress:
     enabled: true
     hosts:
