@@ -47,7 +47,7 @@ up:
 
 # values.yaml used as default, values.local.yaml as override
 .PHONY: local
-local:
+local: img
 	@if [ -x ./local ]; then ./local; else ../scripts/local; fi
 
 .PHONY: down

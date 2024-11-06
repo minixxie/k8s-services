@@ -14,6 +14,7 @@ spec:
       labels:
         app: ai-ragflow
     spec:
+      runtimeClassName: nvidia
       containers:
         - name: main
           image: minixxie/ragflow-cuda:1dada69daadf7cabd6d9cfebb08b269a379630db
