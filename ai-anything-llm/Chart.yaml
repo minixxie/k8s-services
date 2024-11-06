@@ -1,7 +1,7 @@
 apiVersion: v2
-name: anything-llm
-version: 1.4.13
+name: ai-anything-llm
+version: 1.1.2
 dependencies:
   - name: anything-llm
-    version: 1.4.13
-    repository: https://charts.truecharts.org
+    version: 1.1.2
+    repository: https://la-cc.github.io/anything-llm-helm-chart

@@ -1,1 +1,16 @@
-anything-llm: {}
+anything-llm:
+  ingress:
+    enabled: true
+    ingressClassName: "traefik"
+    hosts:
+      - host: ai-anything-llm.local
+        paths:
+          - path: /
+            pathType: Prefix
+  config:
+    # Ollama LLM and Embedding
+    LLM_PROVIDER: 'ollama'
+    OLLAMA_BASE_PATH: 'http://ollama.ai-ollama.svc.cluster.local:11434'
+    OLLAMA_MODEL_PREF: 'llama2'
+    OLLAMA_MODEL_TOKEN_LIMIT: 8192
+    EMBEDDING_BASE_PATH: 'http://ollama.ai-ollama.svc.cluster.local:11434'

@@ -1,0 +1,7 @@
+NS=ai-anything-llm
+HELM_REPO_ALIAS=ai-anything-llm
+CONTAINER_IMAGES="
+ghcr.io/mintplex-labs/anything-llm:1.2.2
+"
+WAIT_DEPLOYS="
+"

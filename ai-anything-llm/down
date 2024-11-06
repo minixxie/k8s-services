@@ -1,0 +1,8 @@
+#!/bin/bash
+
+scriptPath=$(cd $(dirname "$0") && pwd)
+
+source "$PWD"/var.rc
+cd "$PWD"
+
+helm uninstall $(make -s chart-name) || true;

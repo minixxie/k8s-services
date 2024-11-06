@@ -1,0 +1,20 @@
+#!/bin/bash
+
+scriptPath=$(cd $(dirname "$0") && pwd)
+
+source "$PWD"/var.rc
+cd "$PWD"
+
+if [ -f Chart.yaml ]; then
+	helm dep update .
+	opts=""
+	if [ -f values.yaml ]; then
+		opts="$opts -f values.yaml"
+	fi
+	if [ -f values.local.yaml ]; then
+		opts="$opts -f values.local.yaml"
+	fi
+	helm upgrade --install --wait $(make -s chart-name) . $opts
+elif [ -d kustomization ]; then
+	kubectl apply -k kustomization/overlays/local
+fi
