@@ -58,6 +58,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	<td></td>
 </tr>
 <tr>
+	<td><img style="height: 24px;" src="https://framerusercontent.com/images/jebPo71ETH3cKWOn8CH0Ky6pvCs.png" /> Anything LLM</td>
+	<td><a href="http://ai-anything-llm.local" target="_blank">http://ai-anything-llm.local</a></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td><img style="height: 24px;" src="https://argo-cd.readthedocs.io/en/stable/assets/logo.png" /> ArgoCD</td>
 	<td><a href="http://argo-cd.local" target="_blank">http://argo-cd.local</a></td>
 	<td>admin</td>
@@ -100,6 +106,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	<td></td>
 </tr>
 <tr>
+	<td><img style="height: 24px;" src="https://openwebui.com/favicon.png" /> Open WebUI (with ollama)</td>
+	<td><a href="http://ai-open-webui.local" target="_blank">http://ai-open-webui.local</a></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td><img style="height: 24px;" src="https://postgis.net/favicon/favicon.svg" /> PostGIS UI</td>
 	<td><a href="http://postgis-ui.local" target="_blank">http://postgis-ui.local</a></td>
 	<td></td>
@@ -108,6 +120,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
 <tr>
 	<td><img style="height: 24px;" src="https://www.postgresql.org/favicon.ico" /> Postgres UI</td>
 	<td><a href="http://postgres-ui.local" target="_blank">http://postgres-ui.local</a></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td><img style="height: 24px;" src="https://framerusercontent.com/images/x4joFShWYfNyZmV13AS0uKKMQ.svg" /> Private GPT</td>
+	<td><a href="http://ai-private-gpt.local/" target="_blank">http://ai-private-gpt.local/</a></td>
 	<td></td>
 	<td></td>
 </tr>
