@@ -106,6 +106,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	<td></td>
 </tr>
 <tr>
+	<td><img style="height: 24px;" src="https://llamacoder.together.ai/favicon.ico" /> Nutlope LlamaCoder </td>
+	<td><a href="http://ai-nutlope-llamacoder.local" target="_blank">http://ai-nutlope-llamacoder.local</a></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td><img style="height: 24px;" src="https://openwebui.com/favicon.png" /> Open WebUI (with ollama)</td>
 	<td><a href="http://ai-open-webui.local" target="_blank">http://ai-open-webui.local</a></td>
 	<td></td>
@@ -136,7 +142,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	<td></td>
 </tr>
 <tr>
-	<td><img style="height: 24px;" src="https://qdrant.tech/images/logo_with_text.svg" /> Qdrant</td>
+	<td><img style="height: 24px;" src="https://qdrant.tech/img/logo.png" /> Qdrant</td>
 	<td><a href="http://qdrant.local/dashboard" target="_blank">http://qdrant.local/dashboard</a></td>
 	<td></td>
 	<td></td>
@@ -148,7 +154,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	<td></td>
 </tr>
 <tr>
-	<td><img style="height: 24px;" src="https://www.timescale.com/favicon-32x32.png?v=7045a84914f0d48a1c822d466332225b" /> Timescale DB</td>
+	<td><img style="height: 24px;" src="https://www.timescale.com/icon.ico?1fba71913669969d" /> Timescale DB</td>
 	<td><a href="http://timescaledb-ui.local" target="_blank">http://timescaledb-ui.local</a></td>
 	<td></td>
 	<td></td>

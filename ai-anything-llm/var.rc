@@ -4,4 +4,5 @@ CONTAINER_IMAGES="
 ghcr.io/mintplex-labs/anything-llm:1.2.2
 "
 WAIT_DEPLOYS="
+anything-llm
 "
