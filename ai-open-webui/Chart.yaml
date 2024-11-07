@@ -1,0 +1,7 @@
+apiVersion: v2
+name: ai-open-webui
+version: 3.5.1
+dependencies:
+  - name: open-webui
+    version: 3.5.1
+    repository: https://helm.openwebui.com/

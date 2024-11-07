@@ -1,0 +1,11 @@
+NS=ai-open-webui
+HELM_REPO_ALIAS=ai-open-webui
+CONTAINER_IMAGES="
+ghcr.io/open-webui/open-webui:0.3.35
+ghcr.io/open-webui/pipelines:main
+ollama/ollama:0.3.14
+"
+WAIT_DEPLOYS="
+open-webui-ollama
+open-webui-pipelines
+"

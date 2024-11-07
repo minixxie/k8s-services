@@ -1,0 +1,18 @@
+open-webui:
+  ingress:
+    enabled: true
+    hosts:
+      - host: ai-open-webui.local
+        paths:
+          - path: /
+            pathType: Prefix
+  ollama:
+    enabled: true
+    ollama:
+      gpu:
+        enabled: true
+        type: 'nvidia'
+        number: 1
+      models:
+        - llama3.2:3b
+    runtimeClassName: nvidia
