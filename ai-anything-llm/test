@@ -1,3 +1,4 @@
 #!/bin/bash
 
+sleep 5s
 curl -f http://ai-anything-llm.local/

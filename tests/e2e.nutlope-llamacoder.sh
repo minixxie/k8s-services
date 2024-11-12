@@ -14,4 +14,5 @@ make -s -C ./nvidia-gpu-operator img local wait test
 make -s -C ./ai-nutlope-llamacoder img local wait test
 
 
+echo ""
 echo SUCCESS
