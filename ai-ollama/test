@@ -1,7 +1,14 @@
 #!/bin/bash
 
+if [ x"$1" == x ]; then
+	model=llama3.2:3b # default
+	model=nezahatkorkmaz/deepseek-v3:latest  # default
+else
+	model="$1"
+fi
+
 cat <<EOF | curl -v -H 'Content-Type: application/json; charset=utf-8' -X POST --data-binary @- http://ollama-api.local/api/generate
-{"model":"llama3.2:3b","prompt":"Hello"}
+{"model":"$model","prompt":"Hello"}
 EOF
 #curl -v http://ollama-api.local/api/generate -d '{"model":"llama3.1","prompt":"Hello"}'
 #curl -v http://ollama-api.local/api/generate -d '{"model":"llama3.1","prompt":"why is the sky blue?"}'

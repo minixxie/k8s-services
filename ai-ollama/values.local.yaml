@@ -7,11 +7,12 @@ ollama:
       # enable gpu if your k8s containerd/docker has gpu support
       enabled: true
     models:
-      - llama3.2:3b
+      - nezahatkorkmaz/deepseek-v3:latest
+      #- llama3.2:3b
       #- llama3.1
       #- llava  # for image recognition
       #- codellama:7b
-      - qwen2.5-coder:7b
+      #- qwen2.5-coder:7b
       ##- mistral
   ingress:
     enabled: true
