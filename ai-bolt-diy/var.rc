@@ -1,0 +1,8 @@
+NS=ai-bolt-diy
+HELM_REPO_ALIAS=
+CONTAINER_IMAGES="
+minixxie/bolt-diy:85d864f607d7778d759582e464ea478a4b6ed2cc
+"
+WAIT_DEPLOYS="
+ai-bolt-diy
+"

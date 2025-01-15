@@ -16,9 +16,12 @@ ollama:
       ##- mistral
   ingress:
     enabled: true
+    ingressClassName: traefik
     hosts:
     - host: ollama-api.local
       paths:
         - path: /
           pathType: Prefix
-
+  extraEnv:
+    - name: OLLAMA_ORIGINS
+      value: "*"

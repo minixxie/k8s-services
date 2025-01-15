@@ -88,6 +88,7 @@ k3s:
 	sudo ./scripts/nerdctl.sh
 	sudo ./scripts/buildkit.sh
 	make -s k3s-wait
+	make -s -C coredns local
 
 .PHONY: k3s-redo
 k3s-redo:
@@ -97,6 +98,7 @@ k3s-redo:
 	#sudo rm -rf /var/lib/rancher/k3s
 	#sudo systemctl start k3s
 	make -s k3s-wait
+	make -s -C coredns local
 
 .PHONY: k3s-wait
 k3s-wait:

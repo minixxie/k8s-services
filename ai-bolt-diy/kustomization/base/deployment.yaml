@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-bolt-diy
+  namespace: ai-bolt-diy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ai-bolt-diy
+  template:
+    metadata:
+      annotations:
+      labels:
+        app: ai-bolt-diy
+    spec:
+      containers:
+        - name: main
+          image: minixxie/bolt-diy:85d864f607d7778d759582e464ea478a4b6ed2cc
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 5173  # HTTP port
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 5173
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          #env:
+            #- name: OLLAMA_API_BASE_URL
+              #value: "http://ollama.ai-ollama.svc.cluster.local:11434"
+#          volumeMounts:
+#            - name: env-config
+#              mountPath: /app/.env.local
+#              subPath: .env.local
+#      volumes:
+#        - name: env-config
+#          configMap:
+#            name: env-config

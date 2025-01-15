@@ -15,6 +15,7 @@ if [ -f Chart.yaml ]; then
 		opts="$opts -f values.local.yaml"
 	fi
 	helm upgrade --install --wait $(make -s chart-name) . -n $(make -s ns) --create-namespace $opts
-elif [ -d kustomization ]; then
+fi
+if [ -d kustomization ]; then
 	kubectl apply -k kustomization/overlays/local
 fi

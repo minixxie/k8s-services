@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ai-bolt-diy
+  namespace: ai-bolt-diy
+spec:
+  rules:
+    - host: ai-bolt-diy.local
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: ai-bolt-diy
+                port:
+                  number: 5173

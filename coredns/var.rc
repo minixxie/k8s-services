@@ -1,0 +1,6 @@
+NS=kube-system
+HELM_REPO_ALIAS=
+CONTAINER_IMAGES="
+"
+WAIT_DEPLOYS="
+"

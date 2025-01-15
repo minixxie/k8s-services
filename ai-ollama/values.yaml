@@ -1,18 +1,27 @@
 ollama:
   image:
     tag: "0.3.9"
+  runtimeClassName: "nvidia"  # to use gpu
   ollama:
     gpu:
       # enable gpu if your k8s containerd/docker has gpu support
       enabled: true
     models:
-      - llama3.1
-      #- mistral
+      - nezahatkorkmaz/deepseek-v3:latest
+      #- llama3.2:3b
+      #- llama3.1
+      #- llava  # for image recognition
+      #- codellama:7b
+      #- qwen2.5-coder:7b
+      ##- mistral
   ingress:
     enabled: true
+    ingressClassName: traefik
     hosts:
-    - host: ollama-api.local  # use a production hostname
+    - host: ollama-api.local
       paths:
         - path: /
           pathType: Prefix
-
+  extraEnv:
+    - name: OLLAMA_ORIGINS
+      value: "*"

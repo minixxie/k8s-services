@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: env-config
+  namespace: ai-bolt-diy
+data:
+  .env.local: |
+    OLLAMA_API_BASE_URL=http://ollama-api.local
