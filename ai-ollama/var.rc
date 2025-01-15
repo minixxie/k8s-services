@@ -1,7 +1,7 @@
 NS=ai-ollama
 HELM_REPO_ALIAS=ollama
 CONTAINER_IMAGES="
-ollama/ollama:0.3.9
+ollama/ollama:0.5.5
 "
 WAIT_DEPLOYS="
 ollama
