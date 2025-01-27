@@ -3,6 +3,7 @@
 if [ x"$1" == x ]; then
 	model=llama3.2:3b # default
 	model=nezahatkorkmaz/deepseek-v3:latest  # default
+	model=deepseek-r1:7b
 else
 	model="$1"
 fi
