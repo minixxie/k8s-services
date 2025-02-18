@@ -6,8 +6,15 @@ ollama:
       enabled: true
     models:
       pull:
+        - deepseek-r1:1.5b
         - deepseek-r1:7b
-        #- nezahatkorkmaz/deepseek-v3:latest
+        - deepseek-r1:8b
+        - deepseek-r1:14b
+        - deepseek-r1:32b
+        #- deepseek-v3
+        - nezahatkorkmaz/deepseek-v3:latest
+        - ishumilin/deepseek-r1-coder-tools:14b
+        - MFDoom/deepseek-r1-tool-calling:14b
         #- llama3.2:3b
         #- llama3.1
         #- llava  # for image recognition
@@ -15,8 +22,15 @@ ollama:
         #- qwen2.5-coder:7b
         ##- mistral
       run:
+        - deepseek-r1:1.5b
         - deepseek-r1:7b
-        #- nezahatkorkmaz/deepseek-v3:latest
+        - deepseek-r1:8b
+        - deepseek-r1:14b
+        - deepseek-r1:32b
+        #- deepseek-v3
+        - nezahatkorkmaz/deepseek-v3:latest
+        - ishumilin/deepseek-r1-coder-tools:14b
+        - MFDoom/deepseek-r1-tool-calling:14b
         #- llama3.2:3b
         #- llama3.1
         #- llava  # for image recognition
