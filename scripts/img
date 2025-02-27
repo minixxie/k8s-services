@@ -37,7 +37,7 @@ for img in $CONTAINER_IMAGES; do
 			echo "Pulling image..."
 			$cmd pull "$img"
 		fi
-		$cmd save "$img" --output "$f"
+		$cmd save "$img" --output "$f" || true
 		ls -lt "$f"
 	fi
 done

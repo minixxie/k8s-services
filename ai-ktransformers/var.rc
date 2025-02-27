@@ -1,0 +1,8 @@
+NS=ai-ktransformers
+HELM_REPO_ALIAS=
+CONTAINER_IMAGES="
+minixxie/ktransformers:cuda12.4-0.0.1
+"
+WAIT_DEPLOYS="
+ai-ktransformers
+"

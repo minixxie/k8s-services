@@ -1,0 +1,38 @@
+#!/bin/bash
+
+scriptPath=$(cd $(dirname "$0") && pwd)
+
+source "$PWD"/var.rc
+cd "$PWD"
+
+
+pods=$(kubectl -n $(make -s ns) get pod)
+counter=0
+while IFS= read -r pod; do
+	# Add your code here to process each pod
+	if [[ $counter -gt 0 ]]; then
+		printf "%02d " $counter
+		echo "$pod"
+	else
+		echo "   $pod"
+	fi
+	counter=$((counter+1))
+done <<< "$pods"
+
+if [ "$counter" -eq 2 ]; then  # only 1 pod
+	podNumber=1
+else
+	echo -n "Input the pod number: "
+	read podNumber
+fi
+podNumber=$((10#$podNumber+1))
+
+podName=$(echo "$pods" | sed -n "$podNumber"p | awk '{print $1}')
+
+sh=$(kubectl -n $(make -s ns) exec $podName -- ls /bin/bash)
+if [ "$sh" == "" ]; then
+	sh=$(kubectl -n $(make -s ns) exec $podName -- ls /bin/sh)
+fi
+echo "# kubectl -n $(make -s ns) exec -it $podName -- $sh"
+echo "=========================================================="
+kubectl -n $(make -s ns) exec -it $podName -- $sh -c "cd /workspace/ktransformers && python -m ktransformers.local_chat --model_path ./DeepSeek-V2-Lite --gguf_path ./DeepSeek-V2-Lite-Chat-GGUF"

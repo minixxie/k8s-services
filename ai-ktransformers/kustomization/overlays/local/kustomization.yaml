@@ -1,8 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-metadata:
-  name: datascience-models
 resources:
-  - pv.yaml
-  - pvc.yaml
-  - pod.yaml
+  - ../../base
+
+patches:

@@ -1,4 +1,7 @@
 nvidia-gpu-operator:
+  operator:
+    defaultRuntime: containerd
+    runtimeClass: nvidia
   toolkit:
     env:
       - name: CONTAINERD_CONFIG

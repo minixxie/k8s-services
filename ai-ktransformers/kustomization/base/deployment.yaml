@@ -1,0 +1,94 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-ktransformers
+  namespace: ai-ktransformers
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ai-ktransformers
+  template:
+    metadata:
+      annotations:
+      labels:
+        app: ai-ktransformers
+    spec:
+      runtimeClassName: nvidia
+      hostAliases:
+      #  - hostnames:
+      #      - "ai-ktransformers.local"  # Hostname to resolve
+      #    ip: "192.168.3.128"
+      containers:
+        - name: main
+          #image: approachingai/ktransformers:0.2.1
+          image: minixxie/ktransformers:cuda12.4-0.0.1
+          imagePullPolicy: IfNotPresent
+          env:
+           - name: CUDA_VISIBLE_DEVICES
+             value: "0"
+           #- name: PYTORCH_CUDA_ALLOC_CONF
+           #  value: "expandable_segments:True"
+           - name: MODEL_PATH
+             #value: "./DeepSeek-V2-Lite"
+             value: "./DeepSeek-V3"
+             #value: "./DeepSeek-R1"
+           - name: GGUF_PATH
+             #value: "./DeepSeek-V2-Lite-Chat-GGUF"
+             value: "./DeepSeek-V3-GGUF"
+             #value: "./DeepSeek-R1-GGUF"
+          command:
+            - /bin/bash
+            - -c
+            - |
+              sed -i 's/http:\/\/localhost/http:\/\/ai-ktransformers.local/' /workspace/ktransformers/ktransformers/website/dist/static/js/chunk-vendors.cf653779.js
+              cd /workspace/ktransformers/
+              ktransformers --model_path $MODEL_PATH --gguf_path $GGUF_PATH --port 80 --web True
+          ports:
+            - name: http
+              containerPort: 80  # HTTP port
+#          readinessProbe:
+#            httpGet:
+#              path: /web/index.html
+#              port: 80
+#            initialDelaySeconds: 30
+#            periodSeconds: 30
+          volumeMounts:
+            - name: datascience-models
+              subPath: DeepSeek-V2-Lite
+              mountPath: /workspace/ktransformers/DeepSeek-V2-Lite
+              readOnly: true
+            - name: datascience-models
+              subPath: DeepSeek-V2-Lite-Chat-GGUF
+              mountPath: /workspace/ktransformers/DeepSeek-V2-Lite-Chat-GGUF
+              readOnly: true
+            - name: datascience-models
+              subPath: DeepSeek-V3
+              mountPath: /workspace/ktransformers/DeepSeek-V3
+              readOnly: true
+            - name: datascience-models
+              subPath: DeepSeek-V3-GGUF
+              mountPath: /workspace/ktransformers/DeepSeek-V3-GGUF
+              readOnly: true
+            - name: datascience-models
+              subPath: DeepSeek-R1
+              mountPath: /workspace/ktransformers/DeepSeek-R1
+              readOnly: true
+            - name: datascience-models
+              subPath: DeepSeek-R1-GGUF
+              mountPath: /workspace/ktransformers/DeepSeek-R1-GGUF
+              readOnly: true
+            - name: vue-config-volume
+              mountPath: /workspace/ktransformers/ktransformers/website/vue.config.js
+              subPath: vue.config.js
+          resources:
+            limits:
+              nvidia.com/gpu: 1 # requesting 1 GPU
+
+      volumes:
+        - name: datascience-models
+          persistentVolumeClaim:
+            claimName: datascience-models
+        - name: vue-config-volume
+          configMap:
+            name: vue-config

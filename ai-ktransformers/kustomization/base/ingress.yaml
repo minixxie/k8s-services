@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ai-ktransformers
+  namespace: ai-ktransformers
+spec:
+  rules:
+    - host: ai-ktransformers.local
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: ai-ktransformers
+                port:
+                  number: 80

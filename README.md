@@ -1,8 +1,19 @@
 # k8s-services
 
+- [Intro](#intro)
+- [Setting up k8s environment on local](#setting-up-k8s-environment-on-local)
+  - [Mac](#mac)
+  - [Linux](#linux)
+- [Components](#components)
+  - [ktransformers](#ktransformers)
+  - [mysql](#mysql)
+  - [mongodb](#mongodb)
+  - [ollama](#ollama)
+
+
 ## Intro
 
-This repository provides easy, consistent way for spinning up various common software for operation engineers. Since most cases helm is being used, most components use the same Makefile (symbolic link to `scripts/Makefile` and make targets are the same).
+This repository provides easy, consistent way for spinning up various common softwares for operation engineers. Since most cases helm/kustomize are being used, most components use the same Makefile (symbolic link to `scripts/Makefile` and make targets are the same).
 
 This repository is also meant to be runnable on k8s with ArgoCD with GitOps methodology, to spin up most softwares.
 
@@ -29,6 +40,59 @@ make k3s-redo
 
 
 ## Components
+General make targets for all components:
+1. `make get` - to list out k8s resources (deployment, pod, replicaset, services, ingresses, pvc, pv, etc) and container images.
+2. `make up` - to spin up as a production environment (usually uses `values.yaml`, or `kustomization/base/kustomization.yaml`).
+3. `make local` (instead of `make up`) - to spin up as a local environment (usually uses `values.local.yaml`, or `kustomization/overlays/local/`).
+4. `make down` - to shutdown the component
+5. `make img` - to pull the container image upfront, and save it as a file on local harddrive (to speed up next pull).
+6. `make test` - to run relevant test to verify the deployment was successful.
+7. `make cli` - run command line interface (if any).
+
+
+### ktransformers
+Link: https://github.com/kvcache-ai/ktransformers/
+
+Preparations:
+
+1. make sure k3s is running (e.g. Linux)
+```bash
+make k3s-redo
+```
+2. make sure GPU operator is deployed to configure NVIDIA drivers (assumption: you have `nvidia-drivers-550` already installed on the host machine, e.g. `sudo apt-get install nvidia-drivers-550`)
+```bash
+cd nvidia-gpu-operator/
+make img local wait test
+cd -
+```
+
+3. make sure relevant model files are downloaded into the pv (persistent volume)
+```bash
+cd datascience-models/
+cd models/
+./DeepSeek-V3.sh       # download the repo
+./DeepSeek-V3-GGUF.sh  # download the GGUF files
+cd ..
+make local test        # setup pv and pvc
+cd ..
+```
+
+4. deploy the k8s components
+```bash
+cd ai-ktransformers/
+make img local test
+cd ..
+```
+
+5. you can play with the API
+```bash
+./test "Tell me what is MoE in Machine Learning"
+```
+
+*The above commands can actually be replaced by running:
+```bash
+./tests/e2e.ktransformers.sh
+```
 
 ### mysql
 Spin up on local machine
@@ -138,6 +202,9 @@ admin>
 
 
 ### ollama
+With ollama, you may add models on your own, please refer to: https://ollama.com/search
+and configure in `values.yaml` / `values.local.yaml`.
+
 Spin up on local machine
 ```bash
 # ollama will download models from the internet, it needs long time to be pod ready
@@ -210,3 +277,5 @@ cd ai-ollama
 {"model":"llama2","created_at":"2024-03-29T03:24:12.522344661Z","response":" because","done":false}
 ...
 ```
+
+*Edit values.yaml / values.local.yaml to control what models to be served.

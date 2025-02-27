@@ -6,6 +6,7 @@ get:
 
 .PHONY: up
 up:
+	./symlink.sh
 	kubectl apply -k .
 	kubectl -n default wait --for condition=ready --timeout=10m pod datascience-models
 	./cp-files.sh
@@ -27,4 +28,4 @@ exec:
 
 .PHONY: test
 test:
-	./test.sh
+	./test

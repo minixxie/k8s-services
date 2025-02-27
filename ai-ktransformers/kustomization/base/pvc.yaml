@@ -2,10 +2,11 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: datascience-models
+  namespace: ai-ktransformers
 spec:
   selector:
     matchLabels:
-      name: datascience-models
+      name: ai-ktransformers-datascience-models
   storageClassName: manual
   accessModes:
     - ReadWriteOnce
