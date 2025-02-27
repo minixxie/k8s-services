@@ -30,12 +30,12 @@ spec:
            #- name: PYTORCH_CUDA_ALLOC_CONF
            #  value: "expandable_segments:True"
            - name: MODEL_PATH
-             #value: "./DeepSeek-V2-Lite"
-             value: "./DeepSeek-V3"
+             value: "./DeepSeek-V2-Lite"
+             #value: "./DeepSeek-V3"
              #value: "./DeepSeek-R1"
            - name: GGUF_PATH
-             #value: "./DeepSeek-V2-Lite-Chat-GGUF"
-             value: "./DeepSeek-V3-GGUF"
+             value: "./DeepSeek-V2-Lite-Chat-GGUF"
+             #value: "./DeepSeek-V3-GGUF"
              #value: "./DeepSeek-R1-GGUF"
           command:
             - /bin/bash
