@@ -47,12 +47,12 @@ spec:
           ports:
             - name: http
               containerPort: 80  # HTTP port
-#          readinessProbe:
-#            httpGet:
-#              path: /web/index.html
-#              port: 80
-#            initialDelaySeconds: 30
-#            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /web/index.html
+              port: 80
+            initialDelaySeconds: 30
+            periodSeconds: 30
           volumeMounts:
             - name: datascience-models
               subPath: DeepSeek-V2-Lite

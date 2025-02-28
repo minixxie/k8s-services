@@ -18,7 +18,7 @@ if [ "$1" != "" ]; then
 	userPrompt="$1"
 fi
 
-cat <<EOF | curl -v -H 'Content-Type: application/json; charset=utf-8' -X POST --data-binary @- http://ai-ktransformers.local/v1/chat/completions
+cat <<EOF | curl -f -v -H 'Content-Type: application/json; charset=utf-8' -X POST --data-binary @- http://ai-ktransformers.local/v1/chat/completions
 {
 	"model": "$model",
 	"messages": [
