@@ -63,12 +63,14 @@ fi
 #        sudo apt update
 #        sudo apt install -q -y nvidia-container-runtime
 #
-if ! grep -q "socket-path" /etc/nvidia-container-runtime/config.toml; then
-    echo "[nvidia-container-runtime]" >> /etc/nvidia-container-runtime/config.toml
-    echo "  socket-path = \"/run/k3s/containerd/containerd.sock\"" >> /etc/nvidia-container-runtime/config.toml
-    echo "socket-path added to /etc/nvidia-container-runtime/config.toml"
-else
-    echo "socket-path already exists in /etc/nvidia-container-runtime/config.toml"
+if [ $nvidia -eq 1 ]; then
+	if ! grep -q "socket-path" /etc/nvidia-container-runtime/config.toml; then
+	    echo "[nvidia-container-runtime]" >> /etc/nvidia-container-runtime/config.toml
+	    echo "  socket-path = \"/run/k3s/containerd/containerd.sock\"" >> /etc/nvidia-container-runtime/config.toml
+	    echo "socket-path added to /etc/nvidia-container-runtime/config.toml"
+	else
+	    echo "socket-path already exists in /etc/nvidia-container-runtime/config.toml"
+	fi
 fi
 
 NS=default SERVICE_ACCOUNT=default "$scriptPath"/k8s-wait-serviceaccount.sh
