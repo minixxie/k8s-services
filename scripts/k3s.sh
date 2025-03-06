@@ -16,8 +16,7 @@ else
 fi
 
 nvidia=0
-lspci | grep -i nvidia
-if [ $? -eq 0 ]; then
+if lspci | grep -i nvidia; then
 	nvidia=1
 fi
 if [ "$(which nvidia-smi)" != "" ]; then
