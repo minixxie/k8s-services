@@ -15,12 +15,29 @@ else
 	ENGINE=containerd
 fi
 
+nvidia=0
+lspci | grep -i nvidia
+if [ $? -eq 0 ]; then
+	nvidia=1
+fi
+if [ "$(which nvidia-smi)" != "" ]; then
+	nvidia-smi > /dev/null
+	if [ $? -eq 0 ]; then
+		nvidia=1
+	fi
+fi
+
+nvidiaRuntime=""
+if [ $nvidia -eq 1 ]; then
+	nvidiaRuntime="--default-runtime=nvidia"
+fi
+
 if [ "$ENGINE" == docker ]; then
 	sudo apt install -q -y docker.io
 	sudo usermod -aG docker $USER
-	curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--docker" K3S_KUBECONFIG_MODE="644" sh -
+	curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--docker $nvidiaRuntime" K3S_KUBECONFIG_MODE="644" sh -
 else
-	curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--default-runtime=nvidia" K3S_KUBECONFIG_MODE="644" sh -
+	curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="$nvidiaRuntime" K3S_KUBECONFIG_MODE="644" sh -
 fi
 systemctl start k3s
 systemctl enable k3s
