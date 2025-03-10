@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: ai-vllm-datascience-models
+  labels:
+    name: ai-vllm-datascience-models
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 102400Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/datascience-models"

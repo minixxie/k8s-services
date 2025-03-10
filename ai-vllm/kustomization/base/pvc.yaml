@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: datascience-models
+  namespace: ai-vllm
+spec:
+  selector:
+    matchLabels:
+      name: ai-vllm-datascience-models
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 102400Gi

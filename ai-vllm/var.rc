@@ -1,7 +1,7 @@
 NS=ai-vllm
 HELM_REPO_ALIAS=
 CONTAINER_IMAGES="
-vllm/vllm-openai:v0.6.3
+vllm/vllm-openai:v0.7.3
 "
 #vllm/vllm-openai:v0.6.3
 #minixxie/vllm:0.0.1
