@@ -9,6 +9,7 @@ ns:
 .PHONY: get
 get:
 	kubectl -n kubevirt get all
+	kubectl -n kubevirt get ing
 
 .PHONY: up
 up:
@@ -16,9 +17,15 @@ up:
 	echo $$VERSION; \
 	kubectl create -f "https://github.com/kubevirt/kubevirt/releases/download/$$VERSION/kubevirt-operator.yaml"; \
 	kubectl create -f "https://github.com/kubevirt/kubevirt/releases/download/$$VERSION/kubevirt-cr.yaml"
+	make -s virtctl
 
 .PHONY: local
 local: up
+
+# https://kubevirt.io/quickstart_cloud/
+.PHONY: virtctl
+virtctl:
+	./install-virtctl.sh
 
 .PHONY: wait
 wait:
@@ -32,4 +39,8 @@ img:
 
 .PHONY: test
 test:
-
+	#cd .. && make -s -C ubuntu-vm
+	#kubectl delete -f vm.yaml || true
+	#kubectl apply -f vm.yaml
+	#kubectl -n kubevirt get vms
+	#kubectl -n kubevirt wait --for=condition=Ready vm/ubuntu-vm --timeout=120s
