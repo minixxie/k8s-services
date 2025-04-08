@@ -46,33 +46,33 @@ elif [ "$1" == img ]; then
 fi
 
 if [ $all -eq 1 ]; then
-	echo '# kubectl -n $(make -s ns) get all'
-	kubectl -n $(make -s ns) get all
+	echo '# kubectl -n $(make -s --no-print-directory ns) get all'
+	kubectl -n $(make -s --no-print-directory ns) get all
 	echo ""
 fi
 if [ $pod -eq 1 ]; then
-	echo '# kubectl -n $(make -s ns) get pod'
-	kubectl -n $(make -s ns) get pod
+	echo '# kubectl -n $(make -s --no-print-directory ns) get pod'
+	kubectl -n $(make -s --no-print-directory ns) get pod
 	echo ""
 fi
 if [ $svc -eq 1 ]; then
-	echo '# kubectl -n $(make -s ns) get svc'
-	kubectl -n $(make -s ns) get svc
+	echo '# kubectl -n $(make -s --no-print-directory ns) get svc'
+	kubectl -n $(make -s --no-print-directory ns) get svc
 	echo ""
 fi
 if [ $deploy -eq 1 ]; then
-	echo '# kubectl -n $(make -s ns) get deploy'
-	kubectl -n $(make -s ns) get deploy
+	echo '# kubectl -n $(make -s --no-print-directory ns) get deploy'
+	kubectl -n $(make -s --no-print-directory ns) get deploy
 	echo ""
 fi
 if [ $ing -eq 1 ]; then
-	echo '# kubectl -n $(make -s ns) get ing'
-	kubectl -n $(make -s ns) get ing
+	echo '# kubectl -n $(make -s --no-print-directory ns) get ing'
+	kubectl -n $(make -s --no-print-directory ns) get ing
 	echo ""
 fi
 if [ $pvc -eq 1 ]; then
-	echo '# kubectl -n $(make -s ns) get pvc'
-	kubectl -n $(make -s ns) get pvc
+	echo '# kubectl -n $(make -s --no-print-directory ns) get pvc'
+	kubectl -n $(make -s --no-print-directory ns) get pvc
 	echo ""
 fi
 if [ $pv -eq 1 ]; then

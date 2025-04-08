@@ -1,0 +1,195 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ubuntu-vm
+---
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  creationTimestamp: null
+  name: ubuntu-vm
+  namespace: ubuntu-vm
+spec:
+  dataVolumeTemplates:
+  - metadata:
+      creationTimestamp: null
+      name: rootvol-pvc
+    spec:
+      pvc:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 200Gi
+        storageClassName: local-path
+      source:
+        registry:
+          url: docker://quay.io/containerdisks/ubuntu:24.04  # Use docker:// prefix
+  runStrategy: Always
+  template:
+    metadata:
+      creationTimestamp: null
+    spec:
+      domain:
+        devices:
+          disks:
+          - disk:
+              bus: virtio
+            #name: containerdisk
+            name: rootvol
+          - disk:
+              bus: virtio
+            name: cloudinit
+          rng: {}
+        resources:
+          requests:
+            memory: 1Gi
+      terminationGracePeriodSeconds: 180
+      volumes:
+      - dataVolume:
+          name: rootvol-pvc
+        name: rootvol
+      - containerDisk:
+          image: quay.io/containerdisks/ubuntu:24.04
+        name: containerdisk
+      - cloudInitNoCloud:
+          userData: |-
+            #cloud-config
+            growpart:
+              mode: auto
+              devices: ['/dev/vda']  # Adjust this if your device name is different
+              ignore_growroot_disabled: true
+            # Resize the filesystem
+            resizefs:
+              - /dev/vda1  # Adjust this if your root partition is different
+            chpasswd:
+              expire: false
+            password: ubuntu
+            user: ubuntu
+            ssh_authorized_keys:
+              - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDILTGPcGL+4vxW2L/A1quapcg277Zcr7kDV3AAnrM8381w81s+y8EmVjUH8UEsUClFoJc98jiq2kLTyc2l2ROpmDcW4r8V+IL+Qge+4X0vSDRvlCDSLV6lyQ6JbEmRz2OPrqU4jAblM1GA1SS1li8X3xq+ZfYzK4tDupigSf18YuZLWzfOTySRPSShKAcDRVW618ef5T2Hj85fnBHeHY41SM1pHbW7dDr56MUCsL1GsIKk9ksI/9vHez4DaApJWUBIJzEXSj+0q7FIERhyh4VfnizUcEAU9HTrU8cVRjXsMT/XQXI4YNFdRq695PP7erTp1l/kLbp8qCf7CN0Ackp3jFinT0hvevWb4kDvsny+cjSnVbTtG+GYt2VYAEjYZ06OTXzAwuZ4xvmU/M+z449NQhzY7X+26W/ZbWPRjMIr2hzz3NuIM12pyxV4FhcRKzzy59IXRvrlTeDQqvJi8mxJBM4SfxFNKNcLZWVMX4CmTgCeLMiJu0q0K/3f16wjHrs= simon.tse@simontse-predator-phn16
+            bootcmd:
+              - sudo apt-get update
+              - sudo apt-get install net-tools tightvncserver
+        name: cloudinit
+status: {}
+#apiVersion: kubevirt.io/v1
+#kind: VirtualMachine
+#metadata:
+#  name: ubuntu-vm
+#  namespace: ubuntu-vm
+#spec:
+#  running: true
+#  template:
+#    metadata:
+#      labels:
+#        kubevirt.io/domain: ubuntu-vm
+#    spec:
+#      domain:
+#        devices:
+#          disks:
+#          - name: bootdisk
+#            cdrom:
+#              bus: sata
+#          - name: disk0
+#            disk:
+#              bus: virtio
+#        resources:
+#          requests:
+#            memory: 2Gi
+#            cpu: 1
+#      volumes:
+#      - name: bootdisk
+#        persistentVolumeClaim:
+#          claimName: iso-pvc
+#      - name: disk0
+#        persistentVolumeClaim:
+#          claimName: ubuntu-pvc
+#      - name: machine-id
+#        persistentVolumeClaim:
+#          claimName: machine-id-pvc  # Reference the PVC
+#---
+#apiVersion: v1
+#kind: PersistentVolumeClaim
+#metadata:
+#  name: iso-pvc
+#  namespace: ubuntu-vm
+#spec:
+#  accessModes:
+#    - ReadOnlyMany
+#  resources:
+#    requests:
+#      storage: 8Gi  # Must match the PV size
+#  volumeName: iso-pv  # Specify the PV to bind to
+#  storageClassName: manual  # Must match the storage class of the PV
+#---
+#apiVersion: v1
+#kind: PersistentVolume
+#metadata:
+#  name: iso-pv
+#spec:
+#  capacity:
+#    storage: 8Gi  # Ensure this matches your needs
+#  accessModes:
+#    - ReadOnlyMany
+#  hostPath:
+#    path: /ubuntu-24.04.2-desktop-amd64.iso  # Path to your ISO file
+#  storageClassName: manual
+#---
+#apiVersion: v1
+#kind: PersistentVolumeClaim
+#metadata:
+#  name: ubuntu-pvc
+#  namespace: ubuntu-vm
+#spec:
+#  accessModes:
+#    - ReadWriteOnce
+#  resources:
+#    requests:
+#      storage: 100Gi
+#  volumeName: ubuntu-pv  # Specify the PV to bind to
+#  storageClassName: manual  # Must match the storage class of the PV
+#---
+#apiVersion: v1
+#kind: PersistentVolume
+#metadata:
+#  name: ubuntu-pv
+#spec:
+#  capacity:
+#    storage: 100Gi  # Specify the size of the volume
+#  accessModes:
+#    - ReadWriteOnce  # Access mode for the volume
+#  hostPath:  # Use hostPath for local testing; change as needed for production
+#    path: /tmp/k8s/ubuntu-vm/ubuntu-vm  # Path on the host where the volume is located
+#  persistentVolumeReclaimPolicy: Retain  # Policy for reclaiming the volume
+#  storageClassName: manual  # Storage class name
+#---
+#apiVersion: v1
+#kind: PersistentVolumeClaim
+#metadata:
+#  name: machine-id-pvc
+#  namespace: ubuntu-vm
+#spec:
+#  accessModes:
+#    - ReadOnlyMany
+#  resources:
+#    requests:
+#      storage: 1Gi  # This should match the PV size
+#  volumeName: machine-id-pv  # Specify the PV to bind to
+#  storageClassName: manual  # Must match the storage class of the PV
+#---
+#apiVersion: v1
+#kind: PersistentVolume
+#metadata:
+#  name: machine-id-pv
+#  namespace: ubuntu-vm
+#spec:
+#  capacity:
+#    storage: 1Gi  # Specify a size; this is just a placeholder
+#  accessModes:
+#    - ReadOnlyMany
+#  hostPath:
+#    path: /etc/machine-id  # Path on the host
+#  persistentVolumeReclaimPolicy: Retain  # Policy for reclaiming the volume
+#  storageClassName: manual  # Storage class name
+#  

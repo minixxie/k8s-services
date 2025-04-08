@@ -6,7 +6,7 @@ source "$PWD"/var.rc
 cd "$PWD"
 
 
-pods=$(kubectl -n $(make -s ns) get pod)
+pods=$(kubectl -n $(make -s --no-print-directory ns) get pod)
 counter=0
 while IFS= read -r pod; do
 	# Add your code here to process each pod
@@ -29,6 +29,6 @@ podNumber=$((10#$podNumber+1))
 
 podName=$(echo "$pods" | sed -n "$podNumber"p | awk '{print $1}')
 
-echo "# kubectl -n $(make -s ns) describe pod $podName"
+echo "# kubectl -n $(make -s --no-print-directory ns) describe pod $podName"
 echo "=========================================================="
-kubectl -n $(make -s ns) describe pod $podName
+kubectl -n $(make -s --no-print-directory ns) describe pod $podName

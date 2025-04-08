@@ -18,7 +18,7 @@ ns:
 
 .PHONY: check
 check:
-	helm list -n $$(make -s ns) -f $$(make -s chart-name) || true
+	helm list -n $(shell make -s --no-print-directory ns) -f $(shell make -s --no-print-directory chart-name) || true
 
 
 .PHONY: get
@@ -76,7 +76,7 @@ helm-repo-remove:
 
 .PHONY: helm-repo-search
 helm-repo-search: helm-repo-add
-	helm search repo $$(make -s helm-repo-alias)
+	helm search repo $(shell make -s --no-print-directory helm-repo-alias)
 
 .PHONY: helm-show-val
 helm-show-val:
@@ -84,7 +84,7 @@ helm-show-val:
 
 .PHONY: tpl
 tpl: helm-repo-add
-	helm template $$(make -s chart-name) $$(make -s helm-repo-alias)/$$(make -s chart-name)
+	helm template $(shell make -s --no-print-directory chart-name) $(shell make -s --no-print-directory helm-repo-alias)/$(shell make -s --no-print-directory chart-name)
 
 .PHONY: wait
 wait:

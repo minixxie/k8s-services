@@ -11,6 +11,7 @@ make -s k8s-redo
 make -s -C ./kubevirt img local wait test
 
 ### the application
+make -s -C ./ubuntu-vm local wait
 
 
 echo SUCCESS

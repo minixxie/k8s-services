@@ -6,4 +6,4 @@ source "$PWD"/var.rc
 cd "$PWD"
 
 make helm-repo-add > /dev/null 2>&1 || true
-helm show values "$HELM_REPO_ALIAS"/$(make -s chart-name)
+helm show values "$HELM_REPO_ALIAS"/$(make -s --no-print-directory chart-name)

@@ -41,6 +41,40 @@ fi
 systemctl start k3s
 systemctl enable k3s
 
+echo "Waiting for k3s API server to become available..."
+export KUBECONFIG=/etc/rancher/k3s/k3s.yaml || true; \
+	timeout 120 bash -c 'until kubectl get --raw="/api/v1/namespaces/kube-system" >/dev/null 2>&1; do echo "Waiting for k3s API..."; sleep 5; done'
+echo "Waiting for core components to be ready..."
+# export KUBECONFIG=/etc/rancher/k3s/k3s.yaml || true; \
+# 	kubectl wait --for=condition=Ready pods --all -n kube-system --timeout=180s || echo "Warning: Not all pods are ready, but continuing anyway"
+
+NAMESPACE="kube-system"
+TIMEOUT=300  # 5 minutes in seconds
+INTERVAL=5   # Check every 5 seconds
+ELAPSED=0
+
+while [[ $ELAPSED -lt $TIMEOUT ]]; do
+    # Get the number of pods that are not in the "Running" or "Succeeded" state
+    NOT_READY_PODS=$(kubectl get pods -n $NAMESPACE --field-selector=status.phase!=Running,status.phase!=Succeeded --no-headers | wc -l)
+
+    if [[ $NOT_READY_PODS -eq 0 ]]; then
+        echo "All pods in the '$NAMESPACE' namespace are ready."
+        break  # Exit the loop if all pods are ready
+    fi
+
+    echo "Waiting for all pods to be ready... ($NOT_READY_PODS not ready)"
+    sleep $INTERVAL
+    ELAPSED=$((ELAPSED + INTERVAL))
+done
+
+# Check if the timeout was reached
+if [[ $ELAPSED -ge $TIMEOUT ]]; then
+    echo "Timeout reached: Not all pods in the '$NAMESPACE' namespace are ready after 5 minutes."
+    exit 1  # Exit with status 1 when the timeout occurs
+fi
+
+echo "k3s is ready!"
+
 set +e
 grep 'export KUBECONFIG=' /etc/bash.bashrc
 if [ $? -eq 0 ]; then
