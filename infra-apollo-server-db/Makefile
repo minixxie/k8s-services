@@ -16,6 +16,7 @@ up: build
 
 .PHONY: down
 down:
+	./clean || true
 	kubectl delete -k ./kustomization/base/ || true
 
 .PHONY: logs
