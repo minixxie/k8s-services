@@ -1,0 +1,12 @@
+NS=infra-apollo-server
+HELM_REPO_ALIAS=apollo
+CONTAINER_IMAGES="
+apolloconfig/apollo-configservice:2.4.0
+apolloconfig/apollo-adminservice:2.4.0
+apolloconfig/apollo-portal:2.4.0
+"
+WAIT_DEPLOYS="
+apollo-apollo-adminservice
+apollo-apollo-configservice
+apollo-apollo-portal
+"

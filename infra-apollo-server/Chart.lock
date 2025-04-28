@@ -1,0 +1,6 @@
+dependencies:
+- name: apollo
+  repository: https://dellnoantechnp.github.io/helm-chart-xxl-job-admin
+  version: 1.0.1
+digest: sha256:1a360937e370022ba2d95a24aa0c746fafed8b7c5d46a80b5dc9436df5b27904
+generated: "2025-04-28T12:02:49.717660827+08:00"

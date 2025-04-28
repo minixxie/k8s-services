@@ -1,0 +1,48 @@
+apollo:
+  adminService:
+    replicaCount: 2
+    image:
+      tag: 2.4.0
+    ingress:
+      enabled: true
+      hosts:
+        - host: "apollo-admin.local"
+          paths: ["/"]
+  portal:
+    replicaCount: 2
+    enabled: true
+    image:
+      tag: 2.4.0
+    ingress:
+      enabled: true
+      hosts:
+        - host: "apollo.local"
+          paths: ["/"]
+  configService:
+    replicaCount: 2
+    image:
+      tag: 2.4.0
+    ingress:
+      enabled: true
+      hosts:
+        - host: "apollo-config.local"
+          paths: ["/"]
+  db:
+    configdb:
+      name: apollo-configdb
+      host: "mysql.infra-mysql.svc.cluster.local"
+      dbName: "infra_apollo_config"
+      userName: "infra_apollo_config"
+      password: "infra_apollo_config"
+      connectionStringProperties: characterEncoding=utf8&useSSL=false
+      autoInitDatabase:
+        enabled: false
+    portaldb:
+      name: apollo-portaldb
+      host: "mysql.infra-mysql.svc.cluster.local"
+      dbName: "infra_apollo_portal"
+      userName: "infra_apollo_portal"
+      password: "infra_apollo_portal"
+      connectionStringProperties: characterEncoding=utf8&useSSL=false
+      autoInitDatabase:
+        enabled: false

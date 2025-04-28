@@ -1,0 +1,39 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: infra-apollo-mysql-db
+  namespace: infra-mysql
+  annotations:
+  labels:
+    app: infra-apollo
+spec:
+  template:
+    metadata:
+      labels:
+        app: infra-apollo
+    spec:
+      containers:
+        - name: init-db
+          image: local/infra-apollo-mysql-db:dont_push
+          imagePullPolicy: Never
+          command: ["bash", "-c"]
+          args:
+            - |
+              ./k8s-job-initdb.sh
+          envFrom:
+            - secretRef:
+                name: mysql
+          env:
+            - name: HOST
+              value: mysql.infra-mysql.svc.cluster.local
+            - name: USER
+              value: root
+            - name: MYSQL_PWD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql
+                  key: mysql-root-password
+      restartPolicy: OnFailure
+  parallelism: 1
+  completions: 1
+  backoffLimit: 6

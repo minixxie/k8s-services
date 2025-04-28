@@ -1,0 +1,7 @@
+apiVersion: v2
+name: apollo
+version: 1.0.1
+dependencies:
+  - name: apollo
+    version: 1.0.1
+    repository: https://dellnoantechnp.github.io/helm-chart-xxl-job-admin
