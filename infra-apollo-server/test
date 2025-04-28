@@ -1,3 +1,8 @@
 #!/bin/bash
 
 curl -v -f -H 'Host: apollo.local' http://127.0.0.1/
+
+appID=SampleApp
+cluster=default
+namespace=application
+curl -v -f -H 'Host: apollo-config.local' http://127.0.0.1/configs/$appID/$cluster/$namespace | jq
