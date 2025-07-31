@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: devops-sourcebot
+  namespace: devops-sourcebot
+spec:
+  rules:
+  - host: devops-sourcebot.local
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: devops-sourcebot
+            port:
+              number: 3000

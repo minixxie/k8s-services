@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-sourcebot
+  namespace: devops-sourcebot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: devops-sourcebot
+  template:
+    metadata:
+      labels:
+        app: devops-sourcebot
+    spec:
+      containers:
+      - name: main
+        image: ghcr.io/sourcebot-dev/sourcebot:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: http
+          containerPort: 3000  # HTTP port
+        env:
+        # just in case useful for accessing any daemonset
+        - name: HOST_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        - name: GITLAB_URL
+          value: "https://gitlab.xxx"
+        - name: GITLAB_TOKEN
+          value: ""
+        volumeMounts:
+        - name: config-volume
+          mountPath: /app/config.yaml
+          subPath: config.yaml
+        - name: data-volume
+          mountPath: /data
+      volumes:
+      - name: config-volume
+        configMap:
+          name: devops-sourcebot-config
+      - name: data-volume
+        persistentVolumeClaim:
+          claimName: sourcebot-data

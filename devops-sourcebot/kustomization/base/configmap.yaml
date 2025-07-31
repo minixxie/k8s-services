@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: devops-sourcebot
+  name: devops-sourcebot-config
+data:
+  config.yaml: |
+    integrations:
+      gitlab:
+        enabled: true
+        url: "${GITLAB_URL}"
+        token: "${GITLAB_TOKEN}"
+        projects:
+          - "*"
+        schedule: "0 * * * *"

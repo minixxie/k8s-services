@@ -1,0 +1,8 @@
+NS=devops-sourcebot
+HELM_REPO_ALIAS=
+CONTAINER_IMAGES="
+ghcr.io/sourcebot-dev/sourcebot:latest
+"
+WAIT_DEPLOYS="
+devops-sourcebot
+"
