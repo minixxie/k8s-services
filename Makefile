@@ -28,6 +28,14 @@ mem:
 		echo 0; \
 	fi
 
+.PHONY: install-kubectl
+install-kubectl:
+	@if [ "$$(uname -s)" == "Darwin" ]; then \
+		brew install kubectl; \
+	elif [ "$$(uname -s)" == "Linux" ]; then \
+		echo 0; \
+	fi
+
 .PHONY: install-colima
 install-colima:
 	which colima; \
