@@ -48,8 +48,7 @@ colima-small: install-colima
 	colima start -k --runtime containerd \
 		--cpu $$(expr $$(make -s ncpu) / 4) \
 		--memory $$(expr $$(make -s mem) / 4) \
-		--disk 20 \
-		-p small
+		--disk 20
 	make -s -C ./ingress-controller local wait
 
 .PHONY: colima
