@@ -98,6 +98,17 @@ k8s-redo:
 		make -s k3s-redo; \
 	fi
 
+.PHONY: k8s-down
+k8s-down:
+	sys=$$(uname -s); echo $$sys; \
+	if [ "$$sys" == "Darwin" ]; then \
+		make -s install colima; \
+		colima stop --force; \
+		colima delete --force; \
+	else \
+		sudo k3s-uninstall.sh || true
+	fi
+
 .PHONY: k3s
 k3s:
 	sudo ./scripts/k3s.sh
