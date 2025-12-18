@@ -28,8 +28,15 @@ mem:
 		echo 0; \
 	fi
 
+.PHONY: install-colima
+install-colima:
+	which colima; \
+	if [ "$$?" -ne 0 ]; then \
+		brew install colima; \
+	fi
+
 .PHONY: colima-small
-colima-small:
+colima-small: install-colima
 	colima start -k --runtime containerd \
 		--cpu $$(expr $$(make -s ncpu) / 4) \
 		--memory $$(expr $$(make -s mem) / 4) \
@@ -38,7 +45,7 @@ colima-small:
 	make -s -C ./ingress-controller local wait
 
 .PHONY: colima
-colima:
+colima: install-colima
 	colima start -k --runtime containerd \
 		--cpu $$(expr $$(make -s ncpu) / 2) \
 		--memory $$(expr $$(make -s mem) / 2) \
@@ -46,7 +53,7 @@ colima:
 	make -s -C ./ingress-controller local wait
 
 .PHONY: colima-amd64
-colima-amd64:
+colima-amd64: install-colima
 	colima start -k --runtime containerd \
 		--cpu $$(expr $$(make -s ncpu) / 2) \
 		--memory $$(expr $$(make -s mem) / 2) \
@@ -55,7 +62,7 @@ colima-amd64:
 	make -s -C ./ingress-controller local wait
 
 .PHONY: colima-aarch64
-colima-aarch64:
+colima-aarch64: install-colima
 	colima start -k --runtime containerd \
 		--cpu $$(expr $$(make -s ncpu) / 2) \
 		--memory $$(expr $$(make -s mem) / 2) \
@@ -75,6 +82,7 @@ uninstall-docker:
 k8s-redo:
 	sys=$$(uname -s); echo $$sys; \
 	if [ "$$sys" == "Darwin" ]; then \
+		make -s install colima; \
 		colima stop --force; \
 		colima delete --force; \
 		make -s colima; \
