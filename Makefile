@@ -106,7 +106,7 @@ k8s-down:
 		colima stop --force; \
 		colima delete --force; \
 	else \
-		sudo k3s-uninstall.sh || true
+		sudo k3s-uninstall.sh || true; \
 	fi
 
 .PHONY: k3s
