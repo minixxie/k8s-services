@@ -2,15 +2,7 @@
 
 scriptPath=$(cd $(dirname "$0") && pwd)
 
-dockerNeedSudo="sudo"
-dockerNeedSudo=""
-
-systemctl cat k3s | grep -i docker >/dev/null 2>&1
-if [ $? -eq 0 ]; then
-	cmd="$dockerNeedSudo docker"
-else
-	cmd="nerdctl --namespace=k8s.io"
-fi
+cmd="nerdctl --namespace=k8s.io"
 
 source "$PWD"/var.rc
 cd "$PWD"

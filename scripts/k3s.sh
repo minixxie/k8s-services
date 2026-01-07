@@ -2,6 +2,12 @@
 
 scriptPath=$(cd $(dirname "$0") && pwd)
 
+#"$scriptPath"/is-mainland-china.sh
+#isMainlandChina=$?
+isMainlandChina=1  # not yet fully implemented correctly
+
+echo "IS mainland china? $isMainlandChina"
+
 set -e
 
 if [ $UID -ne 0 ]; then
@@ -36,7 +42,19 @@ if [ "$ENGINE" == docker ]; then
 	sudo usermod -aG docker $USER
 	curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--docker $nvidiaRuntime" K3S_KUBECONFIG_MODE="644" sh -
 else
-	curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="$nvidiaRuntime" K3S_KUBECONFIG_MODE="644" sh -
+	if [[ $isMainlandChina -eq 0 ]]; then
+		echo "installing k3s using CN mirrors..."
+		#curl -sfL --insecure https://mirror.ghproxy.com/https://raw.githubusercontent.com/k3s-io/k3s/main/install.sh | INSTALL_K3S_MIRROR=cn INSTALL_K3S_EXEC="$nvidiaRuntime" K3S_KUBECONFIG_MODE="644" sh -
+		#sudo wget --no-check-certificate https://rancher-mirror.oss-cn-beijing.aliyuncs.com/k3s/v1.33.6+k3s1/k3s-amd64 -O /usr/local/bin/k3s
+		#sudo wget --no-check-certificate https://mirrors.cloud.tencent.com/k3s/v1.33.6+k3s1/k3s-amd64 -O /usr/local/bin/k3s
+		#sudo wget http://mirror.ghproxy.com/https://github.com/k3s-io/k3s/releases/download/v1.33.6+k3s1/k3s-amd64 -O /usr/local/bin/k3s
+		sudo curl -sfL https://rancher-mirror.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_MIRROR=cn INSTALL_K3S_EXEC="$nvidiaRuntime" K3S_KUBECONFIG_MODE="644" \
+			INSTALL_K3S_REGISTRIES="https://registry.cn-hangzhou.aliyuncs.com,https://mirror.ccs.tencentyun.com" sh -s - \
+			--system-default-registry=registry.cn-hangzhou.aliyuncs.com
+	else
+		curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="$nvidiaRuntime" K3S_KUBECONFIG_MODE="644" sh -
+	fi
+
 fi
 systemctl start k3s
 systemctl enable k3s

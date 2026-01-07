@@ -1,5 +1,6 @@
 mysql:
   image:
-    tag: 8.2.0-debian-11-r0
+    repository: mysql
+    tag: 8.2.0
   auth:
     rootPassword: "hello123"

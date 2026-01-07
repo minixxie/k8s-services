@@ -5,15 +5,7 @@ scriptPath=$(cd $(dirname "$0") && pwd)
 source "$PWD"/var.rc
 cd "$PWD"
 
-dockerNeedSudo="sudo"
-dockerNeedSudo=""
-
-systemctl cat k3s | grep -i docker >/dev/null 2>&1
-if [ $? -eq 0 ]; then
-	cmd="$dockerNeedSudo docker"
-else
-	cmd="nerdctl --namespace=k8s.io"
-fi
+cmd="nerdctl --namespace=k8s.io"
 
 for img in $CONTAINER_IMAGES; do
 	echo "[$img]"
