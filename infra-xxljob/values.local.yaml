@@ -12,6 +12,9 @@ xxl-job-admin:
     database: xxl_job
   initDB:
     enabled: true
+    image:
+      registry: library/mysql
+      tag: "8.2.0"
   ingress:
     enabled: true
     hosts:
