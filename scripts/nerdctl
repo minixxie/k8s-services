@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+limactl shell ldev sudo nerdctl --address /run/k3s/containerd/containerd.sock $@
