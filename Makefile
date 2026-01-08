@@ -77,24 +77,22 @@ colima-aarch64: install-colima
 		--arch aarch64 --vm-type=vz --vz-rosetta
 	make -s -C ./ingress-controller local wait
 
-.PHONY: install-docker
-install-docker:
-	./scripts/install-docker.sh
-
-.PHONY: uninstall-docker
-uninstall-docker:
-	./scripts/uninstall-docker.sh
-
 .PHONY: k8s-redo
 k8s-redo:
+	make -s k8s-down
+	make -s k8s-up
+
+.PHONY: k8s-up
+k8s-up:
 	sys=$$(uname -s); echo $$sys; \
 	if [ "$$sys" == "Darwin" ]; then \
 		make -s install colima; \
-		colima stop --force; \
-		colima delete --force; \
-		make -s colima; \
+		limactl start --name=ldev --tty=false \
+			--cpus=$$(expr $$(make -s ncpu) / 2) --memory=$$(expr $$(make -s mem) / 2)GiB \
+			./scripts/ldev.lima.yaml; \
+		mkdir -p ~/.kube/ && limactl shell ldev sudo cat /etc/rancher/k3s/k3s.yaml > ~/.kube/config; \
 	else \
-		make -s k3s-redo; \
+		make -s k3s k3s-wait; \
 	fi
 
 .PHONY: k8s-down
@@ -102,8 +100,8 @@ k8s-down:
 	sys=$$(uname -s); echo $$sys; \
 	if [ "$$sys" == "Darwin" ]; then \
 		make -s install colima; \
-		colima stop --force; \
-		colima delete --force; \
+		limactl stop --force ldev; \
+		limactl delete --force ldev; \
 	else \
 		sudo k3s-uninstall.sh || true; \
 	fi
@@ -115,16 +113,6 @@ k3s:
 	sudo ./scripts/buildkit.sh
 	make -s k3s-wait
 	make -s -C coredns local
-
-.PHONY: k3s-redo
-k3s-redo:
-	sudo k3s-uninstall.sh || true
-	sudo ./scripts/k3s.sh
-	#sudo systemctl stop k3s
-	#sudo rm -rf /var/lib/rancher/k3s
-	#sudo systemctl start k3s
-	make -s k3s-wait
-	#make -s -C coredns local
 
 .PHONY: k3s-wait
 k3s-wait:
