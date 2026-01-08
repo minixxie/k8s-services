@@ -88,7 +88,7 @@ k8s-up:
 	if [ "$$sys" == "Darwin" ]; then \
 		make -s install colima; \
 		limactl start --name=ldev --tty=false \
-			--cpus=$$(expr $$(make -s ncpu) / 2) --memory=$$(expr $$(make -s mem) / 2)GiB \
+			--cpus=$$(expr $$(make -s ncpu) / 2) --memory=$$(expr $$(make -s mem) / 2) \
 			./scripts/ldev.lima.yaml; \
 		mkdir -p ~/.kube/ && limactl shell ldev sudo cat /etc/rancher/k3s/k3s.yaml > ~/.kube/config; \
 	else \
