@@ -1,0 +1,58 @@
+# 1. Images (REQUIRED: This tells Lima what to download)
+images:
+  - location: "https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img"
+    arch: "x86_64"
+  - location: "https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-arm64.img"
+    arch: "aarch64"
+
+# 2. Virtualization Engine
+vmType: "vz"
+mountType: "virtiofs"
+
+# 3. Resources: specify in the limactl start command
+#cpus: 4
+#memory: "6GiB"
+
+# 4. Rosetta 2 (for Apple Silicon)
+vmOpts:
+  vz:
+    rosetta:
+      enabled: true
+      binfmt: true
+
+# 5. Networking
+#networks:
+#  - vzNAT: false
+
+# 6. Automated K3s Installation
+provision:
+  - mode: system
+    script: |
+      #!/bin/bash
+      # 1. Install missing dependencies
+      apt-get update
+      apt-get install -y uidmap dbus-user-session slirp4netns
+      # 2. Fix Ubuntu 24.04 AppArmor/UserNS restriction
+      # This allows unprivileged users to create namespaces
+      sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+      echo "kernel.apparmor_restrict_unprivileged_userns=0" > /etc/sysctl.d/99-userns.conf
+      # 3. Now proceed with K3s installation
+      curl -sfL https://get.k3s.io | sh -s - server \
+        --disable traefik \
+        --write-kubeconfig-mode 644
+
+# 7. Port Forwarding for K8s API
+portForwards:
+  - guestPort: 6443
+    hostPort: 6443
+
+user:
+  name: "ldev"
+
+# Disable the host's problematic DNS and use clean ones
+hostResolver:
+  enabled: true
+
+#dns:
+#  - 8.8.8.8
+#  - 1.1.1.1
