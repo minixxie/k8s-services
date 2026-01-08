@@ -95,6 +95,7 @@ k8s-up:
 	else \
 		make -s k3s k3s-wait; \
 	fi
+	make -s -C ./ingress-controller local wait
 
 .PHONY: k8s-down
 k8s-down:
