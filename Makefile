@@ -86,7 +86,7 @@ k8s-redo:
 k8s-up:
 	sys=$$(uname -s); echo $$sys; \
 	if [ "$$sys" == "Darwin" ]; then \
-		make -s install colima; \
+		make -s install-colima; \
 		sudo cp ./scripts/nerdctl /usr/local/bin/nerdctl; \
 		limactl start --name=ldev --tty=false \
 			--cpus=$$(expr $$(make -s ncpu) / 2) --memory=$$(expr $$(make -s mem) / 2) \
@@ -100,7 +100,7 @@ k8s-up:
 k8s-down:
 	sys=$$(uname -s); echo $$sys; \
 	if [ "$$sys" == "Darwin" ]; then \
-		make -s install colima; \
+		make -s install-colima; \
 		limactl stop --force ldev; \
 		limactl delete --force ldev; \
 	else \
