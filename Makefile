@@ -91,6 +91,7 @@ k8s-up:
 			--cpus=$$(expr $$(make -s ncpu) / 2) --memory=$$(expr $$(make -s mem) / 2) \
 			./scripts/ldev.lima.yaml; \
 		mkdir -p ~/.kube/ && limactl shell ldev sudo cat /etc/rancher/k3s/k3s.yaml > ~/.kube/config; \
+		sudo cp ./scripts/nerdctl /usr/local/bin/nerdctl; \
 	else \
 		make -s k3s k3s-wait; \
 	fi
@@ -121,6 +122,13 @@ k3s-wait:
 	NS=kube-system DEPLOYMENT=metrics-server ./scripts/k8s-wait-deployment.sh
 	NS=kube-system DEPLOYMENT=traefik ./scripts/k8s-wait-deployment.sh
 	NS=kube-system LABELS="svccontroller.k3s.cattle.io/svcname=traefik" ./scripts/k8s-wait-daemonset.sh
+
+.PHONY: vm-drop-caches
+vm-drop-caches:
+	sys=$$(uname -s); echo $$sys; \
+	if [ "$$sys" == "Darwin" ]; then \
+		limactl shell ldev sudo sh -c "sync; echo 3 > /proc/sys/vm/drop_caches"; \
+	fi
 
 .PHONY: index
 index:
