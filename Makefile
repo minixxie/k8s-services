@@ -87,11 +87,11 @@ k8s-up:
 	sys=$$(uname -s); echo $$sys; \
 	if [ "$$sys" == "Darwin" ]; then \
 		make -s install colima; \
+		sudo cp ./scripts/nerdctl /usr/local/bin/nerdctl; \
 		limactl start --name=ldev --tty=false \
 			--cpus=$$(expr $$(make -s ncpu) / 2) --memory=$$(expr $$(make -s mem) / 2) \
 			./scripts/ldev.lima.yaml; \
 		mkdir -p ~/.kube/ && limactl shell ldev sudo cat /etc/rancher/k3s/k3s.yaml > ~/.kube/config; \
-		sudo cp ./scripts/nerdctl /usr/local/bin/nerdctl; \
 	else \
 		make -s k3s k3s-wait; \
 	fi
