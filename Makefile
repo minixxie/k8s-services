@@ -82,12 +82,27 @@ k8s-redo:
 	make -s k8s-down
 	make -s k8s-up
 
+.PHONY: install-nerdctl
+install-nerdctl:
+	needInstallNerdctl=1; \
+	if [ -f /usr/local/bin/nerdctl ]; then \
+		a=$$(md5 ./scripts/nerdctl | awk '{print $$NF}'); \
+		b=$$(md5 /usr/local/bin/nerdctl | awk '{print $$NF}'); \
+		if [ "$$a" == "$$b" ]; then \
+			needInstallNerdctl=0; \
+		fi; \
+	fi; \
+	if [ "$$needInstallNerdctl" -eq 1 ]; then \
+		echo "Install nerdctl, need your sudo password:"; \
+		sudo cp ./scripts/nerdctl /usr/local/bin/nerdctl; \
+	fi;
+
 .PHONY: k8s-up
 k8s-up:
 	sys=$$(uname -s); echo $$sys; \
 	if [ "$$sys" == "Darwin" ]; then \
 		make -s install-colima; \
-		sudo cp ./scripts/nerdctl /usr/local/bin/nerdctl; \
+		make -s install-nerdctl; \
 		limactl start --name=ldev --tty=false \
 			--cpus=$$(expr $$(make -s ncpu) / 2) --memory=$$(expr $$(make -s mem) / 2) \
 			./scripts/ldev.lima.yaml; \
