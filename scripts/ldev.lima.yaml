@@ -91,7 +91,14 @@ provision:
       namespace: "k8s.io"
       EOF
 
-# 7. Port Forwarding for K8s API
+probes:
+  - script: |
+      #!/bin/bash
+      test -f /etc/rancher/k3s/k3s.yaml \
+      && nerdctl --address /run/k3s/containerd/containerd.sock version \
+      && systemctl is-active --quiet buildkit \
+      && kubectl wait --for=condition=ready node --all --timeout=180s
+
 portForwards:
   - guestPort: 6443
     hostPort: 6443

@@ -1,0 +1,9 @@
+# /etc/rancher/k3s/config.yaml
+
+# 告诉 K3s 使用我们指定的 resolv.conf 文件
+resolv-conf: /etc/rancher/k3s/resolv.conf
+
+# 告诉 K3s 在生成 containerd 配置时，导入我们的自定义镜像配置文件
+containerd:
+  import:
+    - /etc/rancher/k3s/containerd-mirror.toml

@@ -1,0 +1,25 @@
+# sudo cp -f scripts/k3s-registries.yaml /etc/rancher/k3s/registries.yaml
+# sudo systemctl restart k3s
+# sudo systemctl restart k3s-agent
+
+mirrors:
+  docker.io:
+    endpoints:
+      - "https://registry.cn-hangzhou.aliyuncs.com/"
+      - "https://mirror.ccs.tencentyun.com"
+      - "https://registry-1.docker.io" # (可保留原地址，但建议加上加速)
+  quay.io:
+    endpoint:
+      - "https://quay.tencentcloudcr.com/"
+  registry.k8s.io:
+    endpoint:
+      - "https://registry.aliyuncs.com/v2/google_containers"
+  gcr.io:
+    endpoint:
+      - "https://gcr.m.daocloud.io/"
+  k8s.gcr.io:
+    endpoint:
+      - "https://registry.aliyuncs.com/google_containers"
+  ghcr.io:
+    endpoint:
+      - "https://ghcr.m.daocloud.io/"
