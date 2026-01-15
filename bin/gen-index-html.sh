@@ -13,6 +13,8 @@ grafanaPwd=hello123
 mysqlPwd=$(kubectl get secret --namespace infra-mysql mysql -o jsonpath="{.data.mysql-root-password}" | base64 -d)
 postgresqlPwd=$(kubectl get secret --namespace db postgresql -o jsonpath="{.data.postgres-password}" | base64 -d)
 
+kubeappPwd=""
+
 time=$(TZ=UTC date +"%Y-%m-%d %H:%M:%SZ")
 
 cat <<EOF > "$tmp"
@@ -29,6 +31,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	};
 	document.getElementById("copyGrafanaPasswordButton").onclick = async() => {
 		await navigator.clipboard.writeText("$grafanaPwd");
+	};
+	document.getElementById("copyApolloPasswordButton").onclick = async() => {
+		await navigator.clipboard.writeText("admin");
 	};
 	document.getElementById("copyArgoCDPasswordButton").onclick = async() => {
 		await navigator.clipboard.writeText("$argocdPwd");
@@ -62,6 +67,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	<td><a href="http://ai-anything-llm.local" target="_blank">http://ai-anything-llm.local</a></td>
 	<td></td>
 	<td></td>
+</tr>
+<tr>
+	<td><img style="height: 24px;" src="https://cdn.jsdelivr.net/gh/apolloconfig/apollo@master/doc/images/logo/logo-simple.png" /> Apollo</td>
+	<td><a href="http://apollo.local" target="_blank">http://apollo.local</a></td>
+	<td>apollo</td>
+	<td>admin<button title="copy to clipboard" id="copyApolloPasswordButton">&#x2398;</button></td>
 </tr>
 <tr>
 	<td><img style="height: 24px;" src="https://argo-cd.readthedocs.io/en/stable/assets/logo.png" /> ArgoCD</td>
@@ -100,6 +111,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	<td></td>
 </tr>
 <tr>
+	<td><img style="height: 24px;" src="https://sap.github.io/kubeapps/img/logo.svg" /> Kubeapps</td>
+	<td><a href="http://kubeappds.local" target="_blank">http://kubeapps.local</a></td>
+	<td></td>
+	<td>$kubeappPwd <button title="copy to clipboard" id="copyKubeappsPasswordButton">&#x2398;</button></td>
+</tr>
+<tr>
 	<td><img style="height: 24px;" src="https://clickhouse.com/favicon.ico" /> Lighthouse (Clickhouse)</td>
 	<td><a href="/lighthouse/" target="_blank">/lighthouse/</a></td>
 	<td></td>
@@ -114,6 +131,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
 <tr>
 	<td><img style="height: 24px;" src="https://openwebui.com/favicon.png" /> Open WebUI (with ollama)</td>
 	<td><a href="http://ai-open-webui.local" target="_blank">http://ai-open-webui.local</a></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td><img style="height: 24px;" src="https://www.postgresql.org/favicon.ico" /> pgadmin4</td>
+	<td><a href="http://pgadmin4.local" target="_blank">http://pgadmin4.local</a></td>
 	<td></td>
 	<td></td>
 </tr>
@@ -185,7 +208,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 <html>
 <head>
-<title>minikube INDEX</title>
+<title>local k8s</title>
 <style>
 div.xterm {
 	background-color: #000000;
@@ -210,14 +233,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 <h3>Generated at: $time</h3>
 <table border="1">
 	<tr>
-		<td>ArgoCD</td>
-		<td>
-			<a target="_blank" href="http://argo-cd.local/">http://argo-cd.local/</a><br />
-			user: admin<br />
-			pass: $argocdPwd <button title="copy to clipboard" id="copyArgoCDPasswordButton">&#x2398;</button><br />
-		</td>
-	</tr>
-	<tr>
 		<td>Kubeapps</td>
 		<td>
 			<a target="_blank" href="http://kubeapps.local/">http://kubeapps.local/</a><br />
@@ -233,12 +248,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			Prometheus: <a target="_blank" href="http://prometheus.local/">http://prometheus.local/</a><br />
 			Mimir: <a target="_blank" href="http://mimir.local/prometheus">http://mimir.local/prometheus</a><br />
 			Node-exporter: <a target="_blank" href="http://k8s.local:9100/">http://k8s.local:9100/</a><br />
-		</td>
-	</tr>
-	<tr>
-		<td>pgAdmin4</td>
-		<td>
-			<a target="_blank" href="http://pgadmin4.local/">http://pgadmin4.local/</a><br />
 		</td>
 	</tr>
 	<tr>

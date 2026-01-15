@@ -1,6 +1,5 @@
-FROM bitnami/mysql:8.2.0-debian-11-r0
+FROM mysql:8.2.0
 USER root
-RUN apt-get update && apt-get install -y curl && apt-get clean
 
 WORKDIR /db
 ADD . .
