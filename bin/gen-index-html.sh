@@ -123,6 +123,18 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	<td></td>
 </tr>
 <tr>
+	<td><img style="height: 24px;" src="https://cdn.prod.website-files.com/681c8426519d8db8f867c1e8/68821329161290c2dce9073b_MINIO_wordmark.svg" /> MinIO (console)</td>
+	<td><a href="http://minio.minio.local" target="_blank">http://minio.minio.local</a></td>
+	<td>AK_LOCAL</td>
+	<td>SK_LOCAL</td>
+</tr>
+<tr>
+	<td><img style="height: 24px;" src="https://cdn.prod.website-files.com/681c8426519d8db8f867c1e8/68821329161290c2dce9073b_MINIO_wordmark.svg" /> MinIO (API endpoint)</td>
+	<td><a href="http://s3.minio.local" target="_blank">http://s3.minio.local</a></td>
+	<td>AK_LOCAL</td>
+	<td>SK_LOCAL</td>
+</tr>
+<tr>
 	<td><img style="height: 24px;" src="https://llamacoder.together.ai/favicon.ico" /> Nutlope LlamaCoder </td>
 	<td><a href="http://ai-nutlope-llamacoder.local" target="_blank">http://ai-nutlope-llamacoder.local</a></td>
 	<td></td>
