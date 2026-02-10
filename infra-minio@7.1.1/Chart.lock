@@ -1,6 +1,0 @@
-dependencies:
-- name: minio
-  repository: https://charts.appscode.com/stable/
-  version: v2026.1.15
-digest: sha256:b4bef6ce8ee0e1e8d5d8cb8619d3db672d167674583a880d54ee75b64336e38c
-generated: "2026-01-30T16:16:39.65646298+08:00"

@@ -1,0 +1,41 @@
+minio:
+  image:
+    repository: quay.io/minio/minio
+    tag: RELEASE.2025-09-07T16-13-09Z
+    pullPolicy: IfNotPresent
+
+  mcImage:
+    repository: quay.io/minio/mc
+    tag: RELEASE.2025-08-13T08-35-41Z
+    pullPolicy: IfNotPresent
+
+  mode: standalone
+  rootUser: "AK_LOCAL"
+  rootPassword: "SK_LOCAL"
+
+  # Environment variables section - enables setting MINIO_DOMAIN for virtual host style bucket addressing
+  environment:
+    # Set the MINIO_DOMAIN environment variable to enable virtual host style bucket names
+    # According to the project specification, this should match the wildcard suffix
+    MINIO_DOMAIN: "s3.minio.local"
+
+  # Ingress configuration with wildcard support for virtual host style bucket addressing
+  # This configuration is compatible with any Kubernetes-compliant ingress controller
+  ingress:
+    enabled: true
+    hosts:
+      - s3.minio.local  # API endpoint for S3 operations
+    # Add wildcard host to support bucket-name.s3.minio.local format
+    extraHosts:
+      - "*.s3.minio.local"  # Wildcard host for virtual host style bucket addressing
+
+  consoleIngress:
+    enabled: true
+    hosts:
+      - minio.local  # Console endpoint
+
+  # Additional configuration to support virtual host style bucket addressing
+  # This ensures the MinIO server knows how to handle bucket-name.minio.local requests
+  persistence:
+    enabled: true
+    size: 100Gi

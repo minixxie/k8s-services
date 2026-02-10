@@ -1,8 +1,0 @@
-# https://artifacthub.io/packages/helm/appscode/minio
-apiVersion: v2
-name: minio
-version: 2026.1.15
-dependencies:
-  - name: minio
-    version: 2026.1.15
-    repository: https://charts.appscode.com/stable/

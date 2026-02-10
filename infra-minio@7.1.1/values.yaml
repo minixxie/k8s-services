@@ -1,8 +1,0 @@
-minio:
-  ingress:
-    enabled: true
-    domain: minio.local
-  minio:
-    auth:
-      accessKeyId: "AK_LOCAL"
-      secretAccessKey: "SK_LOCAL"
