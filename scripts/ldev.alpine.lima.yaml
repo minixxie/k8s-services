@@ -1,0 +1,144 @@
+# Inherit from Alpine template
+# This uses the official Alpine cloud image with better cloud-init support
+images:
+  - location: "https://dl-cdn.alpinelinux.org/alpine/v3.22/releases/cloud/nocloud_alpine-3.22.2-x86_64-uefi-cloudinit-r0.qcow2"
+    arch: "x86_64"
+    digest: "sha512:6dcb2ec1ac3ff160f1a2609fbd7cb8417df6c1c937c259238090d5bc494778924c0eb360c926d90bfbe7d0176692ae00b049f4a06d5070618a3b087a47c96532"
+  - location: "https://dl-cdn.alpinelinux.org/alpine/v3.22/releases/cloud/nocloud_alpine-3.22.2-aarch64-uefi-cloudinit-r0.qcow2"
+    arch: "aarch64"
+    digest: "sha512:481ad2db4fe024dd5d2dddd2abf2f722b738173c9ff6b76425ee877706bd49e26b2877ccae7b389aebae1d5e8df0384cc3c8355fc903378997340ce6c1b85faf"
+# 2. Virtualization Engine
+vmType: "vz"
+mountType: "virtiofs"
+# --- Shared Folders ---
+# This links your Mac folders to the VM
+mounts:
+  - location: "~"        # Your Mac Home folder
+    writable: true
+  - location: "/tmp/lima" # A shared temp space
+    writable: true
+# 3. Resources: specify in the limactl start command
+#cpus: 4
+#memory: "6GiB"
+# 4. Rosetta 2 (for Apple Silicon)
+vmOpts:
+  vz:
+    rosetta:
+      enabled: true
+      binfmt: true
+# 5. Networking
+#networks:
+#  - vzNAT: false
+# SSH Configuration
+ssh:
+  loadDotSSHPubKeys: true
+  localPort: 0
+  forwardAgent: false
+  forwardX11: false
+  forwardX11Trusted: false
+# 6. Automated K3s Installation
+provision:
+  - mode: system
+    script: |
+      #!/bin/bash
+      set -e
+      # --- A. Alpine Linux setup for containerization ---
+      # Enable community repository for additional packages
+      echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
+      apk update
+      # Install required packages for K3s and BuildKit
+      apk add --no-cache bash openrc openssl openssh curl tar
+      # Install nerdctl directly from GitHub
+      if [ ! -f /usr/local/bin/nerdctl ]; then
+        echo "Installing nerdctl..."
+        NERDCTL_VERSION="v2.2.0"
+        if [ "$(uname -m)" = "aarch64" ]; then
+          NERDCTL_ARCH="arm64"
+        else
+          NERDCTL_ARCH="amd64"
+        fi
+        curl -sSL "https://github.com/containerd/nerdctl/releases/download/${NERDCTL_VERSION}/nerdctl-full-${NERDCTL_VERSION#v}-linux-${NERDCTL_ARCH}.tar.gz" -o /tmp/nerdctl.tar.gz
+        tar -C /usr/local -xzf /tmp/nerdctl.tar.gz
+        rm /tmp/nerdctl.tar.gz
+      fi
+      # Enable cgroups for K3s
+      if ! grep -q "cgroup" /proc/cmdline 2>/dev/null; then
+        # Update GRUB or syslinux to include cgroup parameters
+        # For Alpine in VM, we'll rely on kernel parameters being passed via Lima
+        echo "cgroups will be enabled via Lima configuration"
+      fi
+      # --- B. Install BuildKit ---
+      if [ ! -f /usr/local/bin/buildkitd ]; then
+        echo "Downloading BuildKit..."
+        # We use the latest stable version
+        BK_VERSION="v0.19.0"
+        if [ "$(uname -m)" = "aarch64" ]; then
+          ARCH="arm64"
+        else
+          ARCH="amd64"
+        fi
+        curl -sSL "https://github.com/moby/buildkit/releases/download/${BK_VERSION}/buildkit-${BK_VERSION}.linux-${ARCH}.tar.gz" -o /tmp/buildkit.tar.gz
+        tar -C /usr/local -xzf /tmp/buildkit.tar.gz
+        rm /tmp/buildkit.tar.gz
+      fi
+      # --- C. Create BuildKit OpenRC Service ---
+      # This creates the BuildKit service script with proper permissions
+      tee /etc/init.d/buildkit > /dev/null <<'SERVICE'
+      #!/sbin/openrc-run
+      depend() {
+        after k3s
+      }
+      start_pre() {
+        return 0
+      }
+      start() {
+        /usr/local/bin/buildkitd --containerd-worker-addr /run/k3s/containerd/containerd.sock --addr unix:///run/buildkit/buildkitd.sock &
+        echo $! > /run/buildkit.pid
+      }
+      stop() {
+        if [ -f /run/buildkit.pid ]; then
+          kill $(cat /run/buildkit.pid)
+          rm /run/buildkit.pid
+        fi
+      }
+      SERVICE
+      chmod +x /etc/init.d/buildkit
+      rc-update add buildkit default
+      # --- D. Install K3s ---
+      if [ ! -f /usr/local/bin/k3s ]; then
+        echo "Installing K3s..."
+        # Install K3s with OpenRC support
+        curl -sfL https://get.k3s.io | sh -s - server \
+          --disable traefik \
+          --write-kubeconfig-mode 644
+      fi
+      # --- E. Configure services ---
+      rc-update add k3s default
+      # --- F. Configure nerdctl default socket ---
+      mkdir -p /etc/nerdctl
+      cat > /etc/nerdctl/nerdctl.yaml <<EOF
+      address: "unix:///run/k3s/containerd/containerd.sock"
+      namespace: "k8s.io"
+      EOF
+probes:
+  - script: |
+      #!/bin/bash
+      test -f /etc/rancher/k3s/k3s.yaml \
+      && /usr/local/bin/nerdctl --address /run/k3s/containerd/containerd.sock version \
+      && rc-service buildkit status \
+      && kubectl wait --for=condition=ready node --all --timeout=180s
+portForwards:
+  - guestPort: 6443
+    hostPort: 6443
+  - guestPort: 80
+    hostPort: 80
+    # Use 0.0.0.0 if you want it accessible to other devices on your LAN
+    hostIP: "127.0.0.1"
+user:
+  name: "ldev"
+# Disable the host's problematic DNS and use clean ones
+hostResolver:
+  enabled: true
+#dns:
+#  - 8.8.8.8
+#  - 1.1.1.1
