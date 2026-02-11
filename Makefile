@@ -101,16 +101,18 @@ install-nerdctl:
 k8s-up:
 	sys=$$(uname -s); echo $$sys; \
 	if [ "$$sys" == "Darwin" ]; then \
-		make -s install-colima; \
 		make -s install-nerdctl; \
 		limactl start --name=ldev --tty=false \
 			--cpus=$$(expr $$(make -s ncpu) / 2) --memory=$$(expr $$(make -s mem) / 2) \
 			./scripts/ldev.lima.yaml; \
 		mkdir -p ~/.kube/ && limactl shell ldev sudo cat /etc/rancher/k3s/k3s.yaml > ~/.kube/config; \
+		make -s -C coredns local; \
+		make -s k8s-wait; \
+		echo "lima is done..."; \
 	else \
-		make -s k3s k3s-wait; \
+		make -s k3s; \
+		make -s k8s-wait; \
 	fi
-	make -s -C ./ingress-controller local wait
 
 .PHONY: k8s-down
 k8s-down:
@@ -128,11 +130,11 @@ k3s:
 	sudo ./scripts/k3s.sh
 	sudo ./scripts/nerdctl.sh
 	sudo ./scripts/buildkit.sh
-	make -s k3s-wait
+	make -s k8s-wait
 	make -s -C coredns local
 
-.PHONY: k3s-wait
-k3s-wait:
+.PHONY: k8s-wait
+k8s-wait:
 	NS=kube-system DEPLOYMENT=coredns ./scripts/k8s-wait-deployment.sh
 	NS=kube-system DEPLOYMENT=local-path-provisioner ./scripts/k8s-wait-deployment.sh
 	NS=kube-system DEPLOYMENT=metrics-server ./scripts/k8s-wait-deployment.sh

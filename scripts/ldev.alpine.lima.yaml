@@ -109,7 +109,6 @@ provision:
         echo "Installing K3s..."
         # Install K3s with OpenRC support
         curl -sfL https://get.k3s.io | sh -s - server \
-          --disable traefik \
           --write-kubeconfig-mode 644
       fi
       # --- E. Configure services ---
