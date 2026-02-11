@@ -10,6 +10,11 @@ images:
 # 2. Virtualization Engine
 vmType: "vz"
 mountType: "virtiofs"
+
+containerd:
+  system: false
+  user: false
+
 # --- Shared Folders ---
 # This links your Mac folders to the VM
 mounts:
