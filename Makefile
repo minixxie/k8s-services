@@ -106,6 +106,7 @@ k8s-up:
 			--cpus=$$(expr $$(make -s ncpu) / 2) --memory=$$(expr $$(make -s mem) / 2) \
 			./scripts/ldev.lima.yaml; \
 		mkdir -p ~/.kube/ && limactl shell ldev sudo cat /etc/rancher/k3s/k3s.yaml > ~/.kube/config; \
+		make -s k8s-wait-port; \
 		make -s -C coredns local; \
 		make -s k8s-wait; \
 		echo "lima is done..."; \
@@ -132,6 +133,19 @@ k3s:
 	sudo ./scripts/buildkit.sh
 	make -s k8s-wait
 	make -s -C coredns local
+
+.PHONY: k8s-wait-port
+k8s-wait-port:
+	@for i in $$(seq 1 30); do \
+		if nc -z 127.0.0.1 6443 2>/dev/null; then \
+			echo "k8s port 6443 is ready"; \
+			exit 0; \
+		fi; \
+		echo "Attempt $$i/30: k8s port 6443 is not ready, waiting..."; \
+		sleep 1; \
+	done; \
+	echo "ERR: Timeout waiting for k8s port 6443."; \
+	exit 1
 
 .PHONY: k8s-wait
 k8s-wait:
