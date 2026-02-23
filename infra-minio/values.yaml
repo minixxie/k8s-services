@@ -24,10 +24,8 @@ minio:
   ingress:
     enabled: true
     hosts:
-      - s3.minio.local  # API endpoint for S3 operations
-    # Add wildcard host to support bucket-name.s3.minio.local format
-    extraHosts:
-      - "*.s3.minio.local"  # Wildcard host for virtual host style bucket addressing
+      - s3.minio.local            # API endpoint for S3 operations
+      - "*.s3.minio.local"        # Wildcard host for virtual host style bucket addressing
 
   consoleIngress:
     enabled: true
