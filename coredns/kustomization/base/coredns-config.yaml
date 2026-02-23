@@ -12,12 +12,12 @@ data:
         errors
         template IN A s3.minio.local {
             match ^(.+\.)?s3\.minio\.local\.$
-            answer "{{ .Name }} 60 IN CNAME minio.infra-minio.svc.cluster.local."
+            answer "{{ .Name }} 60 IN CNAME traefik.kube-system.svc.cluster.local."
             upstream
         }
         template IN AAAA s3.minio.local {
             match ^(.+\.)?s3\.minio\.local\.$
-            answer "{{ .Name }} 60 IN CNAME minio.infra-minio.svc.cluster.local."
+            answer "{{ .Name }} 60 IN CNAME traefik.kube-system.svc.cluster.local."
             upstream
         }
         forward . /etc/resolv.conf

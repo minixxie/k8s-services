@@ -1,4 +1,13 @@
 #!/bin/bash
 
+set -e
+
+# Test the minio console outside the k8s cluster
 curl -v -f -H 'Host: minio.local' http://127.0.0.1/
-#curl -v -f -H 'Host: s3.minio.local' http://127.0.0.1/
+
+# Test the s3 API outside the k8s cluster
+curl -v -f -H 'Host: s3.minio.local' http://127.0.0.1/minio/health/ready
+
+# Test the s3 API inside the k8s cluster
+kubectl run curl-test --rm -it --restart=Never --image=curlimages/curl:8.8.0 -- \
+  curl -v -f http://s3.minio.local/minio/health/ready
