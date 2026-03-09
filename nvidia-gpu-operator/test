@@ -5,8 +5,8 @@ set -e
 # First, make sure nvidia-container-runtime exists and configured to point to the k3s' containerd.sock
 grep "socket-path" /etc/nvidia-container-runtime/config.toml | grep containerd.sock
 
-grep 'default_runtime_name = "nvidia"' /etc/containerd/config.toml
-grep "/usr/local/nvidia/toolkit/nvidia-container-runtime" /etc/containerd/config.toml
+#grep 'default_runtime_name = "nvidia"' /etc/containerd/config.toml
+#grep "/usr/local/nvidia/toolkit/nvidia-container-runtime" /etc/containerd/config.toml
 
 # vectorAdd should pass as a pre-requisite!
 ./vectorAdd
