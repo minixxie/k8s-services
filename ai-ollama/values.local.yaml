@@ -4,41 +4,43 @@ ollama:
     gpu:
       # enable gpu if your k8s containerd/docker has gpu support
       enabled: true
+    # IMPORTANT: Disable automatic model pull/run to avoid postStart hook timeout
+    # Pull models manually after the container starts: kubectl exec -it <pod> -- ollama pull <model>
     models:
-      pull:
-        - glm-5:cloud
+      pull: []
+        # - glm-5:cloud
         # - deepseek-r1:1.5b
         # - deepseek-r1:7b
         # - deepseek-r1:8b
         # - deepseek-r1:14b
-        - deepseek-r1:32b
-        #- deepseek-v3
-        - nezahatkorkmaz/deepseek-v3:latest
+        # - deepseek-r1:32b
+        # - deepseek-v3
+        # - nezahatkorkmaz/deepseek-v3:latest
         # - ishumilin/deepseek-r1-coder-tools:14b
-        - MFDoom/deepseek-r1-tool-calling:14b
-        #- llama3.2:3b
-        #- llama3.1
-        #- llava  # for image recognition
-        #- codellama:7b
-        #- qwen2.5-coder:7b
-        ##- mistral
-      run:
-        - glm-5:cloud
+        # - MFDoom/deepseek-r1-tool-calling:14b
+        # - llama3.2:3b
+        # - llama3.1
+        # - llava  # for image recognition
+        # - codellama:7b
+        # - qwen2.5-coder:7b
+        # - mistral
+      run: []
+        # - glm-5:cloud
         # - deepseek-r1:1.5b
         # - deepseek-r1:7b
         # - deepseek-r1:8b
         # - deepseek-r1:14b
-        - deepseek-r1:32b
-        #- deepseek-v3
-        - nezahatkorkmaz/deepseek-v3:latest
+        # - deepseek-r1:32b
+        # - deepseek-v3
+        # - nezahatkorkmaz/deepseek-v3:latest
         # - ishumilin/deepseek-r1-coder-tools:14b
-        - MFDoom/deepseek-r1-tool-calling:14b
-        #- llama3.2:3b
-        #- llama3.1
-        #- llava  # for image recognition
-        #- codellama:7b
-        #- qwen2.5-coder:7b
-        ##- mistral
+        # - MFDoom/deepseek-r1-tool-calling:14b
+        # - llama3.2:3b
+        # - llama3.1
+        # - llava  # for image recognition
+        # - codellama:7b
+        # - qwen2.5-coder:7b
+        # - mistral
   ingress:
     enabled: true
     ingressClassName: traefik

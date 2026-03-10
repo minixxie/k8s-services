@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -e
+
+NS=ai-ollama
+
+if [ x"$1" == x ]; then
+	model=deepseek-r1:14b
+else
+	model="$1"
+fi
+
+pod=$(kubectl get pods -n $NS -l app.kubernetes.io/name=ollama -o jsonpath='{.items[0].metadata.name}')
+kubectl exec -it -n $NS $pod -- ollama pull $model
