@@ -12,3 +12,26 @@ gpu-operator:
         value: nvidia
       - name: CONTAINERD_SET_AS_DEFAULT
         value: "true"
+
+  # Enable GPU time-slicing to allow multiple pods to share the GPU
+  # replicas: number of virtual GPUs to create from 1 physical GPU
+  # Higher values = more pods can share, but each gets less GPU time
+  # Replica Recommendations:
+  #   4 replicas: Good balance for most workloads
+  #   8 replicas: Suitable for lighter AI inference tasks
+  #   16 replicas: Possible, good for many small/quick tasks
+  #   32+ replicas: Technically possible but diminishing returns
+  devicePlugin:
+    config:
+      name: time-slicing-config
+      default: "any"
+      create: true
+      data:
+        any: |-
+          version: v1
+          sharing:
+            timeSlicing:
+              replicas: 4
+              resources:
+              - name: nvidia.com/gpu
+                replicas: 4
