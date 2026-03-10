@@ -1,0 +1,20 @@
+#!/bin/bash
+
+scriptPath=$(cd $(dirname "$0") && pwd)
+
+source "$scriptPath"/var.rc
+cd "$scriptPath"
+
+"$scriptPath"/../scripts/wait
+
+# Wait for the important DaemonSets in the current namespace to be ready
+kubectl rollout status daemonset/gpu-feature-discovery -n "$NS" --timeout=300s
+kubectl rollout status daemonset/gpu-operator-node-feature-discovery-worker -n "$NS" --timeout=300s
+kubectl rollout status daemonset/nvidia-container-toolkit-daemonset -n "$NS" --timeout=300s
+kubectl rollout status daemonset/nvidia-dcgm-exporter -n "$NS" --timeout=300s
+kubectl rollout status daemonset/nvidia-device-plugin-daemonset -n "$NS" --timeout=300s
+# The following DaemonSets have DESIRED = 0, so we skip them:
+# nvidia-device-plugin-mps-control-daemon
+# nvidia-driver-daemonset
+# nvidia-mig-manager
+kubectl rollout status daemonset/nvidia-operator-validator -n "$NS" --timeout=300s
