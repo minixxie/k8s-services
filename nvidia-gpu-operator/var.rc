@@ -10,17 +10,20 @@ gpu-operator-node-feature-discovery-gc
 gpu-operator-node-feature-discovery-master
 "
 
-#WAIT_DAEMONSETS="
-#gpu-feature-discovery
-#gpu-operator-node-feature-discovery-worker
-#nvidia-container-toolkit-daemonset
-#nvidia-dcgm-exporter
-#nvidia-device-plugin-daemonset
-#nvidia-device-plugin-mps-control-daemon
-#nvidia-driver-daemonset
-#nvidia-mig-manager
-#nvidia-operator-validator
-#"
+WAIT_DAEMONSETS_BY_NAME="
+gpu-feature-discovery
+gpu-operator-node-feature-discovery-worker
+nvidia-container-toolkit-daemonset
+nvidia-dcgm-exporter
+nvidia-device-plugin-daemonset
+nvidia-device-plugin-mps-control-daemon
+nvidia-driver-daemonset
+nvidia-mig-manager
+nvidia-operator-validator
+nvidia-device-plugin-mps-control-daemon
+nvidia-driver-daemonset
+nvidia-mig-manager
+"
 
 #WAIT_DAEMONSETS="
 #app.kubernetes.io/name=node-feature-discovery

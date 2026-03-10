@@ -17,6 +17,9 @@ done
 for l in $WAIT_DAEMONSETS; do
 	NS=$NS LABELS=$l ../scripts/k8s-wait-statefulset.sh
 done
+for d in $WAIT_DAEMONSETS_BY_NAME; do
+	NS=$NS DAEMONSET=$d ../scripts/k8s-wait-daemonset-by-name.sh
+done
 for l in $WAIT_PODS; do
 	NS=$NS LABELS=$l ../scripts/k8s-wait-pod.sh
 done

@@ -3,6 +3,8 @@
 set +e;
 #kubectl -n $NS wait --for condition=Available=True --timeout=10m deploy $DEPLOYMENT
 
+echo "== [deployment/$DEPLOYMENT] =="
+
 while : ; do \
 	sleep 1; \
 	kubectl -n $NS get deployment "$DEPLOYMENT" > /dev/null; \
