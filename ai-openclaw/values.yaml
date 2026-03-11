@@ -1,0 +1,99 @@
+openclaw:
+  app-template:
+    configMode: overwrite
+    controllers:
+      main:
+        containers:
+          main:
+            env:
+              OLLAMA_HOST: "http://ollama-api.local"
+              OLLAMA_API_KEY: "ollama-local"
+    configMaps:
+      config:
+        data:
+          openclaw.json: |
+            {
+              "gateway": {
+                "port": 18789,
+                "mode": "local",
+                "trustedProxies": ["10.0.0.1"],
+                "controlUi": {
+                  "dangerouslyAllowHostHeaderOriginFallback": true
+                }
+              },
+              "browser": {
+                "enabled": true,
+                "defaultProfile": "default",
+                "profiles": {
+                  "default": {
+                    "cdpUrl": "http://localhost:9222",
+                    "color": "#4285F4"
+                  }
+                }
+              },
+              "agents": {
+                "defaults": {
+                  "workspace": "/home/node/.openclaw/workspace",
+                  "model": {
+                    "primary": "ollama/deepseek-r1:14b"
+                  },
+                  "userTimezone": "UTC",
+                  "timeoutSeconds": 600,
+                  "maxConcurrent": 1
+                },
+                "list": [
+                  {
+                    "id": "main",
+                    "default": true,
+                    "identity": {
+                      "name": "OpenClaw",
+                      "emoji": "🦞"
+                    }
+                  }
+                ]
+              },
+              "session": {
+                "scope": "per-sender",
+                "store": "/home/node/.openclaw/sessions",
+                "reset": {
+                  "mode": "idle",
+                  "idleMinutes": 60
+                }
+              },
+              "logging": {
+                "level": "info",
+                "consoleLevel": "info",
+                "consoleStyle": "compact",
+                "redactSensitive": "tools"
+              },
+              "tools": {
+                "profile": "full",
+                "web": {
+                  "search": {
+                    "enabled": false
+                  },
+                  "fetch": {
+                    "enabled": true
+                  }
+                }
+              }
+            }
+    ingress:
+      main:
+        enabled: true
+        className: traefik
+        # annotations:
+        #   traefik.ingress.kubernetes.io/router.tls: "true"
+        #   cert-manager.io/cluster-issuer: "selfsigned-issuer"  # selfsigned-issuer / letsencrypt-prod
+        # tls:
+        #   - secretName: ai-openclaw-tls
+        #     hosts:
+        #       - ai-openclaw.local
+        hosts:
+          - host: ai-openclaw.local
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: main
+                  port: http

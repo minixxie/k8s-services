@@ -1,0 +1,8 @@
+# https://github.com/serhanekicii/openclaw-helm
+apiVersion: v2
+name: openclaw
+version: 1.4.6
+dependencies:
+  - name: openclaw
+    version: 1.4.6
+    repository: https://serhanekicii.github.io/openclaw-helm

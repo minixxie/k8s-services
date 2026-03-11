@@ -1,0 +1,5 @@
+#!/bin/bash
+
+token=$(kubectl exec -n ai-openclaw deployment/openclaw -c main -- cat /home/node/.openclaw/openclaw.json | grep -A 2 '"auth"' | grep '"token"' | tail -n 1 | sed 's/^.*: "//' | sed 's/".*$//')
+echo "Token: $token"
+echo "Open this URL in browser: http://localhost:18789/?token=$token"
