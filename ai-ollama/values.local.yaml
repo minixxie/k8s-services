@@ -1,11 +1,32 @@
 ollama:
+  image:
+    repository: ollama/ollama
+    pullPolicy: IfNotPresent
+    tag: "0.18.0"
   runtimeClassName: "nvidia"  # to use gpu
+  persistentVolume:
+    enabled: false
+    # enabled: true
+    # accessModes:
+    #   - ReadWriteOnce
+    # size: 50Gi
+    # storageClass: ""  # Use default storage class, or specify your storage class
+  volumes:
+    - name: ollama-models
+      hostPath:
+        path: /datascience-models/ollama
+        type: DirectoryOrCreate
+  volumeMounts:
+    - name: ollama-models
+      mountPath: /root/.ollama
   ollama:
+    # Move the default ollama-data volume mount away so we can use /root/.ollama for hostPath
+    mountPath: "/tmp/ollama-unused"
     gpu:
       # enable gpu if your k8s containerd/docker has gpu support
       enabled: true
-    # IMPORTANT: Disable automatic model pull/run to avoid postStart hook timeout
-    # Pull models manually after the container starts: kubectl exec -it <pod> -- ollama pull <model>
+    # Models are stored on hostPath /datascience-models/ollama and mounted to /root/.ollama
+    # No automatic pull needed - models persist on the host
     models:
       pull: []
         # - glm-5:cloud
