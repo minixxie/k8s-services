@@ -13,6 +13,7 @@ set -e
 DEST_DIR="/datascience-models/ollama"
 OLLAMA_IMAGE="ollama/ollama:0.18.0"
 CONTAINER_NAME="ollama-downloader-$$"
+echo "CONTAINER: $CONTAINER_NAME"
 
 trap "nerdctl --namespace=k8s.io rm -f $CONTAINER_NAME" EXIT
 
@@ -25,6 +26,9 @@ nerdctl --namespace=k8s.io run -d \
     --name "$CONTAINER_NAME" \
     -v "$DEST_DIR:/root/.ollama" \
     "$OLLAMA_IMAGE"
+nerdctl --namespace=k8s.io exec -it "$CONTAINER_NAME" ollama list
+nerdctl --namespace=k8s.io exec -it "$CONTAINER_NAME" ollama pull qwen2.5:14b
+nerdctl --namespace=k8s.io exec -it "$CONTAINER_NAME" ollama pull qwen3.5:9b
 nerdctl --namespace=k8s.io exec -it "$CONTAINER_NAME" ollama pull deepseek-r1:14b
 nerdctl --namespace=k8s.io exec -it "$CONTAINER_NAME" ollama pull llava:7b
-nerdctl --namespace=k8s.io rm -f "$CONTAINER_NAME"
+nerdctl --namespace=k8s.io exec -it "$CONTAINER_NAME" ollama list
