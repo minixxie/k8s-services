@@ -54,6 +54,10 @@ local: img
 down:
 	@if [ -x ./down ]; then ./down; else ../scripts/down; fi
 
+.PHONY: restart
+restart:
+	@if [ -x ./restart ]; then ./restart; else ../scripts/restart; fi
+
 .PHONY: cli
 cli:
 	@./cli
