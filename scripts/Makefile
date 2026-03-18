@@ -70,6 +70,10 @@ test:
 img:
 	@if [ -x ./img ]; then ./img; else ../scripts/img; fi
 
+.PHONY: list-pod-images
+list-pod-images:
+	@if [ -x ./list-pod-images ]; then ./list-pod-images; else ../scripts/list-pod-images; fi
+
 .PHONY: helm-repo-add
 helm-repo-add:
 	@if [ -x ./helm-repo-add ]; then ./helm-repo-add; else ../scripts/helm-repo-add; fi

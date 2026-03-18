@@ -5,9 +5,8 @@ scriptPath=$(cd $(dirname "$0") && pwd)
 source "$PWD"/var.rc
 cd "$PWD"
 
-if [ -f Chart.yaml ]; then \
-	helm uninstall $(make -s --no-print-directory chart-name) -n $(make -s --no-print-directory ns) || true; \
-fi
-if [ -d kustomization ]; then \
-	kubectl delete -k kustomization/base/ || true; \
+if [ -d kustomization ]; then
+	kubectl delete -k kustomization/base || true
+elif [ -f Chart.yaml ]; then
+	helm uninstall $(make -s --no-print-directory chart-name) -n $(make -s --no-print-directory ns) || true
 fi

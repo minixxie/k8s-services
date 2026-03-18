@@ -82,6 +82,28 @@ k8s-redo:
 	make -s k8s-down
 	make -s k8s-up
 
+.PHONY: install-helm
+install-helm:
+	sys=$$(uname -s); echo $$sys; \
+	if [ "$$sys" == "Darwin" ]; then \
+		echo "Not implemented yet"; \
+	else \
+		curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-4 | bash; \
+	fi
+	helm version
+
+.PHONY: install-kustomize
+install-kustomize:
+	sys=$$(uname -s); echo $$sys; \
+	if [ "$$sys" == "Darwin" ]; then \
+		echo "Not implemented yet"; \
+	else \
+		cd /tmp && \
+			curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash && \
+			sudo mv kustomize /usr/local/bin/; \
+	fi
+	kustomize version
+
 .PHONY: install-nerdctl
 install-nerdctl:
 	needInstallNerdctl=1; \

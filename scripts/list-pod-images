@@ -1,0 +1,5 @@
+#!/bin/bash
+
+for d in $(kubectl -n $(make -s ns) get deploy | sed 1d | awk '{print $1}'); do
+	kubectl -n $(make -s ns) get deploy $d -oyaml | grep image: | sed 's/.*image: //'
+done

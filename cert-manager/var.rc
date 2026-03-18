@@ -1,6 +1,11 @@
 NS=cert-manager
-HELM_REPO_ALIAS=cert-manager
+HELM_REPO_ALIAS=jetstack
 CONTAINER_IMAGES="
+"
+WAIT_DEPLOYS="
+cert-manager
+cert-manager-cainjector
+cert-manager-webhook
 "
 WAIT_STATEFULSETS="
 "

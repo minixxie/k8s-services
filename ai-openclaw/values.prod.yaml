@@ -145,13 +145,13 @@ openclaw:
       main:
         enabled: true
         className: traefik
-        # annotations:
-        #   traefik.ingress.kubernetes.io/router.tls: "true"
-        #   cert-manager.io/cluster-issuer: "selfsigned-issuer"  # selfsigned-issuer / letsencrypt-prod
-        # tls:
-        #   - secretName: ai-openclaw-tls
-        #     hosts:
-        #       - ai-openclaw.local
+        annotations:
+          traefik.ingress.kubernetes.io/router.tls: "true"
+          cert-manager.io/cluster-issuer: "selfsigned-issuer"  # selfsigned-issuer / letsencrypt-prod
+        tls:
+          - secretName: ai-openclaw-tls
+            hosts:
+              - ai-openclaw.local
         hosts:
           - host: ai-openclaw.local
             paths:
