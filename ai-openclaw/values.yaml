@@ -9,6 +9,25 @@ openclaw:
             env:
               OLLAMA_HOST: "http://ollama-api.local"
               OLLAMA_API_KEY: "ollama-local"
+              GITHUB_COPILOT_TOKEN: "YOUR_GITHUB_COPILOT_TOKEN"
+              NODE_OPTIONS: "--max-old-space-size=2048"
+            securityContext:
+              allowPrivilegeEscalation: false
+              runAsNonRoot: true
+              runAsUser: 1000
+              readOnlyRootFilesystem: false
+              capabilities:
+                drop:
+                  - ALL
+              seccompProfile:
+                type: RuntimeDefault
+            resources:
+              requests:
+                cpu: 500m
+                memory: 1Gi
+              limits:
+                cpu: 2000m
+                memory: 4Gi
     configMaps:
       config:
         data:
@@ -17,9 +36,9 @@ openclaw:
               "gateway": {
                 "port": 18789,
                 "mode": "local",
-                "trustedProxies": ["10.0.0.1"],
+                "trustedProxies": ["10.0.0.0/8"],
                 "controlUi": {
-                  "dangerouslyAllowHostHeaderOriginFallback": true
+                  "allowedOrigins": ["http://ai-openclaw.local", "https://ai-openclaw.local"]
                 }
               },
               "browser": {
@@ -32,15 +51,58 @@ openclaw:
                   }
                 }
               },
+              "models": {
+                "providers": {
+                  "ollama": {
+                    "baseUrl": "http://ollama-api.local",
+                    "apiKey": "ollama-local",
+                    "api": "ollama",
+                    "models": [
+                      {
+                        "id": "qwen3.5:9b",
+                        "name": "qwen3.5:9b",
+                        "contextWindow": 32768
+                      }
+                    ]
+                  },
+                  "github": {
+                    "baseUrl": "https://api.githubcopilot.com",
+                    "apiKey": "YOUR_GITHUB_COPILOT_TOKEN",
+                    "api": "github-copilot",
+                    "models": [
+                      {
+                        "id": "gpt-4o",
+                        "name": "GitHub Copilot GPT-4o",
+                        "contextWindow": 128000
+                      },
+                      {
+                        "id": "gpt-4",
+                        "name": "GitHub Copilot GPT-4",
+                        "contextWindow": 8192
+                      },
+                      {
+                        "id": "gpt-3.5-turbo",
+                        "name": "GitHub Copilot GPT-3.5 Turbo",
+                        "contextWindow": 16385
+                      },
+                      {
+                        "id": "gpt-5-mini",
+                        "name": "GitHub Copilot GPT-5 Mini",
+                        "contextWindow": 256000
+                      }
+                    ]
+                  }
+                }
+              },
               "agents": {
                 "defaults": {
                   "workspace": "/home/node/.openclaw/workspace",
                   "model": {
-                    "primary": "ollama/deepseek-r1:14b"
+                    "primary": "ollama/qwen3.5:9b"
                   },
                   "userTimezone": "UTC",
                   "timeoutSeconds": 600,
-                  "maxConcurrent": 1
+                  "maxConcurrent": 3
                 },
                 "list": [
                   {
@@ -62,8 +124,8 @@ openclaw:
                 }
               },
               "logging": {
-                "level": "info",
-                "consoleLevel": "info",
+                "level": "debug",
+                "consoleLevel": "debug",
                 "consoleStyle": "compact",
                 "redactSensitive": "tools"
               },
