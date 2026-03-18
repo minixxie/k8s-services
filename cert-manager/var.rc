@@ -1,0 +1,6 @@
+NS=cert-manager
+HELM_REPO_ALIAS=cert-manager
+CONTAINER_IMAGES="
+"
+WAIT_STATEFULSETS="
+"
