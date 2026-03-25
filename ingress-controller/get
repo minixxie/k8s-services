@@ -1,0 +1,10 @@
+#!/bin/bash
+
+scriptPath=$(cd $(dirname "$0") && pwd)
+
+"$scriptPath"/../scripts/get
+
+cat <<EOF
+# kubectl get middlewares.traefik.io -A
+EOF
+kubectl get middlewares.traefik.io -A

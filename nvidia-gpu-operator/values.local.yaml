@@ -13,6 +13,12 @@ gpu-operator:
       - name: CONTAINERD_SET_AS_DEFAULT
         value: "true"
 
+  validator:
+    plugin:
+      env:
+        - name: PLUGIN_ENABLED
+          value: "true"
+
   # Enable GPU time-slicing to allow multiple pods to share the GPU
   # replicas: number of virtual GPUs to create from 1 physical GPU
   # Higher values = more pods can share, but each gets less GPU time

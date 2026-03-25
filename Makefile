@@ -106,34 +106,46 @@ install-kustomize:
 
 .PHONY: install-nerdctl
 install-nerdctl:
-	needInstallNerdctl=1; \
-	if [ -f /usr/local/bin/nerdctl ]; then \
-		a=$$(md5 ./scripts/nerdctl | awk '{print $$NF}'); \
-		b=$$(md5 /usr/local/bin/nerdctl | awk '{print $$NF}'); \
-		if [ "$$a" == "$$b" ]; then \
-			needInstallNerdctl=0; \
+	sys=$$(uname -s); echo $$sys; \
+	if [ "$$sys" == "Darwin" ]; then \
+		needInstallNerdctl=1; \
+		if [ -f /usr/local/bin/nerdctl ]; then \
+			a=$$(md5 ./scripts/nerdctl | awk '{print $$NF}'); \
+			b=$$(md5 /usr/local/bin/nerdctl | awk '{print $$NF}'); \
+			if [ "$$a" == "$$b" ]; then \
+				needInstallNerdctl=0; \
+			fi; \
 		fi; \
-	fi; \
-	if [ "$$needInstallNerdctl" -eq 1 ]; then \
-		echo "Install nerdctl, need your sudo password:"; \
-		sudo cp ./scripts/nerdctl /usr/local/bin/nerdctl; \
-	fi;
+		if [ "$$needInstallNerdctl" -eq 1 ]; then \
+			echo "Install nerdctl, need your sudo password:"; \
+			sudo cp ./scripts/nerdctl /usr/local/bin/nerdctl; \
+		fi; \
+	elif [ "$$sys" == "Linux" ]; then \
+		sudo ./scripts/nerdctl.sh; \
+	else \
+		echo "Not implemented yet"; \
+	fi
 
 .PHONY: k8s-up
 k8s-up:
 	sys=$$(uname -s); echo $$sys; \
+	make -s install-nerdctl; \
 	if [ "$$sys" == "Darwin" ]; then \
-		make -s install-nerdctl; \
 		limactl start --name=ldev --tty=false \
 			--cpus=$$(expr $$(make -s ncpu) / 2) --memory=$$(expr $$(make -s mem) / 2) \
 			./scripts/ldev.lima.yaml; \
 		mkdir -p ~/.kube/ && limactl shell ldev sudo cat /etc/rancher/k3s/k3s.yaml > ~/.kube/config; \
 		make -s k8s-wait-port; \
 		make -s -C coredns local; \
+		make -s -C ingress-controller local; \
 		make -s k8s-wait; \
 		echo "lima is done..."; \
 	else \
-		make -s k3s; \
+		sudo ./scripts/k3s.sh; \
+		sudo ./scripts/buildkit.sh; \
+		make -s k8s-wait-port; \
+		make -s -C coredns local; \
+		make -s -C ingress-controller local; \
 		make -s k8s-wait; \
 	fi
 
@@ -148,13 +160,13 @@ k8s-down:
 		sudo k3s-uninstall.sh || true; \
 	fi
 
-.PHONY: k3s
-k3s:
-	sudo ./scripts/k3s.sh
-	sudo ./scripts/nerdctl.sh
-	sudo ./scripts/buildkit.sh
-	make -s k8s-wait
-	make -s -C coredns local
+# .PHONY: k3s
+# k3s:
+# 	sudo ./scripts/k3s.sh
+# 	sudo ./scripts/nerdctl.sh
+# 	sudo ./scripts/buildkit.sh
+# 	make -s k8s-wait
+# 	make -s -C coredns local
 
 .PHONY: k8s-wait-port
 k8s-wait-port:

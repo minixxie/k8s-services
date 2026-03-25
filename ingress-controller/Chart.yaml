@@ -1,7 +1,8 @@
+# https://traefik.github.io/charts
 apiVersion: v2
 name: traefik
-version: 25.0.0
+version: 39.0.6
 dependencies:
   - name: traefik
-    version: 25.0.0
+    version: 39.0.6
     repository: https://traefik.github.io/charts

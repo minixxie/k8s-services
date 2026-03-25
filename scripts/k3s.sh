@@ -40,7 +40,7 @@ fi
 if [ "$ENGINE" == docker ]; then
 	sudo apt install -q -y docker.io
 	sudo usermod -aG docker $USER
-	curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--docker $nvidiaRuntime" K3S_KUBECONFIG_MODE="644" sh -
+	curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--docker $nvidiaRuntime --disable=traefik" K3S_KUBECONFIG_MODE="644" sh -
 else
 	if [[ $isMainlandChina -eq 0 ]]; then
 		echo "installing k3s using CN mirrors..."
@@ -48,11 +48,11 @@ else
 		#sudo wget --no-check-certificate https://rancher-mirror.oss-cn-beijing.aliyuncs.com/k3s/v1.33.6+k3s1/k3s-amd64 -O /usr/local/bin/k3s
 		#sudo wget --no-check-certificate https://mirrors.cloud.tencent.com/k3s/v1.33.6+k3s1/k3s-amd64 -O /usr/local/bin/k3s
 		#sudo wget http://mirror.ghproxy.com/https://github.com/k3s-io/k3s/releases/download/v1.33.6+k3s1/k3s-amd64 -O /usr/local/bin/k3s
-		sudo curl -sfL https://rancher-mirror.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_MIRROR=cn INSTALL_K3S_EXEC="$nvidiaRuntime" K3S_KUBECONFIG_MODE="644" \
+		sudo curl -sfL https://rancher-mirror.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_MIRROR=cn INSTALL_K3S_EXEC="$nvidiaRuntime --disable=traefik" K3S_KUBECONFIG_MODE="644" \
 			INSTALL_K3S_REGISTRIES="https://registry.cn-hangzhou.aliyuncs.com,https://mirror.ccs.tencentyun.com" sh -s - \
 			--system-default-registry=registry.cn-hangzhou.aliyuncs.com
 	else
-		curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="$nvidiaRuntime" K3S_KUBECONFIG_MODE="644" sh -
+		curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="$nvidiaRuntime --disable=traefik" K3S_KUBECONFIG_MODE="644" sh -
 	fi
 
 fi
@@ -126,4 +126,5 @@ if [ $nvidia -eq 1 ]; then
 fi
 
 NS=default SERVICE_ACCOUNT=default "$scriptPath"/k8s-wait-serviceaccount.sh
-NS=kube-system LABELS=svccontroller.k3s.cattle.io/svcname=traefik "$scriptPath"/k8s-wait-daemonset.sh
+# Traefik is disabled - install your own ingress controller
+# NS=kube-system LABELS=svccontroller.k3s.cattle.io/svcname=traefik "$scriptPath"/k8s-wait-daemonset.sh

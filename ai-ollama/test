@@ -6,6 +6,7 @@ if [ x"$1" == x ]; then
 	model=deepseek-r1:14b
 	#model=deepseek-r1:32b
 	#model=deepseek-v3
+	model=qwen3.5:9b
 else
 	model="$1"
 fi
