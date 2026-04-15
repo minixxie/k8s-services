@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: opencode-config
+  namespace: ai-paperclip
+data:
+  opencode.json: |
+    {
+      "$schema": "https://opencode.ai/config.json",
+      "permission": {
+        "external_directory": "allow"
+      },
+      "provider": {
+        "ollama": {
+          "npm": "@ai-sdk/openai-compatible",
+          "name": "Ollama",
+          "options": {
+            "baseURL": "http://ollama.ai-ollama.svc.cluster.local:11434/v1"
+          },
+          "models": {
+            "qwen3.5:9b": { "name": "Ollama qwen3.5:9b" }
+          }
+        }
+      }
+    }
