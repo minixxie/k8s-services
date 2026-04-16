@@ -18,7 +18,13 @@ data:
             "baseURL": "http://ollama.ai-ollama.svc.cluster.local:11434/v1"
           },
           "models": {
-            "qwen3.5:9b": { "name": "Ollama qwen3.5:9b" }
+            "qwen3.5:9b":{
+              "name": "Ollama qwen3.5:9b (32k ctx)",
+              "limit": {
+                "context": 32768,
+                "output": 32768
+              }
+            }
           }
         }
       }

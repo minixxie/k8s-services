@@ -73,3 +73,6 @@ ollama:
   extraEnv:
     - name: OLLAMA_ORIGINS
       value: "*"
+    # Raise default server context window above 4096 to reduce prompt truncation.
+    - name: OLLAMA_CONTEXT_LENGTH
+      value: "32768"
