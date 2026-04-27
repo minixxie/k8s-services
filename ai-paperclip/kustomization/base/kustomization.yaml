@@ -8,6 +8,7 @@ namespace: ai-paperclip
 resources:
   - namespace.yaml
   - opencode-config.yaml
+  - pvc.yaml
   - deployment.yaml
   - service.yaml
   - ingress.yaml
@@ -19,3 +20,13 @@ secretGenerator:
     literals:
       # Rotate via overlay or `kubectl create secret` replacement; value is cluster-local
       - better-auth-secret=hello123
+  # - name: github-copilot-secrets
+  #   options:
+  #     disableNameSuffixHash: true
+  #   literals:
+  #     - github-token=REPLACE_WITH_YOUR_GITHUB_PAT
+  # - name: ofox-secrets
+  #   options:
+  #     disableNameSuffixHash: true
+  #   literals:
+  #     - ofox-api-key=REPLACE_WITH_YOUR_API_KEY

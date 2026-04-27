@@ -1,6 +1,10 @@
 NS=ai-paperclip
 HELM_REPO_ALIAS=
 CONTAINER_IMAGES="
+minixxie/paperclip:7f893ac4ec9f700efaf902be8a57ce510c1c7092
 "
 WAIT_STATEFULSETS="
+"
+WAIT_DEPLOYS="
+ai-paperclip
 "

@@ -53,6 +53,16 @@ spec:
                   key: better-auth-secret
             - name: OLLAMA_HOST
               value: "http://ollama.ai-ollama.svc.cluster.local:11434"
+            # - name: GITHUB_TOKEN
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: github-copilot-secrets
+            #       key: github-token
+            # - name: OFOX_API_KEY
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: ofox-secrets
+            #       key: ofox-api-key
             - name: OPENCODE_DISABLE_PROJECT_CONFIG
               value: "true"
           readinessProbe:
@@ -84,7 +94,8 @@ spec:
               readOnly: true
       volumes:
         - name: paperclip-home
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: paperclip-home-pvc
         - name: opencode-config
           configMap:
             name: opencode-config

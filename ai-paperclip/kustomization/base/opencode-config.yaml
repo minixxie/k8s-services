@@ -22,7 +22,24 @@ data:
               "name": "Ollama qwen3.5:9b (32k ctx)",
               "limit": {
                 "context": 32768,
-                "output": 32768
+                "output": 4096
+              }
+            }
+          }
+        },
+        "ofox": {
+          "npm": "@ai-sdk/openai-compatible",
+          "name": "ofox.ai",
+          "options": {
+            "baseURL": "https://api.ofox.ai/v1",
+            "apiKey": "YOUR_API_KEY"
+          },
+          "models": {
+            "z-ai/glm-4.7-flash:free": {
+              "name": "GLM-4.7 Flash (Free)",
+              "limit": {
+                "context": 32768,
+                "output": 4096
               }
             }
           }
