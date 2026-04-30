@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-hermes-dashboard
+  namespace: ai-hermes-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ai-hermes-dashboard
+  template:
+    metadata:
+      labels:
+        app: ai-hermes-dashboard
+    spec:
+      securityContext:
+        fsGroup: 1000
+      containers:
+        - name: hermes-dashboard
+          image: nousresearch/hermes-agent:v2026.4.23
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 9119
+          command: ["/opt/hermes/docker/entrypoint.sh", "dashboard", "--host", "0.0.0.0", "--insecure"]
+          env:
+            - name: GATEWAY_HEALTH_URL
+              value: "http://ai-hermes-agent:8642"
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            timeoutSeconds: 5
+            failureThreshold: 3
+          volumeMounts:
+            - name: hermes-data
+              mountPath: /opt/data
+      volumes:
+        - name: hermes-data
+          persistentVolumeClaim:
+            claimName: hermes-agent-home-pvc

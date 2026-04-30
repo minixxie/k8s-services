@@ -1,0 +1,9 @@
+NS=ai-hermes-agent
+HELM_REPO_ALIAS=
+CONTAINER_IMAGES="
+nousresearch/hermes-agent:v2026.4.23
+"
+WAIT_STATEFULSETS="
+"
+WAIT_DEPLOYS="
+"

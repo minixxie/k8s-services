@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-hermes-agent
+  namespace: ai-hermes-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ai-hermes-agent
+  template:
+    metadata:
+      labels:
+        app: ai-hermes-agent
+    spec:
+      securityContext:
+        fsGroup: 1000
+      containers:
+        - name: hermes-agent
+          image: nousresearch/hermes-agent:v2026.4.23
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8642
+              protocol: TCP
+          command: ["/opt/hermes/docker/entrypoint.sh", "gateway", "run", "-v"]
+          env:
+            - name: GATEWAY_ALLOW_ALL_USERS
+              value: "true"
+            - name: OLLAMA_BASE_URL
+              value: "http://ollama-api.local/v1"
+            - name: OLLAMA_API_KEY
+              value: "NONE"
+          # startupProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 5
+          #   timeoutSeconds: 3
+          #   failureThreshold: 30  # Allow up to 150 seconds for startup
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          #   initialDelaySeconds: 15
+          #   periodSeconds: 10
+          #   timeoutSeconds: 5
+          #   failureThreshold: 3
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          #   initialDelaySeconds: 45
+          #   periodSeconds: 30
+          #   timeoutSeconds: 5
+          #   failureThreshold: 3
+          volumeMounts:
+            - name: hermes-agent-env
+              mountPath: /opt/data/.hermes/.env
+              subPath: .env
+              readOnly: true
+            - name: hermes-agent-config
+              mountPath: /opt/data/.hermes/config.yaml
+              subPath: config.yaml
+              readOnly: true
+            - name: hermes-data
+              mountPath: /opt/data
+      volumes:
+        - name: hermes-data
+          persistentVolumeClaim:
+            claimName: hermes-agent-home-pvc
+        - name: hermes-agent-env
+          secret:
+            secretName: hermes-agent-env
+            items:
+              - key: .env
+                path: .env
+        - name: hermes-agent-config
+          configMap:
+            name: hermes-agent-config
+            items:
+              - key: config.yaml
+                path: config.yaml

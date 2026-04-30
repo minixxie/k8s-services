@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ai-hermes-dashboard
+  namespace: ai-hermes-agent
+spec:
+  rules:
+    - host: ai-hermes-dashboard.local
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: ai-hermes-dashboard
+                port:
+                  number: 9119

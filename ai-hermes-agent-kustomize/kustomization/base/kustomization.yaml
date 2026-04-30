@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+metadata:
+  name: ai-hermes-agent
+
+namespace: ai-hermes-agent
+
+resources:
+  - namespace.yaml
+  - configmap.yaml
+  - pvc.yaml
+  - deployment.yaml
+  - service.yaml
+  - ingress.yaml
+  - secret.yaml
+  - dashboard-deployment.yaml
+  - dashboard-service.yaml
+  - dashboard-ingress.yaml
