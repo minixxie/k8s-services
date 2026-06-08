@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Get the generated secret name (Kustomize adds hash suffix)
-SECRET_NAME=$(kubectl get secrets --namespace infra-mysql -o jsonpath='{.items[?(@.type=="Opaque")].metadata.name}' | grep mysql-secret | head -1)
+SECRET_NAME=$(kubectl get secrets --namespace infra-mysql -o jsonpath='{.items[?(@.type=="Opaque")].metadata.name}' | grep mysql | head -1)
 
 if [ -z "$SECRET_NAME" ]; then
     echo "Error: MySQL secret not found. Have you deployed with kustomize?"
@@ -9,4 +9,4 @@ if [ -z "$SECRET_NAME" ]; then
     exit 1
 fi
 
-kubectl run mysql-client-$(date +%s) --rm --tty -i --restart='Never' --image docker.io/mysql:8.2.0 --namespace infra-mysql --env MYSQL_ROOT_PASSWORD=$(kubectl get secret --namespace infra-mysql $SECRET_NAME -o jsonpath="{.data.root-password}" | base64 -d) --command -- bash -c 'mysql -h mysql.infra-mysql.svc.cluster.local -uroot -p"$MYSQL_ROOT_PASSWORD" -e "select utc_timestamp();"'
+kubectl run mysql-client-$(date +%s) --rm --tty -i --restart='Never' --image docker.io/mysql:8.2.0 --namespace infra-mysql --env MYSQL_ROOT_PASSWORD=$(kubectl get secret --namespace infra-mysql $SECRET_NAME -o jsonpath="{.data.mysql-root-password}" | base64 -d) --command -- bash -c 'mysql -h mysql.infra-mysql.svc.cluster.local -uroot -p"$MYSQL_ROOT_PASSWORD" -e "select utc_timestamp();"'
