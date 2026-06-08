@@ -12,6 +12,8 @@ secretGenerator:
     type: Opaque
     envs:
       - mysql-secret.env
+    options:
+      disableNameSuffixHash: true
 
 # Local-specific patches
 patches:
