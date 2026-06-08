@@ -1,0 +1,22 @@
+#!/bin/bash
+
+scriptPath=$(cd $(dirname "$0") && pwd)
+
+source "$scriptPath"/var.rc
+cd "$scriptPath"
+
+# Get the generated secret name (Kustomize adds hash suffix)
+SECRET_NAME=$(kubectl get secrets --namespace infra-mysql -o jsonpath='{.items[?(@.type=="Opaque")].metadata.name}' | grep mysql-secret | head -1)
+
+if [ -z "$SECRET_NAME" ]; then
+    echo "Error: MySQL secret not found. Have you deployed with kustomize?"
+    echo "Run: kubectl apply -k kustomization/overlays/local/"
+    exit 1
+fi
+
+echo -n "MySQL root pass: "
+kubectl get secret --namespace infra-mysql $SECRET_NAME -o jsonpath="{.data.root-password}" | base64 -d
+echo ""
+
+ts=$(date "+%s")
+kubectl run mysql-client-$ts --rm --tty -i --restart='Never' --image docker.io/mysql:8.2.0 --namespace infra-mysql --env MYSQL_ROOT_PASSWORD=$(kubectl get secret --namespace infra-mysql $SECRET_NAME -o jsonpath="{.data.root-password}" | base64 -d) --command -- bash -c 'mysql --default-character-set=utf8mb4 -h mysql.infra-mysql.svc.cluster.local -uroot -p"$MYSQL_ROOT_PASSWORD"'

@@ -1,0 +1,6 @@
+charts/
+
+# Secret files (never commit)
+kustomization/overlays/local/*.env
+kustomization/overlays/*/secret*.yaml
+*.secret

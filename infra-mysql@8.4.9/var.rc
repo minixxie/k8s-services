@@ -1,0 +1,8 @@
+NS=infra-mysql
+HELM_REPO_ALIAS=
+CONTAINER_IMAGES="
+mysql:8.4.9
+"
+WAIT_STATEFULSETS="
+mysql
+"
