@@ -35,6 +35,9 @@ fi
 nvidiaRuntime=""
 if [ $nvidia -eq 1 ]; then
 	nvidiaRuntime="--default-runtime=nvidia"
+	if [ "$(which nvidia-container-runtime)" == "" ]; then
+		echo >&2 "ERR: nvidia-container-runtime not found. Please install nvidia-container-toolkit: https://nvidia.github.io/nvidia-container-runtime/"
+	fi
 fi
 
 if [ "$ENGINE" == docker ]; then

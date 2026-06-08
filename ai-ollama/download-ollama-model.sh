@@ -12,23 +12,31 @@ set -e
 
 DEST_DIR="/datascience-models/ollama"
 OLLAMA_IMAGE="ollama/ollama:0.18.0"
-CONTAINER_NAME="ollama-downloader-$$"
-echo "CONTAINER: $CONTAINER_NAME"
 
-trap "nerdctl --namespace=k8s.io rm -f $CONTAINER_NAME" EXIT
-
-# Create destination directory if it doesn't exist
 mkdir -p "$DEST_DIR"
 
-# Start Ollama container in background with the volume mounted
-echo "Starting Ollama container..."
-nerdctl --namespace=k8s.io run -d \
-    --name "$CONTAINER_NAME" \
+echo "Downloading models..."
+nerdctl --namespace=k8s.io run --rm -it \
+    --net=host \
+    --user root \
     -v "$DEST_DIR:/root/.ollama" \
-    "$OLLAMA_IMAGE"
-nerdctl --namespace=k8s.io exec -it "$CONTAINER_NAME" ollama list
-nerdctl --namespace=k8s.io exec -it "$CONTAINER_NAME" ollama pull qwen2.5:14b
-nerdctl --namespace=k8s.io exec -it "$CONTAINER_NAME" ollama pull qwen3.5:9b
-nerdctl --namespace=k8s.io exec -it "$CONTAINER_NAME" ollama pull deepseek-r1:14b
-nerdctl --namespace=k8s.io exec -it "$CONTAINER_NAME" ollama pull llava:7b
-nerdctl --namespace=k8s.io exec -it "$CONTAINER_NAME" ollama list
+    --entrypoint=/bin/bash \
+    "$OLLAMA_IMAGE" \
+    -c "
+echo '--- List existing models ---'
+ollama list
+
+echo ''
+echo '--- Pulling models ---'
+ollama pull qwen2.5-coder:7b
+ollama pull qwen2.5:14b
+ollama pull qwen3.5:9b
+ollama pull deepseek-r1:14b
+ollama pull llava:7b
+
+echo ''
+echo '--- Updated model list ---'
+ollama list
+"
+
+echo "Done!"
