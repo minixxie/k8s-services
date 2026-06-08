@@ -8,7 +8,7 @@ resources:
 
 # Generate secret from env file (not committed to git)
 secretGenerator:
-  - name: mysql-secret
+  - name: mysql
     type: Opaque
     envs:
       - mysql-secret.env
