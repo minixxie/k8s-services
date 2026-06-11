@@ -5,6 +5,9 @@ scriptPath=$(cd $(dirname "$0") && pwd)
 source "$PWD"/var.rc
 cd "$PWD"
 
+kubectl -n $(make -s --no-print-directory ns) top pod
+echo ""
+
 
 pods=$(kubectl -n $(make -s --no-print-directory ns) get pod)
 counter=0
