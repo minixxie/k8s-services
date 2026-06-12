@@ -11,7 +11,7 @@ set -e
 # )
 
 DEST_DIR="/datascience-models/ollama"
-OLLAMA_IMAGE="ollama/ollama:0.18.0"
+OLLAMA_IMAGE="ollama/ollama:0.30.7"
 
 mkdir -p "$DEST_DIR"
 
@@ -28,8 +28,9 @@ ollama list
 
 echo ''
 echo '--- Pulling models ---'
+ollama pull gemma4:e4b
+ollama pull gemma4:12b
 ollama pull qwen2.5-coder:7b
-ollama pull qwen2.5:14b
 ollama pull qwen3.5:9b
 ollama pull deepseek-r1:14b
 ollama pull llava:7b

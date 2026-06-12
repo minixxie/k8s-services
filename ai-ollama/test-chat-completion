@@ -1,0 +1,28 @@
+#!/bin/bash
+
+if [ x"$1" == x ]; then
+	model=llama3.2:3b
+	model=nezahatkorkmaz/deepseek-v3:latest
+	model=deepseek-r1:14b
+	#model=deepseek-r1:32b
+	#model=deepseek-v3
+	model=qwen3.5:9b
+	model=qwen2.5-coder:7b
+	model=gemma4:12b
+	model=gemma4:e4b
+else
+	model="$1"
+fi
+
+cat <<EOF | curl -v -H 'Content-Type: application/json; charset=utf-8' -X POST --data-binary @- http://ollama-api.local/v1/chat/completions
+{
+  "model": "$model",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Write a C++ hello world program"
+    }
+  ],
+  "stream": true
+}
+EOF
