@@ -1,0 +1,27 @@
+#!/bin/bash
+
+scriptPath=$(cd $(dirname "$0") && pwd)
+
+source "$scriptPath"/var.rc
+
+"$scriptPath"/../scripts/wait
+
+# Pod may be ready but port not yet listening. Test from inside the cluster.
+ts=$(date "+%s")
+kubectl run mysql-port-check-"$ts" --rm -i --restart='Never' \
+  --image busybox:latest \
+  --namespace "$NS" \
+  --command -- sh -c "
+    i=1
+    while [ \$i -le 30 ]; do
+      if nc -z mysql.$NS.svc.cluster.local 3306 2>/dev/null; then
+        echo '3306 is ready';
+        exit 0;
+      fi;
+      echo \"Attempt \$i/30: 3306 is not ready, waiting...\";
+      sleep 1;
+      i=\$(( i + 1 ));
+    done;
+    echo 'ERR: Timeout waiting for port 3306.';
+    exit 1
+  "
